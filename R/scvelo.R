@@ -94,7 +94,11 @@ NULL
 }
 
 #' @importFrom reticulate import
+#' @importFrom DelayedArray is_sparse
 .run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical') {
+    spliced <- .make_np_friendly(spliced)
+    unspliced <- .make_np_friendly(unspliced)
+
     and <- import("anndata")
     scv <- import("scvelo")
     adata <- and$AnnData(spliced, layers=list(spliced=spliced, unspliced=unspliced))
