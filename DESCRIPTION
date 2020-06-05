@@ -5,6 +5,9 @@ Authors@R: c(person("Kevin", "Rue-Albrecht", role = c("aut", "cre"), email = "ke
     person("Aaron", "Lun", role="aut", email="infinite.monkeys.with.keyboards@gmail.com", comment = c(ORCID = '0000-0002-3564-4813')))
 Maintainer: Kevin Rue-Albrecht <kevin.rue-albrecht@ndlcs.ox.ac.uk>
 Description: Functionality for processing single-cell velocity data.
+Imports:
+    basilisk
+StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
