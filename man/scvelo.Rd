@@ -8,9 +8,24 @@
 \usage{
 scvelo(x, ...)
 
-\S4method{scvelo}{ANY}(x)
+\S4method{scvelo}{ANY}(
+  x,
+  subset.row = NULL,
+  log.norm = FALSE,
+  sf.spliced = NULL,
+  sf.unspliced = NULL,
+  use.theirs = FALSE,
+  mode = c("steady_state", "deterministic", "stochastic", "dynamical")
+)
 
-\S4method{scvelo}{SummarizedExperiment}(x, ..., assay.spliced = "spliced", assay.unspliced = "unspliced")
+\S4method{scvelo}{SummarizedExperiment}(
+  x,
+  ...,
+  assay.spliced = "counts",
+  assay.unspliced = "unspliced",
+  sf.spliced = sizeFactors(x),
+  sf.unspliced = NULL
+)
 }
 \arguments{
 \item{x}{A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
@@ -20,6 +35,20 @@ Alternatively, a \linkS4class{SummarizedExperiment} object containing two such m
 
 \item{...}{For the generic, further arguments to pass to specific methods.
 For the SummarizedExperiment method, further arguments to pass to the ANY method.}
+
+\item{subset.row}{A character, integer or logical vector specifying the genes to use for the calculations.
+Defaults to all genes.}
+
+\item{sf.spliced}{A numeric vector containing size factors for the spliced counts for each cell.
+Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
+
+\item{sf.unspliced}{A numeric vector containing size factors for the unspliced counts for each cell.
+Defaults to \code{\link{librarySizeFactors}} on the unspliced matrix.}
+
+\item{use.theirs}{Logical scalar indicating whether \pkg{scvelo}'s gene filtering and normalization should be used,
+in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.}
+
+\item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
