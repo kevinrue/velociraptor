@@ -6,3 +6,13 @@
         as.matrix(x) 
     }
 }
+
+.extractor_python_dict <- function(thing, names, single=FALSE) {
+    if (single) {
+        values <- lapply(names, function(x) thing[x])
+    } else {
+        values <- lapply(names, function(x) thing[[x]])
+    }
+    names(values) <- names
+    values
+}

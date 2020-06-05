@@ -33,12 +33,13 @@
 #' before starting the velocity calculations with \pkg{scvelo}.
 #' This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other 
 #' applications like clustering or trajectory reconstruction.
-#' However, setting \code{use.theirs=TRUE} will directly use the entire \pkg{scvelo} normalization and filtering pipeline.
+#' Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
 #' 
 #' Upon first use, this function will instantiate a conda environment containing the \pkg{scvelo} package.
 #' 
 #' @return 
-#' By default, a \linkS4class{DataFrame} is returned containing:
+#' A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
+#' TODO: SOME DOCUMENTATION REQUIRED.
 #'
 #' @examples
 #' # Using mock data to demonstrate the process:
@@ -60,7 +61,8 @@ NULL
 .scvelo <- function(x, subset.row=NULL, log.norm=FALSE, 
     sf.spliced=NULL, sf.unspliced=NULL, 
     use.theirs=FALSE, 
-    mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'))
+    mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
+    get.velocities=TRUE)
 {
     spliced <- x[[1]]
     unspliced <- x[[2]]
@@ -90,7 +92,7 @@ NULL
         spliced=spliced, unspliced=unspliced, 
         use.theirs=use.theirs, mode=mode)
 
-    do.call(DataFrame, output)
+    output
 }
 
 #' @importFrom reticulate import
@@ -116,9 +118,31 @@ NULL
     scv$tl$velocity_graph(adata)
     scv$tl$velocity_pseudotime(adata)
 
-    list(pseudotime=adata$obs$velocity_pseudotime,
-        roots=adata$obs$root_cells,
-        endpoints=adata$obs$end_points)
+    .scvelo_anndata2sce(adata) 
+}
+
+.scvelo_anndata2sce <- function(adata) {
+    assays <- .extractor_python_dict(adata$layers, c("Mu", "Ms", "velocity"), single=TRUE)
+    rowdata <- .extractor_python_dict(adata$obs, names(adata$obs))
+    coldata <- .extractor_python_dict(adata$var, names(adata$var))
+    metadata <- .extractor_python_dict(adata$uns, c('velocity_params', 'velocity_graph', 'velocity_graph_neg'), single=TRUE)
+
+    if (!is.null(rowdata)) {
+        rowdata <- do.call(DataFrame, rowdata)
+    } else {
+        rowdata <- make_zero_col_DFrame(nrow(assays[[1]]))
+        rownames(rowdata) <- rownames(assays[[1]])
+    }
+
+    if (!is.null(coldata)) {
+        coldata <- do.call(DataFrame, coldata)
+    } else {
+        coldata <- make_zero_col_DFrame(ncol(assays[[1]]))
+        rownames(coldata) <- colnames(assays[[1]])
+    }
+
+    SummarizedExperiment(assays, colData=coldata, rowData=rowdata,
+        metadata=metadata)
 }
 
 #' @export
