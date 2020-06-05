@@ -6,7 +6,7 @@
 \alias{velociraptor-package}
 \title{velociraptor: Toolkit for Single-Cell Velocity}
 \description{
-Functionality for processing single-cell velocity data.
+Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
 }
 \seealso{
 Useful links:

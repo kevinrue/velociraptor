@@ -1,3 +1,5 @@
+#' @import basilisk
+#' @import SummarizedExperiment 
 #' @keywords internal
 "_PACKAGE"
 
