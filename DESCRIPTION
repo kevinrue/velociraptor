@@ -7,11 +7,17 @@ Description: Bioconductor-friendly wrappers for RNA velocity calculations in sin
 Depends:
     SummarizedExperiment
 Imports:
+    methods,
     reticulate,
     S4Vectors,
-    basilisk
-Suggests:
+    DelayedArray,
+    basilisk,
     scuttle
+Suggests:
+    BiocStyle,
+    testthat,
+    knitr,
+    rmarkdown
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
