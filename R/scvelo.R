@@ -31,13 +31,13 @@
 #'
 #' For consistency with other Bioconductor packages, we perform scaling normalization, log-transformation and subsetting
 #' before starting the velocity calculations with \pkg{scvelo}.
-#' This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other 
+#' This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 #' applications like clustering or trajectory reconstruction.
 #' Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
-#' 
+#'
 #' Upon first use, this function will instantiate a conda environment containing the \pkg{scvelo} package.
-#' 
-#' @return 
+#'
+#' @return
 #' A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
 #' TODO: SOME DOCUMENTATION REQUIRED.
 #'
@@ -51,16 +51,16 @@
 #' unspliced <- counts(sce2)
 #'
 #' out <- scvelo(list(spliced, unspliced))
-#' 
+#'
 #' @author Aaron Lun
 #' @name scvelo
 NULL
 
 #' @importFrom S4Vectors DataFrame
 #' @importFrom scuttle normalizeCounts
-.scvelo <- function(x, subset.row=NULL, log.norm=FALSE, 
-    sf.spliced=NULL, sf.unspliced=NULL, 
-    use.theirs=FALSE, 
+.scvelo <- function(x, subset.row=NULL, log.norm=FALSE,
+    sf.spliced=NULL, sf.unspliced=NULL,
+    use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
     get.velocities=TRUE)
 {
@@ -68,7 +68,7 @@ NULL
     unspliced <- x[[2]]
     if (!identical(as.integer(dim(spliced)), as.integer(dim(unspliced)))) {
         stop("matrices in 'x' must have the same dimensions")
-    } 
+    }
 
     # Can't be bothered figuring this out.
     if (log.norm && use.theirs) {
@@ -88,8 +88,8 @@ NULL
     }
 
     mode <- match.arg(mode)
-    output <- basiliskRun(env=velo.env, fun=.run_scvelo, 
-        spliced=spliced, unspliced=unspliced, 
+    output <- basiliskRun(env=velo.env, fun=.run_scvelo,
+        spliced=spliced, unspliced=unspliced,
         use.theirs=use.theirs, mode=mode)
 
     output
@@ -108,7 +108,7 @@ NULL
     if (use.theirs) {
         scv$pp$filter_and_normalize(adata)
     }
-    scv$pp$moments(adata) 
+    scv$pp$moments(adata)
 
     if (mode=="dynamical") {
         scv$tl$recover_dynamics(adata)
@@ -118,9 +118,10 @@ NULL
     scv$tl$velocity_graph(adata)
     scv$tl$velocity_pseudotime(adata)
 
-    .scvelo_anndata2sce(adata) 
+    .scvelo_anndata2sce(adata)
 }
 
+#' @importFrom S4Vectors make_zero_col_DFrame
 .scvelo_anndata2sce <- function(adata) {
     assays <- .extractor_python_dict(adata$layers, c("Mu", "Ms", "velocity"), single=TRUE)
     rowdata <- .extractor_python_dict(adata$obs, names(adata$obs))
@@ -155,9 +156,10 @@ setMethod("scvelo", "ANY", .scvelo)
 
 #' @export
 #' @rdname scvelo
-setMethod("scvelo", "SummarizedExperiment", function(x, ..., 
-    assay.spliced="counts", assay.unspliced="unspliced", 
-    sf.spliced=sizeFactors(x), sf.unspliced=NULL) 
+#' @importFrom BiocGenerics sizeFactors
+setMethod("scvelo", "SummarizedExperiment", function(x, ...,
+    assay.spliced="counts", assay.unspliced="unspliced",
+    sf.spliced=sizeFactors(x), sf.unspliced=NULL)
 {
     x <- list(assay(x, assay.spliced), assay(x, assay.unspliced))
     scvelo(x, ..., size.factors=size.factors)

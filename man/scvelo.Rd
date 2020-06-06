@@ -74,7 +74,7 @@ which may improve the reliability of the velocity calculations in general applic
 
 For consistency with other Bioconductor packages, we perform scaling normalization, log-transformation and subsetting
 before starting the velocity calculations with \pkg{scvelo}.
-This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other 
+This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 applications like clustering or trajectory reconstruction.
 Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
 
