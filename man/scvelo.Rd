@@ -15,7 +15,8 @@ scvelo(x, ...)
   sf.spliced = NULL,
   sf.unspliced = NULL,
   use.theirs = FALSE,
-  mode = c("steady_state", "deterministic", "stochastic", "dynamical")
+  mode = c("steady_state", "deterministic", "stochastic", "dynamical"),
+  get.velocities = TRUE
 )
 
 \S4method{scvelo}{SummarizedExperiment}(
@@ -29,15 +30,20 @@ scvelo(x, ...)
 }
 \arguments{
 \item{x}{A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
-The first matrix should contain spliced counts and te second matrix should contain unspliced counts.
+The first matrix should contain spliced counts and the second matrix should contain unspliced counts.
+If \code{log.norm=TRUE}, both matrices should contain log-expression values instead.
 
 Alternatively, a \linkS4class{SummarizedExperiment} object containing two such matrices in its assays.}
 
 \item{...}{For the generic, further arguments to pass to specific methods.
 For the SummarizedExperiment method, further arguments to pass to the ANY method.}
 
-\item{subset.row}{A character, integer or logical vector specifying the genes to use for the calculations.
-Defaults to all genes.}
+\item{subset.row}{A character, integer or logical vector specifying the genes to use for the velocity calculations.
+Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
+Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.}
+
+\item{log.norm}{Logical scalar indicating whether the matrices in \code{x} are already log-transformed.
+In such cases, \code{sf.spliced} and \code{sf.unspliced} are ignored.}
 
 \item{sf.spliced}{A numeric vector containing size factors for the spliced counts for each cell.
 Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
@@ -55,14 +61,22 @@ in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are i
 \item{assay.unspliced}{An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.}
 }
 \value{
-By default, a \linkS4class{DataFrame} is returned containing:
+A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
+TODO: SOME DOCUMENTATION REQUIRED.
 }
 \description{
 Perform RNA velocity calculations with the \pkg{scvelo} package.
 }
 \details{
 This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
-The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations.
+The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations,
+which may improve the reliability of the velocity calculations in general applications.
+
+For consistency with other Bioconductor packages, we perform scaling normalization, log-transformation and subsetting
+before starting the velocity calculations with \pkg{scvelo}.
+This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other 
+applications like clustering or trajectory reconstruction.
+Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
 
 Upon first use, this function will instantiate a conda environment containing the \pkg{scvelo} package.
 }
