@@ -8,7 +8,7 @@ Depends:
     SummarizedExperiment
 Imports:
     methods,
-    BiocGenerics
+    BiocGenerics,
     reticulate,
     S4Vectors,
     DelayedArray,
