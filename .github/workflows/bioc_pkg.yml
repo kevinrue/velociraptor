@@ -61,18 +61,18 @@ jobs:
           registry: docker.pkg.github.com
 
       - name: Build pkgdown
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
            PATH=$PATH:$HOME/bin/ Rscript -e 'BiocManager::install("pkgdown"); pkgdown::build_site(".")'
 
       # deploy needs rsync? Seems so.
       - name: Install deploy dependencies
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           apt-get update && apt-get -y install rsync
 
       - name: Deploy 🚀
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@3.5.4
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
