@@ -9,10 +9,11 @@ The goal of velociraptor is to ...
 
 ## Installation
 
-You can install the released version of velociraptor from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of velociraptor from [GitHub](https://github.com/kevinrue/velociraptor) with:
 
 ``` r
-install.packages("velociraptor")
+install.packages("remotes")
+remotes::install_github("kevinrue/velociraptor")
 ```
 
 ## Example
