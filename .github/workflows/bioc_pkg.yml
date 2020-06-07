@@ -54,7 +54,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: docker.pkg.github.com/${{ github.repository }}/image:latest
+          name: docker.pkg.github.com/${{ github.repository }}/image:0.0.1
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
