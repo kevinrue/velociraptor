@@ -11,7 +11,7 @@ scvelo(x, ...)
 \S4method{scvelo}{ANY}(
   x,
   subset.row = NULL,
-  log.norm = FALSE,
+  norm = FALSE,
   sf.spliced = NULL,
   sf.unspliced = NULL,
   use.theirs = FALSE,
@@ -31,7 +31,7 @@ scvelo(x, ...)
 \arguments{
 \item{x}{A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
 The first matrix should contain spliced counts and the second matrix should contain unspliced counts.
-If \code{log.norm=TRUE}, both matrices should contain log-expression values instead.
+If \code{norm=TRUE}, both matrices should contain normalized expression values instead.
 
 Alternatively, a \linkS4class{SummarizedExperiment} object containing two such matrices in its assays.}
 
@@ -42,7 +42,7 @@ For the SummarizedExperiment method, further arguments to pass to the ANY method
 Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
 Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.}
 
-\item{log.norm}{Logical scalar indicating whether the matrices in \code{x} are already log-transformed.
+\item{norm}{Logical scalar indicating whether the matrices in \code{x} are already normalized.
 In such cases, \code{sf.spliced} and \code{sf.unspliced} are ignored.}
 
 \item{sf.spliced}{A numeric vector containing size factors for the spliced counts for each cell.
