@@ -96,10 +96,10 @@ NULL
 }
 
 #' @importFrom reticulate import
-#' @importFrom DelayedArray is_sparse
+#' @importFrom DelayedArray is_sparse t
 .run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical') {
-    spliced <- .make_np_friendly(spliced)
-    unspliced <- .make_np_friendly(unspliced)
+    spliced <- t(.make_np_friendly(spliced))
+    unspliced <- t(.make_np_friendly(unspliced))
 
     and <- import("anndata")
     scv <- import("scvelo")
@@ -123,9 +123,9 @@ NULL
 
 #' @importFrom S4Vectors make_zero_col_DFrame
 .scvelo_anndata2sce <- function(adata) {
-    assays <- .extractor_python_dict(adata$layers, c("Mu", "Ms", "velocity"), single=TRUE)
-    rowdata <- .extractor_python_dict(adata$obs, names(adata$obs))
-    coldata <- .extractor_python_dict(adata$var, names(adata$var))
+    assays <- .extractor_python_dict(adata$layers, c("Mu", "Ms", "velocity"), single=TRUE, transpose=TRUE)
+    coldata <- .extractor_python_dict(adata$obs, names(adata$obs))
+    rowdata <- .extractor_python_dict(adata$var, names(adata$var))
     metadata <- .extractor_python_dict(adata$uns, c('velocity_params', 'velocity_graph', 'velocity_graph_neg'), single=TRUE)
 
     if (!is.null(rowdata)) {
