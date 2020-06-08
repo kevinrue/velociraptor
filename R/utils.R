@@ -3,15 +3,22 @@
     if (is_sparse(x)) {
         as(x, "dgCMatrix")
     } else {
-        as.matrix(x) 
+        as.matrix(x)
     }
 }
 
-.extractor_python_dict <- function(thing, names, single=FALSE) {
+#' @importFrom DelayedArray t
+.extractor_python_dict <- function(thing, names, single=FALSE, transpose=FALSE) {
     if (single) {
-        values <- lapply(names, function(x) thing[x])
+        values <- lapply(names, function(x) {
+            if (transpose) t(thing[x])
+            else thing[x]
+        })
     } else {
-        values <- lapply(names, function(x) thing[[x]])
+        values <- lapply(names, function(x) {
+            if (transpose) t(thing[[x]])
+            else thing[[x]]
+        })
     }
     names(values) <- names
     values
