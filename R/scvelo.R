@@ -23,13 +23,14 @@
 #' @param use.theirs Logical scalar indicating whether \pkg{scvelo}'s gene filtering and normalization should be used,
 #' in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.
 #' @param mode String specifying the method to use to estimate the transcriptional dynamics.
+#' @param scvelo.params List of lists, providing arguments for scVelo functions.
 #'
 #' @details
 #' This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
 #' The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations,
 #' which may improve the reliability of the velocity calculations in general applications.
 #'
-#' For consistency with other Bioconductor packages, we perform scaling normalization, log-transformation and subsetting
+#' For consistency with other Bioconductor packages, we perform scaling normalization and subsetting
 #' before starting the velocity calculations with \pkg{scvelo}.
 #' This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 #' applications like clustering or trajectory reconstruction.
@@ -62,7 +63,8 @@ NULL
     sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
-    get.velocities=TRUE)
+    get.velocities=TRUE,
+    scvelo.params=list())
 {
     spliced <- x[[1]]
     unspliced <- x[[2]]
@@ -90,33 +92,53 @@ NULL
     mode <- match.arg(mode)
     output <- basiliskRun(env=velo.env, fun=.run_scvelo,
         spliced=spliced, unspliced=unspliced,
-        use.theirs=use.theirs, mode=mode)
+        use.theirs=use.theirs, mode=mode,
+        scvelo.params=scvelo.params)
 
     output
 }
 
 #' @importFrom reticulate import
 #' @importFrom DelayedArray is_sparse t
-.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical') {
+.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=scvelo.params) {
     spliced <- t(.make_np_friendly(spliced))
     unspliced <- t(.make_np_friendly(unspliced))
 
     and <- import("anndata")
     scv <- import("scvelo")
     adata <- and$AnnData(spliced, layers=list(spliced=spliced, unspliced=unspliced))
+    adata$obs_names <- rownames(spliced)
+    adata$var_names <- colnames(spliced)
 
     if (use.theirs) {
-        scv$pp$filter_and_normalize(adata)
+        do.call(scv$pp$filter_and_normalize, c(list(data=adata),
+                                               scvelo.params$filter_and_normalize))
     }
-    scv$pp$moments(adata)
+    do.call(scv$pp$moments, c(list(data=adata),
+                              scvelo.params$moments))
 
     if (mode=="dynamical") {
-        scv$tl$recover_dynamics(adata)
+        do.call(scv$tl$recover_dynamics, c(list(data=adata),
+                                           scvelo.params$recover_dynamics))
     }
 
-    scv$tl$velocity(adata, mode=mode)
-    scv$tl$velocity_graph(adata)
-    scv$tl$velocity_pseudotime(adata)
+    scvelo.params$velocity$mode <- mode
+    do.call(scv$tl$velocity, c(list(data=adata),
+                               scvelo.params$velocity))
+
+    do.call(scv$tl$velocity_graph, c(list(data=adata),
+                                     scvelo.params$velocity_graph))
+
+    do.call(scv$tl$velocity_pseudotime, c(list(adata=adata),
+                                          scvelo.params$velocity_pseudotime))
+
+    if (mode=="dynamical") {
+        do.call(scv$tl$latent_time, c(list(data=adata),
+                                      scvelo.params$latent_time))
+    }
+
+    do.call(scv$tl$velocity_confidence, c(list(data=adata),
+                                          scvelo.params$velocity_confidence))
 
     .scvelo_anndata2sce(adata)
 }
