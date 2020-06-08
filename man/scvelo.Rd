@@ -16,7 +16,8 @@ scvelo(x, ...)
   sf.unspliced = NULL,
   use.theirs = FALSE,
   mode = c("steady_state", "deterministic", "stochastic", "dynamical"),
-  get.velocities = TRUE
+  get.velocities = TRUE,
+  scvelo.params = list()
 )
 
 \S4method{scvelo}{SummarizedExperiment}(
@@ -56,6 +57,8 @@ in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are i
 
 \item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
+\item{scvelo.params}{List of lists, providing arguments for scVelo functions.}
+
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
 \item{assay.unspliced}{An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.}
@@ -72,7 +75,7 @@ This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvel
 The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations,
 which may improve the reliability of the velocity calculations in general applications.
 
-For consistency with other Bioconductor packages, we perform scaling normalization, log-transformation and subsetting
+For consistency with other Bioconductor packages, we perform scaling normalization and subsetting
 before starting the velocity calculations with \pkg{scvelo}.
 This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 applications like clustering or trajectory reconstruction.
