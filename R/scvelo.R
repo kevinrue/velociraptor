@@ -4,14 +4,14 @@
 #'
 #' @param x A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
 #' The first matrix should contain spliced counts and the second matrix should contain unspliced counts.
-#' If \code{log.norm=TRUE}, both matrices should contain log-expression values instead.
+#' If \code{norm=TRUE}, both matrices should contain normalized expression values instead.
 #'
 #' Alternatively, a \linkS4class{SummarizedExperiment} object containing two such matrices in its assays.
 #' @param ... For the generic, further arguments to pass to specific methods.
 #' For the SummarizedExperiment method, further arguments to pass to the ANY method.
 #' @param assay.spliced An integer scalar or string specifying the assay of \code{x} containing the spliced counts.
 #' @param assay.unspliced An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.
-#' @param log.norm Logical scalar indicating whether the matrices in \code{x} are already log-transformed.
+#' @param norm Logical scalar indicating whether the matrices in \code{x} are already normalized.
 #' In such cases, \code{sf.spliced} and \code{sf.unspliced} are ignored.
 #' @param sf.spliced A numeric vector containing size factors for the spliced counts for each cell.
 #' Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.
@@ -58,7 +58,7 @@ NULL
 
 #' @importFrom S4Vectors DataFrame
 #' @importFrom scuttle normalizeCounts
-.scvelo <- function(x, subset.row=NULL, log.norm=FALSE,
+.scvelo <- function(x, subset.row=NULL, norm=FALSE,
     sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
@@ -71,14 +71,14 @@ NULL
     }
 
     # Can't be bothered figuring this out.
-    if (log.norm && use.theirs) {
+    if (norm && use.theirs) {
         stop("need raw counts to use the 'scvelo' native pipeline")
     }
 
     if (!use.theirs) {
-        if (!log.norm) {
-            spliced <- normalizeCounts(spliced, sf.spliced)
-            unspliced <- normalizeCounts(unspliced, sf.unspliced)
+        if (!norm) {
+            spliced <- normalizeCounts(spliced, sf.spliced, log=FALSE)
+            unspliced <- normalizeCounts(unspliced, sf.unspliced, log=FALSE)
         }
 
         if (!is.null(subset.row)) {
