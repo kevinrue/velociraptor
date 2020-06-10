@@ -24,6 +24,7 @@
 #' in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.
 #' @param mode String specifying the method to use to estimate the transcriptional dynamics.
 #' @param scvelo.params List of lists, providing arguments for scVelo functions.
+#' @param dimred A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.
 #'
 #' @details
 #' This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
@@ -64,7 +65,7 @@ NULL
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
     get.velocities=TRUE,
-    scvelo.params=list())
+    scvelo.params=list(), dimred=NULL)
 {
     spliced <- x[[1]]
     unspliced <- x[[2]]
@@ -87,33 +88,51 @@ NULL
             spliced <- spliced[subset.row,,drop=FALSE]
             unspliced <- unspliced[subset.row,,drop=FALSE]
         }
+
+        # Find nearest neighbors
+        if (length(dimred) > 0) {
+            nn <- findKNN(dimred, k=29)$index
+            nn <- cbind(seq_len(nrow(nn)), nn) - 1
+            mode(nn) <- "integer"
+            neighbors <- list(indices=nn, params=list(n_neighbors=30, n_pcs=ncol(dimred)))
+        }
+    } else {
+        neighbors <- NULL
     }
 
     mode <- match.arg(mode)
     output <- basiliskRun(env=velo.env, fun=.run_scvelo,
         spliced=spliced, unspliced=unspliced,
         use.theirs=use.theirs, mode=mode,
-        scvelo.params=scvelo.params)
+        scvelo.params=scvelo.params,
+        dimred=dimred, neighbors=neighbors)
 
     output
 }
 
 #' @importFrom reticulate import
 #' @importFrom DelayedArray is_sparse t
-.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=scvelo.params) {
+.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL, neighbors=NULL) {
     spliced <- t(.make_np_friendly(spliced))
     unspliced <- t(.make_np_friendly(unspliced))
+    if (!is.null(dimred)) {
+        dimred <- .make_np_friendly(dimred)
+    }
 
     and <- import("anndata")
     scv <- import("scvelo")
     adata <- and$AnnData(spliced, layers=list(spliced=spliced, unspliced=unspliced))
     adata$obs_names <- rownames(spliced)
     adata$var_names <- colnames(spliced)
+    if (!use.theirs && !is.null(dimred)) {
+        adata$obsm <- list(X_pca = dimred)
+    }
 
     if (use.theirs) {
         do.call(scv$pp$filter_and_normalize, c(list(data=adata),
                                                scvelo.params$filter_and_normalize))
     }
+
     do.call(scv$pp$moments, c(list(data=adata),
                               scvelo.params$moments))
 
@@ -181,8 +200,13 @@ setMethod("scvelo", "ANY", .scvelo)
 #' @importFrom BiocGenerics sizeFactors
 setMethod("scvelo", "SummarizedExperiment", function(x, ...,
     assay.spliced="counts", assay.unspliced="unspliced",
-    sf.spliced=sizeFactors(x), sf.unspliced=NULL)
+    sf.spliced=sizeFactors(x), sf.unspliced=NULL, dimred="PCA")
 {
-    x <- list(assay(x, assay.spliced), assay(x, assay.unspliced))
-    scvelo(x, ..., size.factors=size.factors)
+    if (!is.null(dimred) && is(x, "SingleCellExperiment") && dimred %in% reducedDimNames(x)) {
+        dimred <- reducedDim(x, dimred)
+    } else {
+        dimred=NULL
+    }
+
+    scvelo(list(assay(x, assay.spliced), assay(x, assay.unspliced)), ..., sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=dimred)
 })
