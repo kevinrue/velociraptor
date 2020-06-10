@@ -211,13 +211,21 @@ setMethod("scvelo", "ANY", .scvelo)
 
 #' @export
 #' @rdname scvelo
-#' @importFrom BiocGenerics sizeFactors
-#' @importFrom SingleCellExperiment reducedDimNames reducedDim
 setMethod("scvelo", "SummarizedExperiment", function(x, ...,
+    assay.spliced="counts", assay.unspliced="unspliced",
+    sf.spliced=NULL, sf.unspliced=NULL)
+{
+    scvelo(list(assay(x, assay.spliced), assay(x, assay.unspliced)), ..., sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=NULL)
+})
+
+#' @export
+#' @rdname scvelo
+#' @importFrom SingleCellExperiment reducedDimNames reducedDim
+setMethod("scvelo", "SingleCellExperiment", function(x, ...,
     assay.spliced="counts", assay.unspliced="unspliced",
     sf.spliced=NULL, sf.unspliced=NULL, dimred="PCA")
 {
-    if (!is.null(dimred) && is(x, "SingleCellExperiment") && dimred %in% reducedDimNames(x)) {
+    if (!is.null(dimred) && dimred %in% reducedDimNames(x)) {
         dimred <- reducedDim(x, dimred)
     } else {
         dimred=NULL
