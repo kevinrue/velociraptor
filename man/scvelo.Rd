@@ -4,7 +4,7 @@
 \alias{scvelo}
 \alias{scvelo,ANY-method}
 \alias{scvelo,SummarizedExperiment-method}
-\title{RNA velocity calculations with \pkg{scvelo}}
+\title{RNA velocity calculations with \pkg{scVelo}}
 \usage{
 scvelo(x, ...)
 
@@ -16,7 +16,6 @@ scvelo(x, ...)
   sf.unspliced = NULL,
   use.theirs = FALSE,
   mode = c("steady_state", "deterministic", "stochastic", "dynamical"),
-  get.velocities = TRUE,
   scvelo.params = list(),
   dimred = NULL
 )
@@ -26,7 +25,7 @@ scvelo(x, ...)
   ...,
   assay.spliced = "counts",
   assay.unspliced = "unspliced",
-  sf.spliced = sizeFactors(x),
+  sf.spliced = NULL,
   sf.unspliced = NULL,
   dimred = "PCA"
 )
@@ -54,14 +53,15 @@ Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
 \item{sf.unspliced}{A numeric vector containing size factors for the unspliced counts for each cell.
 Defaults to \code{\link{librarySizeFactors}} on the unspliced matrix.}
 
-\item{use.theirs}{Logical scalar indicating whether \pkg{scvelo}'s gene filtering and normalization should be used,
+\item{use.theirs}{Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used,
 in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.}
 
 \item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
 \item{scvelo.params}{List of lists, providing arguments for scVelo functions.}
 
-\item{dimred}{A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.}
+\item{dimred}{A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.
+Alternatively, if \code{x} is a \linkS4class{SingleCellExperiment}, a character scalar with the name of a reduced dimension representation in \code{x}.}
 
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
@@ -72,20 +72,35 @@ A \linkS4class{SummarizedExperiment} is returned containing the output of the ve
 TODO: SOME DOCUMENTATION REQUIRED.
 }
 \description{
-Perform RNA velocity calculations with the \pkg{scvelo} package.
+Perform RNA velocity calculations with the \pkg{scVelo} package.
 }
 \details{
-This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
-The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations,
+This function uses the \pkg{scVelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
+The main difference from \pkg{velocyto} is that the dynamical model of \pkg{scVelo} does not rely on the presence of observed steady state populations,
 which may improve the reliability of the velocity calculations in general applications.
 
 For consistency with other Bioconductor packages, we perform scaling normalization and subsetting
-before starting the velocity calculations with \pkg{scvelo}.
+before starting the velocity calculations with \pkg{scVelo}.
 This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 applications like clustering or trajectory reconstruction.
-Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
+Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scVelo} normalization and filtering pipeline.
 
-Upon first use, this function will instantiate a conda environment containing the \pkg{scvelo} package.
+Upon first use, this function will instantiate a conda environment containing the \pkg{scVelo} package.
+
+Additional arguments to \pkg{scVelo} functions are provided via the \code{scvelo.params} list.
+The arguments for a given function are given as a named list.
+The following function names are currently recognized:
+\itemize{
+\item filter_and_normalize
+\item moments
+\item recover_dynamics
+\item velocity
+\item velocity_graph
+\item velocity_pseudotime
+\item latent_time
+\item velocity_confidence
+}
+For more information about the arguments of these functions, see the \pkg{scVelo} documentation.
 }
 \examples{
 # Using mock data to demonstrate the process:
@@ -96,7 +111,7 @@ sce2 <- mockSCE()
 spliced <- counts(sce1)
 unspliced <- counts(sce2)
 
-out <- scvelo(list(spliced, unspliced))
+out <- scvelo(list(spliced, unspliced), use.theirs=TRUE)
 
 }
 \author{

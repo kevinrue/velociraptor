@@ -1,6 +1,6 @@
-#' RNA velocity calculations with \pkg{scvelo}
+#' RNA velocity calculations with \pkg{scVelo}
 #'
-#' Perform RNA velocity calculations with the \pkg{scvelo} package.
+#' Perform RNA velocity calculations with the \pkg{scVelo} package.
 #'
 #' @param x A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
 #' The first matrix should contain spliced counts and the second matrix should contain unspliced counts.
@@ -20,24 +20,40 @@
 #' @param subset.row A character, integer or logical vector specifying the genes to use for the velocity calculations.
 #' Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
 #' Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
-#' @param use.theirs Logical scalar indicating whether \pkg{scvelo}'s gene filtering and normalization should be used,
+#' @param use.theirs Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used,
 #' in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.
 #' @param mode String specifying the method to use to estimate the transcriptional dynamics.
 #' @param scvelo.params List of lists, providing arguments for scVelo functions.
 #' @param dimred A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.
+#' Alternatively, if \code{x} is a \linkS4class{SingleCellExperiment}, a character scalar with the name of a reduced dimension representation in \code{x}.
 #'
 #' @details
-#' This function uses the \pkg{scvelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
-#' The main difference from \code{\link{velocyto}} is that it does not rely on the presence of observed steady state populations,
+#' This function uses the \pkg{scVelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
+#' The main difference from \pkg{velocyto} is that the dynamical model of \pkg{scVelo} does not rely on the presence of observed steady state populations,
 #' which may improve the reliability of the velocity calculations in general applications.
 #'
 #' For consistency with other Bioconductor packages, we perform scaling normalization and subsetting
-#' before starting the velocity calculations with \pkg{scvelo}.
+#' before starting the velocity calculations with \pkg{scVelo}.
 #' This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
 #' applications like clustering or trajectory reconstruction.
-#' Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scvelo} normalization and filtering pipeline.
+#' Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scVelo} normalization and filtering pipeline.
 #'
-#' Upon first use, this function will instantiate a conda environment containing the \pkg{scvelo} package.
+#' Upon first use, this function will instantiate a conda environment containing the \pkg{scVelo} package.
+#'
+#' Additional arguments to \pkg{scVelo} functions are provided via the \code{scvelo.params} list.
+#' The arguments for a given function are given as a named list.
+#' The following function names are currently recognized:
+#' \itemize{
+#' \item filter_and_normalize
+#' \item moments
+#' \item recover_dynamics
+#' \item velocity
+#' \item velocity_graph
+#' \item velocity_pseudotime
+#' \item latent_time
+#' \item velocity_confidence
+#' }
+#' For more information about the arguments of these functions, see the \pkg{scVelo} documentation.
 #'
 #' @return
 #' A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
@@ -52,7 +68,7 @@
 #' spliced <- counts(sce1)
 #' unspliced <- counts(sce2)
 #'
-#' out <- scvelo(list(spliced, unspliced))
+#' out <- scvelo(list(spliced, unspliced), use.theirs=TRUE)
 #'
 #' @author Aaron Lun
 #' @name scvelo
@@ -64,7 +80,6 @@ NULL
     sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
-    get.velocities=TRUE,
     scvelo.params=list(), dimred=NULL)
 {
     spliced <- x[[1]]
@@ -78,6 +93,14 @@ NULL
         stop("need raw counts to use the 'scvelo' native pipeline")
     }
 
+    # If use.theirs = FALSE, normalization but no log-transformation
+    # will be applied to spliced and unspliced abundances. However,
+    # if scVelo calculates the PCA it will assume that X (here set to
+    # spliced) is log-transformed
+    if (!use.theirs && is.null(dimred)) {
+        stop("if use.theirs=FALSE, dimred must be supplied")
+    }
+
     if (!use.theirs) {
         if (!norm) {
             spliced <- normalizeCounts(spliced, sf.spliced, log=FALSE)
@@ -89,15 +112,6 @@ NULL
             unspliced <- unspliced[subset.row,,drop=FALSE]
         }
 
-        # Find nearest neighbors
-        if (length(dimred) > 0) {
-            nn <- findKNN(dimred, k=29)$index
-            nn <- cbind(seq_len(nrow(nn)), nn) - 1
-            mode(nn) <- "integer"
-            neighbors <- list(indices=nn, params=list(n_neighbors=30, n_pcs=ncol(dimred)))
-        }
-    } else {
-        neighbors <- NULL
     }
 
     mode <- match.arg(mode)
@@ -105,14 +119,14 @@ NULL
         spliced=spliced, unspliced=unspliced,
         use.theirs=use.theirs, mode=mode,
         scvelo.params=scvelo.params,
-        dimred=dimred, neighbors=neighbors)
+        dimred=dimred)
 
     output
 }
 
 #' @importFrom reticulate import
 #' @importFrom DelayedArray is_sparse t
-.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL, neighbors=NULL) {
+.run_scvelo <- function(spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL) {
     spliced <- t(.make_np_friendly(spliced))
     unspliced <- t(.make_np_friendly(unspliced))
     if (!is.null(dimred)) {
@@ -198,9 +212,10 @@ setMethod("scvelo", "ANY", .scvelo)
 #' @export
 #' @rdname scvelo
 #' @importFrom BiocGenerics sizeFactors
+#' @importFrom SingleCellExperiment reducedDimNames reducedDim
 setMethod("scvelo", "SummarizedExperiment", function(x, ...,
     assay.spliced="counts", assay.unspliced="unspliced",
-    sf.spliced=sizeFactors(x), sf.unspliced=NULL, dimred="PCA")
+    sf.spliced=NULL, sf.unspliced=NULL, dimred="PCA")
 {
     if (!is.null(dimred) && is(x, "SingleCellExperiment") && dimred %in% reducedDimNames(x)) {
         dimred <- reducedDim(x, dimred)
