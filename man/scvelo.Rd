@@ -17,7 +17,8 @@ scvelo(x, ...)
   use.theirs = FALSE,
   mode = c("steady_state", "deterministic", "stochastic", "dynamical"),
   get.velocities = TRUE,
-  scvelo.params = list()
+  scvelo.params = list(),
+  dimred = NULL
 )
 
 \S4method{scvelo}{SummarizedExperiment}(
@@ -26,7 +27,8 @@ scvelo(x, ...)
   assay.spliced = "counts",
   assay.unspliced = "unspliced",
   sf.spliced = sizeFactors(x),
-  sf.unspliced = NULL
+  sf.unspliced = NULL,
+  dimred = "PCA"
 )
 }
 \arguments{
@@ -58,6 +60,8 @@ in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are i
 \item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
 \item{scvelo.params}{List of lists, providing arguments for scVelo functions.}
+
+\item{dimred}{A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.}
 
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
