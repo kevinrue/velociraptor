@@ -13,7 +13,8 @@ Imports:
     S4Vectors,
     DelayedArray,
     basilisk,
-    scuttle
+    scuttle,
+    SingleCellExperiment
 Suggests:
     BiocStyle,
     testthat,
