@@ -4,6 +4,7 @@
 \alias{scvelo}
 \alias{scvelo,ANY-method}
 \alias{scvelo,SummarizedExperiment-method}
+\alias{scvelo,SingleCellExperiment-method}
 \title{RNA velocity calculations with \pkg{scVelo}}
 \usage{
 scvelo(x, ...)
@@ -12,30 +13,48 @@ scvelo(x, ...)
   x,
   subset.row = NULL,
   norm = FALSE,
+  sf.x = NULL,
   sf.spliced = NULL,
   sf.unspliced = NULL,
   use.theirs = FALSE,
   mode = c("steady_state", "deterministic", "stochastic", "dynamical"),
   scvelo.params = list(),
-  dimred = NULL
+  dimred = NULL,
+  ncomponents = 30,
+  BPPARAM = SerialParam(),
+  BSPARAM = bsparam()
 )
 
 \S4method{scvelo}{SummarizedExperiment}(
   x,
   ...,
-  assay.spliced = "counts",
+  assay.x = "counts",
+  assay.spliced = "spliced",
   assay.unspliced = "unspliced",
+  sf.x = sizeFactors(x),
+  sf.spliced = NULL,
+  sf.unspliced = NULL
+)
+
+\S4method{scvelo}{SingleCellExperiment}(
+  x,
+  ...,
+  assay.x = "counts",
+  assay.spliced = "spliced",
+  assay.unspliced = "unspliced",
+  sf.x = sizeFactors(x),
   sf.spliced = NULL,
   sf.unspliced = NULL,
   dimred = "PCA"
 )
 }
 \arguments{
-\item{x}{A list of two matrices of the same dimensions where genes are in rows and cells are in columns.
-The first matrix should contain spliced counts and the second matrix should contain unspliced counts.
-If \code{norm=TRUE}, both matrices should contain normalized expression values instead.
+\item{x}{A list of three matrices of the same dimensions where genes are in rows and cells are in columns.
+The first matrix should contain the counts used for calculating reduced dimension representations and cell-to-cell distances.
+The second matrix should contain spliced counts and the third matrix should contain unspliced counts.
+If \code{norm=TRUE}, all matrices should contain normalized (but not log-transformed) expression values instead.
 
-Alternatively, a \linkS4class{SummarizedExperiment} object containing two such matrices in its assays.}
+Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices in its assays.}
 
 \item{...}{For the generic, further arguments to pass to specific methods.
 For the SummarizedExperiment method, further arguments to pass to the ANY method.}
@@ -45,7 +64,10 @@ Defaults to all genes but is most typically set to a subset of interesting genes
 Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.}
 
 \item{norm}{Logical scalar indicating whether the matrices in \code{x} are already normalized.
-In such cases, \code{sf.spliced} and \code{sf.unspliced} are ignored.}
+In such cases, \code{sf.x}, \code{sf.spliced} and \code{sf.unspliced} are ignored.}
+
+\item{sf.x}{A numeric vector containing size factors for the counts in \code{x} for each cell.
+Defaults to \code{\link{librarySizeFactors}} on the \code{x} count matrix.}
 
 \item{sf.spliced}{A numeric vector containing size factors for the spliced counts for each cell.
 Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
@@ -54,7 +76,7 @@ Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
 Defaults to \code{\link{librarySizeFactors}} on the unspliced matrix.}
 
 \item{use.theirs}{Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used,
-in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.}
+in which case \code{sf.counts}, \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.}
 
 \item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
@@ -62,6 +84,14 @@ in which case \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are i
 
 \item{dimred}{A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.
 Alternatively, if \code{x} is a \linkS4class{SingleCellExperiment}, a character scalar with the name of a reduced dimension representation in \code{x}.}
+
+\item{ncomponents}{Numeric scalar indicating the number of principal components to obtain, if \code{use.theirs} is FALSE and no \code{dimred} is supplied.}
+
+\item{BPPARAM}{A \linkS4class{BiocParallelParam} object specifying whether the PCA calculations should be parallelized.}
+
+\item{BSPARAM}{A \linkS4class{BiocSingularParam} object specifying which algorithm should be used to perform the PCA.}
+
+\item{assay.x}{An integer scalar or string specifying the assay of \code{x} containing the counts that will be used for dimension reduction and distance calculations.}
 
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
@@ -111,9 +141,9 @@ sce2 <- mockSCE()
 spliced <- counts(sce1)
 unspliced <- counts(sce2)
 
-out <- scvelo(list(spliced, unspliced), use.theirs=TRUE)
+out <- scvelo(list(spliced, spliced, unspliced), use.theirs=TRUE)
 
 }
 \author{
-Aaron Lun
+Aaron Lun, Charlotte Soneson
 }
