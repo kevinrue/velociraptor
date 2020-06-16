@@ -12,8 +12,7 @@ scvelo(x, ...)
 \S4method{scvelo}{ANY}(
   x,
   subset.row = NULL,
-  norm = FALSE,
-  sf.x = NULL,
+  sf.X = NULL,
   sf.spliced = NULL,
   sf.unspliced = NULL,
   use.theirs = FALSE,
@@ -28,74 +27,61 @@ scvelo(x, ...)
 \S4method{scvelo}{SummarizedExperiment}(
   x,
   ...,
-  assay.x = "counts",
+  assay.X = "counts",
   assay.spliced = "spliced",
-  assay.unspliced = "unspliced",
-  sf.x = sizeFactors(x),
-  sf.spliced = NULL,
-  sf.unspliced = NULL
+  assay.unspliced = "unspliced"
 )
 
-\S4method{scvelo}{SingleCellExperiment}(
-  x,
-  ...,
-  assay.x = "counts",
-  assay.spliced = "spliced",
-  assay.unspliced = "unspliced",
-  sf.x = sizeFactors(x),
-  sf.spliced = NULL,
-  sf.unspliced = NULL,
-  dimred = "PCA"
-)
+\S4method{scvelo}{SingleCellExperiment}(x, ..., sf.X = sizeFactors(x), dimred = NULL, use.dimred = NULL)
 }
 \arguments{
-\item{x}{A list of three matrices of the same dimensions where genes are in rows and cells are in columns.
-The first matrix should contain the counts used for calculating reduced dimension representations and cell-to-cell distances.
-The second matrix should contain spliced counts and the third matrix should contain unspliced counts.
-If \code{norm=TRUE}, all matrices should contain normalized (but not log-transformed) expression values instead.
+\item{x}{A named list of three matrices of the same dimensions where genes are in rows and cells are in columns.
+The list should contain \code{"spliced"} and \code{"unspliced"} entries containing spliced and unspliced counts, respectively.
+It should also contain an \code{"X"} entry containing the \dQuote{usual} count matrix, see details below.
 
-Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices in its assays.}
+Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices among its assays.}
 
 \item{...}{For the generic, further arguments to pass to specific methods.
-For the SummarizedExperiment method, further arguments to pass to the ANY method.}
+For the SummarizedExperiment and SingleCellExperiment methods, further arguments to pass to the ANY method.}
 
 \item{subset.row}{A character, integer or logical vector specifying the genes to use for the velocity calculations.
-Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
-Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.}
+Defaults to all genes.}
 
-\item{norm}{Logical scalar indicating whether the matrices in \code{x} are already normalized.
-In such cases, \code{sf.x}, \code{sf.spliced} and \code{sf.unspliced} are ignored.}
-
-\item{sf.x}{A numeric vector containing size factors for the counts in \code{x} for each cell.
-Defaults to \code{\link{librarySizeFactors}} on the \code{x} count matrix.}
+\item{sf.X}{A numeric vector containing size factors for usual count matrix.
+Defaults to \code{\link{librarySizeFactors}} on the \code{"X"} matrix in \code{x}.}
 
 \item{sf.spliced}{A numeric vector containing size factors for the spliced counts for each cell.
-Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.}
+Defaults to \code{\link{librarySizeFactors}} on the \code{"spliced"} matrix in \code{x}.}
 
 \item{sf.unspliced}{A numeric vector containing size factors for the unspliced counts for each cell.
-Defaults to \code{\link{librarySizeFactors}} on the unspliced matrix.}
+Defaults to \code{\link{librarySizeFactors}} on the \code{"unspliced"} matrix in \code{x}.}
 
-\item{use.theirs}{Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used,
-in which case \code{sf.counts}, \code{sf.spliced}, \code{sf.unspliced} and \code{subset.row} are ignored.}
+\item{use.theirs}{Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used.}
 
 \item{mode}{String specifying the method to use to estimate the transcriptional dynamics.}
 
-\item{scvelo.params}{List of lists, providing arguments for scVelo functions.}
+\item{scvelo.params}{List of lists containing arguments for individual \pkg{scVelo} functions, see details below.}
 
-\item{dimred}{A low-dimensional representation of the cells (N x k matrix, where N is the number of cells) that will be used to find the nearest neighbors for the moment calculations.
-Alternatively, if \code{x} is a \linkS4class{SingleCellExperiment}, a character scalar with the name of a reduced dimension representation in \code{x}.}
+\item{dimred}{A low-dimensional representation of the cells with number of rows equal to the number of cells in \code{x},
+used to find the nearest neighbors.}
 
-\item{ncomponents}{Numeric scalar indicating the number of principal components to obtain, if \code{use.theirs} is FALSE and no \code{dimred} is supplied.}
+\item{ncomponents}{Numeric scalar indicating the number of principal components to obtain. 
+Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.}
 
-\item{BPPARAM}{A \linkS4class{BiocParallelParam} object specifying whether the PCA calculations should be parallelized.}
+\item{BPPARAM}{A \linkS4class{BiocParallelParam} object specifying whether the PCA calculations should be parallelized.
+Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.}
 
-\item{BSPARAM}{A \linkS4class{BiocSingularParam} object specifying which algorithm should be used to perform the PCA.}
+\item{BSPARAM}{A \linkS4class{BiocSingularParam} object specifying which algorithm should be used to perform the PCA.
+Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.}
 
-\item{assay.x}{An integer scalar or string specifying the assay of \code{x} containing the counts that will be used for dimension reduction and distance calculations.}
+\item{assay.X}{An integer scalar or string specifying the assay of \code{x} containing the usual count matrix.}
 
 \item{assay.spliced}{An integer scalar or string specifying the assay of \code{x} containing the spliced counts.}
 
 \item{assay.unspliced}{An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.}
+
+\item{use.dimred}{String naming the entry of \code{\link{reducedDims}(x)} to use for nearest neighbor calculations.
+Ignored if \code{dimred} is supplied.}
 }
 \value{
 A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
@@ -105,33 +91,70 @@ TODO: SOME DOCUMENTATION REQUIRED.
 Perform RNA velocity calculations with the \pkg{scVelo} package.
 }
 \details{
-This function uses the \pkg{scVelo} package (\url{https://pypi.org/project/scvelo/}) to perform RNA velocity calculations.
-The main difference from \pkg{velocyto} is that the dynamical model of \pkg{scVelo} does not rely on the presence of observed steady state populations,
+This function uses the \pkg{scVelo} Python package (\url{https://pypi.org/project/scvelo/}) for RNA velocity calculations.
+The main difference from the original \pkg{velocyto} approach is that the dynamical model of \pkg{scVelo} 
+does not rely on the presence of observed steady state populations,
 which may improve the reliability of the velocity calculations in general applications.
 
-For consistency with other Bioconductor packages, we perform scaling normalization and subsetting
+For consistency with other Bioconductor workflows, we perform as many standard steps in R as we can
 before starting the velocity calculations with \pkg{scVelo}.
-This allows us to guarantee that, e.g., the spliced log-expression matrix of HVGs is the same as that used in other
-applications like clustering or trajectory reconstruction.
+This involves:
+\enumerate{
+\item Size factor-based normalization with \code{sf.*} values and \code{\link{normalizeCounts}}.
+For \code{"X"}, log-transformation is performed as well, while for the others, only scaling normalization is performed.
+\item Subsetting all matrices to \code{subset.row}, most typically to a subset of interest, e.g., highly variable genes.
+Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
+\item If \code{dimred=NULL}, the PCA step on the log-expression values derived from the \code{"X"} matrix,
+using the specified \code{BSPARAM} to obtain the first \code{ncomponents} PCs.
+}
+This allows us to guarantee that, for example, the log-expression matrix of HVGs or the PCA coordinates
+are the same as that used in other applications like clustering or trajectory reconstruction.
+
 Nonetheless, one can set \code{use.theirs=TRUE} to directly use the entire \pkg{scVelo} normalization and filtering pipeline.
+This ignores all of the size factors arguments (\code{sf.*}),
+all of the PCA-related arguments (\code{ncomponents}, \code{BSPARAM}) and \code{subset.row}.
+However, if a low-dimensionality result is supplied via \code{dimred} or \code{use.dimred},
+the \pkg{scVelo} PCA will always be omitted.
 
 Upon first use, this function will instantiate a conda environment containing the \pkg{scVelo} package.
+This is done via the \pkg{basilisk} package - see the documentation for that package for trouble-shooting.
+}
+\section{Comments on the three matrices}{
 
-Additional arguments to \pkg{scVelo} functions are provided via the \code{scvelo.params} list.
-The arguments for a given function are given as a named list.
+It is worth commenting on the use of three separate matrices.
+Strictly speaking, only the spliced and unspliced matrices are necessary for the velocity calculations.
+However, it is often the case that the spliced matrix is not actually the same as a \dQuote{usual} count matrix
+(e.g., generated by summing counts across all exons for all mapped genes).
+This is due to differences in how ambiguous reads mapping across exon-intron boundaries are handled -
+quantification of spliced/unspliced counts tends to be more conservative.
+
+We request the usual count matrix as the first entry of \code{x} to ensure that 
+the PCA and nearest neighbor detection in \pkg{scVelo} are done on the same data 
+as that used in other steps of the large analysis (e.g., clustering, visualization, trajectory reconstruction).
+In practice, if the usual count matrix is not available, one can often achieve satisfactory results 
+by simply re-using the spliced count matrix as both the first and second entries of \code{x}.
+}
+
+\section{Additional arguments to Python}{
+
+Additional arguments to \pkg{scVelo} functions are provided via \code{scvelo.params}.
+This is a named list where each entry is named after a function and is itself a named list of arguments for that function.
 The following function names are currently recognized:
 \itemize{
-\item filter_and_normalize
-\item moments
-\item recover_dynamics
-\item velocity
-\item velocity_graph
-\item velocity_pseudotime
-\item latent_time
-\item velocity_confidence
+\item \code{"filter_and_normalize"}, for gene selection and normalization.
+This is not used unless \code{use.theirs=TRUE}.
+\item \code{"moments"}, for PCA and nearest neighbor detection.
+The PCA is not performed if \code{dimred} or \code{use.dimred} is already supplied.
+\item \code{"recover_dynamics"}
+\item \code{"velocity"}
+\item \code{"velocity_graph"}
+\item \code{"velocity_pseudotime"}
+\item \code{"latent_time"}
+\item \code{"velocity_confidence"}
 }
-For more information about the arguments of these functions, see the \pkg{scVelo} documentation.
+See the \pkg{scVelo} documentation for more details about the available arguments.
 }
+
 \examples{
 # Using mock data to demonstrate the process:
 library(scuttle)
@@ -141,8 +164,13 @@ sce2 <- mockSCE()
 spliced <- counts(sce1)
 unspliced <- counts(sce2)
 
-out <- scvelo(list(spliced, spliced, unspliced), use.theirs=TRUE)
+out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 
+}
+\references{
+Bergen V. et al. (2019).
+Generalizing RNA velocity to transient cell states through dynamical modeling.
+bioxRiv, \url{https://www.biorxiv.org/content/10.1101/820936v1}
 }
 \author{
 Aaron Lun, Charlotte Soneson
