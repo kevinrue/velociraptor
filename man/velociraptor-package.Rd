@@ -22,6 +22,7 @@ Useful links:
 Authors:
 \itemize{
   \item Aaron Lun \email{infinite.monkeys.with.keyboards@gmail.com} (\href{https://orcid.org/0000-0002-3564-4813}{ORCID})
+  \item Charlotte Soneson \email{charlottesoneson@gmail.com} (\href{https://orcid.org/0000-0003-3833-2169}{ORCID})
 }
 
 }
