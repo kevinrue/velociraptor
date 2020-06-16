@@ -26,11 +26,14 @@
 #' @param scvelo.params List of lists, providing arguments for scVelo functions.
 #' @param dimred A low-dimensional representation of the cells with number of rows equal to the number of cells in \code{x},
 #' used to find the nearest neighbors.
-#' @param use.dimred String naming a reduced dimension representation to use for nearest neighbor calculations.
-#' @param ncomponents Numeric scalar indicating the number of principal components to obtain, 
-#' if \code{use.theirs} is FALSE and no \code{dimred} is supplied.
+#' @param use.dimred String naming the entry of \code{\link{reducedDims}(x)} to use for nearest neighbor calculations.
+#' Ignored if \code{dimred} is supplied.
+#' @param ncomponents Numeric scalar indicating the number of principal components to obtain. 
+#' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
 #' @param BSPARAM A \linkS4class{BiocSingularParam} object specifying which algorithm should be used to perform the PCA.
+#' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
 #' @param BPPARAM A \linkS4class{BiocParallelParam} object specifying whether the PCA calculations should be parallelized.
+#' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
 #'
 #' @details
 #' This function uses the \pkg{scVelo} Python package (\url{https://pypi.org/project/scvelo/}) for RNA velocity calculations.
@@ -38,8 +41,10 @@
 #' does not rely on the presence of observed steady state populations,
 #' which may improve the reliability of the velocity calculations in general applications.
 #'
-#' For consistency with other Bioconductor workflows, we perform scaling normalization and subsetting in R
+#' For consistency with other Bioconductor workflows, we perform as many standard steps in R as we can
 #' before starting the velocity calculations with \pkg{scVelo}.
+#' This involves size factor-based normalization with \code{sf.*} values, subsetting all matrices to \code{subset.row},
+#' and if \code{dimred=NULL}, the PCA step for the first \code{ncomponents} PCs with \code{BSPARAM}.
 #' This allows us to guarantee that, for example, the log-expression matrix of HVGs or the PCA coordinates
 #' are the same as that used in other applications like clustering or trajectory reconstruction.
 #' 
@@ -236,27 +241,18 @@ setMethod("scvelo", "ANY", .scvelo)
 #' @rdname scvelo
 #' @importFrom BiocGenerics sizeFactors
 setMethod("scvelo", "SummarizedExperiment", function(x, ...,
-    assay.x="counts", assay.spliced="spliced", assay.unspliced="unspliced",
-    sf.x=sizeFactors(x), sf.spliced=NULL, sf.unspliced=NULL)
+    assay.x="counts", assay.spliced="spliced", assay.unspliced="unspliced")
 {
-    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), 
-        ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced)
+    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), ...)
 })
 
 #' @export
 #' @rdname scvelo
 #' @importFrom BiocGenerics sizeFactors
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
-setMethod("scvelo", "SingleCellExperiment", function(x, ...,
-    assay.x="counts", assay.spliced="spliced", assay.unspliced="unspliced",
-    sf.x=sizeFactors(x), sf.spliced=NULL, sf.unspliced=NULL, use.dimred=NULL) 
-{
-    if (!is.null(use.dimred)) {
+setMethod("scvelo", "SingleCellExperiment", function(x, ..., sf.x=sizeFactors(x), dimred=NULL, use.dimred=NULL) {
+    if (is.null(dimred)) {
         dimred <- reducedDim(x, use.dimred)
-    } else {
-        dimred <- NULL
     }
-
-    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), 
-           ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=dimred)
+    callNextMethod(x, ..., sf.x=sf.x, dimred=dimred)
 })
