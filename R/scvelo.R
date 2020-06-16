@@ -19,8 +19,7 @@
 #' @param sf.unspliced A numeric vector containing size factors for the unspliced counts for each cell.
 #' Defaults to \code{\link{librarySizeFactors}} on the \code{"unspliced"} matrix in \code{x}.
 #' @param subset.row A character, integer or logical vector specifying the genes to use for the velocity calculations.
-#' Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
-#' Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
+#' Defaults to all genes.
 #' @param use.theirs Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used.
 #' @param mode String specifying the method to use to estimate the transcriptional dynamics.
 #' @param scvelo.params List of lists containing arguments for individual \pkg{scVelo} functions, see details below.
@@ -43,8 +42,15 @@
 #'
 #' For consistency with other Bioconductor workflows, we perform as many standard steps in R as we can
 #' before starting the velocity calculations with \pkg{scVelo}.
-#' This involves size factor-based normalization with \code{sf.*} values, subsetting all matrices to \code{subset.row},
-#' and if \code{dimred=NULL}, the PCA step for the first \code{ncomponents} PCs with \code{BSPARAM}.
+#' This involves:
+#' \enumerate{
+#' \item Size factor-based normalization with \code{sf.*} values and \code{\link{normalizeCounts}}.
+#' For \code{"X"}, log-transformation is performed as well, while for the others, only scaling normalization is performed.
+#' \item Subsetting all matrices to \code{subset.row}, most typically to a subset of interest, e.g., highly variable genes.
+#' Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
+#' \item If \code{dimred=NULL}, the PCA step on the log-expression values derived from the \code{"X"} matrix,
+#' using the specified \code{BSPARAM} to obtain the first \code{ncomponents} PCs.
+#' }
 #' This allows us to guarantee that, for example, the log-expression matrix of HVGs or the PCA coordinates
 #' are the same as that used in other applications like clustering or trajectory reconstruction.
 #' 
@@ -102,7 +108,7 @@
 #' spliced <- counts(sce1)
 #' unspliced <- counts(sce2)
 #'
-#' out <- scvelo(list(spliced, spliced, unspliced), use.theirs=TRUE)
+#' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 #'
 #' @references
 #' Bergen V. et al. (2019).
@@ -128,8 +134,9 @@ NULL
     spliced <- x$spliced
     unspliced <- x$unspliced
     X <- x$X
-    if (!all(identical(as.integer(dim(spliced)), as.integer(dim(unspliced))),
-             identical(as.integer(dim(spliced)), as.integer(dim(X))))) {
+
+    refdim <- as.integer(dim(spliced))
+    if (!identical(refdim, as.integer(dim(unspliced))) || !identical(refdim, as.integer(dim(X)))) {
         stop("matrices in 'x' must have the same dimensions")
     }
 
@@ -145,7 +152,7 @@ NULL
         }
 
         if (is.null(dimred)) {
-            dimred <- BiocSingular::runPCA(t(X), rank=ncomponents, BSPARAM=BSPARAM, BPPARAM=BPPARAM)
+            dimred <- runPCA(t(X), rank=ncomponents, BSPARAM=BSPARAM, BPPARAM=BPPARAM)$x
         }
     }
 
