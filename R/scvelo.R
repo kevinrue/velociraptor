@@ -5,7 +5,6 @@
 #' @param x A list of three matrices of the same dimensions where genes are in rows and cells are in columns.
 #' The first matrix should contain the counts used for calculating reduced dimension representations and cell-to-cell distances.
 #' The second matrix should contain spliced counts and the third matrix should contain unspliced counts.
-#' If \code{norm=TRUE}, all matrices should contain normalized (but not log-transformed) expression values instead.
 #'
 #' Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices among its assays.
 #' @param ... For the generic, further arguments to pass to specific methods.
@@ -13,8 +12,6 @@
 #' @param assay.x An integer scalar or string specifying the assay of \code{x} containing the counts that will be used for dimension reduction and distance calculations.
 #' @param assay.spliced An integer scalar or string specifying the assay of \code{x} containing the spliced counts.
 #' @param assay.unspliced An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.
-#' @param norm Logical scalar indicating whether the matrices in \code{x} are already normalized.
-#' In such cases, \code{sf.x}, \code{sf.spliced} and \code{sf.unspliced} are ignored.
 #' @param sf.x A numeric vector containing size factors for the counts in \code{x} for each cell.
 #' Defaults to \code{\link{librarySizeFactors}} on the \code{x} count matrix.
 #' @param sf.spliced A numeric vector containing size factors for the spliced counts for each cell.
@@ -83,9 +80,10 @@ NULL
 
 #' @importFrom S4Vectors DataFrame
 #' @importFrom scuttle normalizeCounts
-#' @importFrom BiocSingular bsparam
+#' @importFrom BiocSingular bsparam runPCA
 #' @importFrom BiocParallel SerialParam
-.scvelo <- function(x, subset.row=NULL, norm=FALSE,
+#' @importFrom Matrix t
+.scvelo <- function(x, subset.row=NULL, 
     sf.x=NULL, sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
@@ -100,19 +98,10 @@ NULL
         stop("matrices in 'x' must have the same dimensions")
     }
 
-    # Can't be bothered figuring this out.
-    if (norm && use.theirs) {
-        stop("need raw counts to use the 'scvelo' native pipeline")
-    }
-
     if (!use.theirs) {
-        if (!norm) {
-            x <- normalizeCounts(x, sf.x, log=TRUE)
-            spliced <- normalizeCounts(spliced, sf.spliced, log=FALSE)
-            unspliced <- normalizeCounts(unspliced, sf.unspliced, log=FALSE)
-        } else {
-            x <- log2(x + 1)
-        }
+        x <- normalizeCounts(x, sf.x, log=TRUE)
+        spliced <- normalizeCounts(spliced, sf.spliced, log=FALSE)
+        unspliced <- normalizeCounts(unspliced, sf.unspliced, log=FALSE)
 
         if (!is.null(subset.row)) {
             x <- x[subset.row,,drop=FALSE]
@@ -121,10 +110,8 @@ NULL
         }
 
         if (is.null(dimred)) {
-            dimred <- BiocSingular::runPCA(t(x), rank=ncomponents,
-                                           BSPARAM=BSPARAM, BPPARAM=BPPARAM)
+            dimred <- BiocSingular::runPCA(t(x), rank=ncomponents, BSPARAM=BSPARAM, BPPARAM=BPPARAM)
         }
-
     }
 
     mode <- match.arg(mode)
@@ -233,7 +220,8 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
     assay.x="counts", assay.spliced="spliced", assay.unspliced="unspliced",
     sf.x=sizeFactors(x), sf.spliced=NULL, sf.unspliced=NULL)
 {
-    scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=NULL)
+    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), 
+        ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=NULL)
 })
 
 #' @export
@@ -250,5 +238,6 @@ setMethod("scvelo", "SingleCellExperiment", function(x, ...,
         dimred <- NULL
     }
 
-    scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=dimred)
+    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), 
+           ..., sf.x=sf.x, sf.spliced=sf.spliced, sf.unspliced=sf.unspliced, dimred=dimred)
 })
