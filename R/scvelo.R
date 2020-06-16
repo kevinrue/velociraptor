@@ -2,28 +2,28 @@
 #'
 #' Perform RNA velocity calculations with the \pkg{scVelo} package.
 #'
-#' @param x A list of three matrices of the same dimensions where genes are in rows and cells are in columns.
-#' The first matrix should contain the counts used for calculating reduced dimension representations and cell-to-cell distances.
-#' The second matrix should contain spliced counts and the third matrix should contain unspliced counts.
+#' @param x A named list of three matrices of the same dimensions where genes are in rows and cells are in columns.
+#' The list should contain \code{"spliced"} and \code{"unspliced"} entries containing spliced and unspliced counts, respectively.
+#' It should also contain an \code{"X"} entry containing the \dQuote{usual} count matrix, see details below.
 #'
 #' Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices among its assays.
 #' @param ... For the generic, further arguments to pass to specific methods.
 #' For the SummarizedExperiment and SingleCellExperiment methods, further arguments to pass to the ANY method.
-#' @param assay.x An integer scalar or string specifying the assay of \code{x} containing the counts that will be used for dimension reduction and distance calculations.
+#' @param assay.X An integer scalar or string specifying the assay of \code{x} containing the usual count matrix.
 #' @param assay.spliced An integer scalar or string specifying the assay of \code{x} containing the spliced counts.
 #' @param assay.unspliced An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.
-#' @param sf.x A numeric vector containing size factors for the counts in \code{x} for each cell.
-#' Defaults to \code{\link{librarySizeFactors}} on the \code{x} count matrix.
+#' @param sf.X A numeric vector containing size factors for usual count matrix.
+#' Defaults to \code{\link{librarySizeFactors}} on the \code{"X"} matrix in \code{x}.
 #' @param sf.spliced A numeric vector containing size factors for the spliced counts for each cell.
-#' Defaults to \code{\link{librarySizeFactors}} on the spliced matrix.
+#' Defaults to \code{\link{librarySizeFactors}} on the \code{"spliced"} matrix in \code{x}.
 #' @param sf.unspliced A numeric vector containing size factors for the unspliced counts for each cell.
-#' Defaults to \code{\link{librarySizeFactors}} on the unspliced matrix.
+#' Defaults to \code{\link{librarySizeFactors}} on the \code{"unspliced"} matrix in \code{x}.
 #' @param subset.row A character, integer or logical vector specifying the genes to use for the velocity calculations.
 #' Defaults to all genes but is most typically set to a subset of interesting genes, e.g., highly variable genes.
 #' Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
 #' @param use.theirs Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used.
 #' @param mode String specifying the method to use to estimate the transcriptional dynamics.
-#' @param scvelo.params List of lists, providing arguments for scVelo functions.
+#' @param scvelo.params List of lists containing arguments for individual \pkg{scVelo} functions, see details below.
 #' @param dimred A low-dimensional representation of the cells with number of rows equal to the number of cells in \code{x},
 #' used to find the nearest neighbors.
 #' @param use.dimred String naming the entry of \code{\link{reducedDims}(x)} to use for nearest neighbor calculations.
@@ -119,39 +119,39 @@ NULL
 #' @importFrom BiocParallel SerialParam
 #' @importFrom Matrix t
 .scvelo <- function(x, subset.row=NULL, 
-    sf.x=NULL, sf.spliced=NULL, sf.unspliced=NULL,
+    sf.X=NULL, sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,
     mode=c('steady_state', 'deterministic', 'stochastic', 'dynamical'),
     scvelo.params=list(), dimred=NULL, ncomponents=30, BPPARAM=SerialParam(),
     BSPARAM=bsparam())
 {
-    spliced <- x[[2]]
-    unspliced <- x[[3]]
-    x <- x[[1]]
+    spliced <- x$spliced
+    unspliced <- x$unspliced
+    X <- x$X
     if (!all(identical(as.integer(dim(spliced)), as.integer(dim(unspliced))),
-             identical(as.integer(dim(spliced)), as.integer(dim(x))))) {
+             identical(as.integer(dim(spliced)), as.integer(dim(X))))) {
         stop("matrices in 'x' must have the same dimensions")
     }
 
     if (!use.theirs) {
-        x <- normalizeCounts(x, sf.x, log=TRUE)
+        X <- normalizeCounts(X, sf.X, log=TRUE)
         spliced <- normalizeCounts(spliced, sf.spliced, log=FALSE)
         unspliced <- normalizeCounts(unspliced, sf.unspliced, log=FALSE)
 
         if (!is.null(subset.row)) {
-            x <- x[subset.row,,drop=FALSE]
+            X <- X[subset.row,,drop=FALSE]
             spliced <- spliced[subset.row,,drop=FALSE]
             unspliced <- unspliced[subset.row,,drop=FALSE]
         }
 
         if (is.null(dimred)) {
-            dimred <- BiocSingular::runPCA(t(x), rank=ncomponents, BSPARAM=BSPARAM, BPPARAM=BPPARAM)
+            dimred <- BiocSingular::runPCA(t(X), rank=ncomponents, BSPARAM=BSPARAM, BPPARAM=BPPARAM)
         }
     }
 
     mode <- match.arg(mode)
     output <- basiliskRun(env=velo.env, fun=.run_scvelo,
-        x=x, spliced=spliced, unspliced=unspliced,
+        X=X, spliced=spliced, unspliced=unspliced,
         use.theirs=use.theirs, mode=mode,
         scvelo.params=scvelo.params,
         dimred=dimred)
@@ -161,14 +161,14 @@ NULL
 
 #' @importFrom reticulate import
 #' @importFrom DelayedArray is_sparse t
-.run_scvelo <- function(x, spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL) {
-    x <- t(.make_np_friendly(x))
+.run_scvelo <- function(X, spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL) {
+    X <- t(.make_np_friendly(X))
     spliced <- t(.make_np_friendly(spliced))
     unspliced <- t(.make_np_friendly(unspliced))
 
     and <- import("anndata")
     scv <- import("scvelo")
-    adata <- and$AnnData(x, layers=list(spliced=spliced, unspliced=unspliced))
+    adata <- and$AnnData(X, layers=list(spliced=spliced, unspliced=unspliced))
     adata$obs_names <- rownames(spliced)
     adata$var_names <- colnames(spliced)
 
@@ -241,18 +241,18 @@ setMethod("scvelo", "ANY", .scvelo)
 #' @rdname scvelo
 #' @importFrom BiocGenerics sizeFactors
 setMethod("scvelo", "SummarizedExperiment", function(x, ...,
-    assay.x="counts", assay.spliced="spliced", assay.unspliced="unspliced")
+    assay.X="counts", assay.spliced="spliced", assay.unspliced="unspliced")
 {
-    .scvelo(list(assay(x, assay.x), assay(x, assay.spliced), assay(x, assay.unspliced)), ...)
+    .scvelo(list(X=assay(x, assay.X), spliced=assay(x, assay.spliced), unspliced=assay(x, assay.unspliced)), ...)
 })
 
 #' @export
 #' @rdname scvelo
 #' @importFrom BiocGenerics sizeFactors
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
-setMethod("scvelo", "SingleCellExperiment", function(x, ..., sf.x=sizeFactors(x), dimred=NULL, use.dimred=NULL) {
+setMethod("scvelo", "SingleCellExperiment", function(x, ..., sf.X=sizeFactors(x), dimred=NULL, use.dimred=NULL) {
     if (is.null(dimred)) {
         dimred <- reducedDim(x, use.dimred)
     }
-    callNextMethod(x, ..., sf.x=sf.x, dimred=dimred)
+    callNextMethod(x, ..., sf.X=sf.X, dimred=dimred)
 })
