@@ -1,7 +1,7 @@
 on:
   push:
-  #  branches:
-  #    - master
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
     steps:
+      # Source: https://github.com/lcolladotor/derfinder/blob/master/.github/workflows/check-bioc.yml#L117
       - name: Install latest git
         run: |
           ## git version provided
@@ -73,28 +74,28 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
-      #- name: Publish to Registry
-      #  if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-      #  uses: elgohr/Publish-Docker-Github-Action@master
-      #  with:
-      #    name: docker.pkg.github.com/${{ github.repository }}/master:latest
-      #    username: ${{ github.actor }}
-      #    password: ${{ secrets.GITHUB_TOKEN }}
-      #    registry: docker.pkg.github.com
+      - name: Publish to Registry
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: docker.pkg.github.com/${{ github.repository }}/master:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
 
       - name: Build pkgdown
-        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
            PATH=$PATH:$HOME/bin/ Rscript -e 'BiocManager::install("pkgdown"); pkgdown::build_site(".")'
 
       # deploy needs rsync? Seems so.
       - name: Install deploy dependencies
-        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           apt-get update && apt-get -y install rsync
 
       - name: Deploy 🚀
-        #if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
