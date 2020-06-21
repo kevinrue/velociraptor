@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        with:
+          persist-credentials: false
 
       - name: Query dependencies
         run: |
@@ -51,14 +54,14 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
-      - name: Publish to Registry
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        uses: elgohr/Publish-Docker-Github-Action@master
-        with:
-          name: docker.pkg.github.com/${{ github.repository }}/master:latest
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
+      #- name: Publish to Registry
+      #  if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+      #  uses: elgohr/Publish-Docker-Github-Action@master
+      #  with:
+      #    name: docker.pkg.github.com/${{ github.repository }}/master:latest
+      #    username: ${{ github.actor }}
+      #    password: ${{ secrets.GITHUB_TOKEN }}
+      #    registry: docker.pkg.github.com
 
       - name: Build pkgdown
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
