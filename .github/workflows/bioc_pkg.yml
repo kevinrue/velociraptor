@@ -13,7 +13,6 @@ jobs:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
     steps:
-    steps:
       - name: Install latest git
         run: |
           ## git version provided
