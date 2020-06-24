@@ -23,7 +23,8 @@ Suggests:
     BiocStyle,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    LoomExperiment
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
