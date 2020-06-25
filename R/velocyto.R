@@ -1,6 +1,6 @@
-#' Velocity calculations with \pkg{velocyto}
+#' RNA velocity with \pkg{velocyto}
 #'
-#' Performs RNA velocity calculations using the original implementation
+#' Perform RNA velocity calculations using the original implementation
 #' of the steady-state model by La Manno et al. (2018).
 #'
 #' @param x A list of count matrices of the same dimensions, with genes in rows and cells in samples.
@@ -56,14 +56,24 @@
 #' This is done via the \pkg{basilisk} package - see the documentation for that package for trouble-shooting.
 #'
 #' @return
-#' A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
-#' TODO: SOME DOCUMENTATION REQUIRED.
+#' A \linkS4class{SummarizedExperiment} is returned where each column corresponds to a cell in \code{x}.
+#' Each row corresponds to a feature after subsetting if \code{subset.row} is provided;
+#' or after feature selection within \pkg{velocyto} if \code{use.theirs=TRUE}.
+#' This object contains the following assays:
+#' \itemize{
+#' \item \code{velocity}, a matrix containing per-cell velocity vectors in each dimension.
+#' \item \code{extrapolated}, a matrix containing the predicted location of each cell along its velocity vector.
+#' }
 #'
 #' @references
 #' La Manno G, Soldatov R, Zeisel A et al. (2018).
 #' RNA velocity of single cells.
 #' \emph{Nature} 560, 494-498
 #'
+#' @seealso
+#' \code{\link{scvelo}} with \code{mode="steady-state"},
+#' which provides an alternative implementation of steady-state model.
+#' 
 #' @examples
 #' # Using mock data to demonstrate the process:
 #' library(scuttle)
