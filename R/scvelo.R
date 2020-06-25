@@ -1,4 +1,4 @@
-#' RNA velocity calculations with \pkg{scVelo}
+#' RNA velocity with \pkg{scVelo}
 #'
 #' Perform RNA velocity calculations with the \pkg{scVelo} package.
 #'
@@ -37,8 +37,8 @@
 #' @details
 #' This function uses the \pkg{scVelo} Python package (\url{https://pypi.org/project/scvelo/}) for RNA velocity calculations.
 #' The main difference from the original \pkg{velocyto} approach is that the dynamical model of \pkg{scVelo}
-#' does not rely on the presence of observed steady state populations,
-#' which may improve the reliability of the velocity calculations in general applications.
+#' does not rely on the presence of observed steady-state populations,
+#' which should improve the reliability of the velocity calculations in general applications.
 #'
 #' For consistency with other Bioconductor workflows, we perform as many standard steps in R as we can
 #' before starting the velocity calculations with \pkg{scVelo}.
@@ -77,6 +77,9 @@
 #' In practice, if the usual count matrix is not available, one can often achieve satisfactory results
 #' by simply re-using the spliced count matrix as both the \code{"X"} and \code{"spliced"} entries of \code{x}.
 #'
+#' Note that if reduced dimensions are supplied in \code{dimred},
+#' any \code{"X"} entry is only used to create the AnnData object and is not used in any actual calculations.
+#'
 #' @section Additional arguments to Python:
 #' Additional arguments to \pkg{scVelo} functions are provided via \code{scvelo.params}.
 #' This is a named list where each entry is named after a function and is itself a named list of arguments for that function.
@@ -96,8 +99,17 @@
 #' See the \pkg{scVelo} documentation for more details about the available arguments.
 #'
 #' @return
-#' A \linkS4class{SummarizedExperiment} is returned containing the output of the velocity calculations.
-#' TODO: SOME DOCUMENTATION REQUIRED.
+#' A \linkS4class{SingleCellExperiment} is returned containing the output of the velocity calculations.
+#' Of particular interest are:
+#' \itemize{
+#' \item the \code{velocity_pseudotime} field in the \code{\link{colData}},
+#' containing the velocity pseudotime for each cell.
+#' \item the \code{velocity} entry of the \code{\link{assays}},
+#' containing the velocity vectors for each cell.
+#' }
+#' The output will always have number of columns equal to the number of cells supplied in \code{x},
+#' though the number of rows will depend on whether any subsetting (if \code{subset.row} is supplied) 
+#' or feature selection (if \code{use.theirs=TRUE}) was performed.
 #'
 #' @examples
 #' # Using mock data to demonstrate the process:
@@ -168,6 +180,7 @@ NULL
 
 #' @importFrom reticulate import
 #' @importFrom DelayedArray is_sparse t
+#' @importFrom zellkonverter AnnData2SCE
 .run_scvelo <- function(X, spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL) {
     X <- t(.make_np_friendly(X))
     spliced <- t(.make_np_friendly(spliced))
@@ -208,32 +221,7 @@ NULL
 
     do.call(scv$tl$velocity_confidence, c(list(data=adata), scvelo.params$velocity_confidence))
 
-    .scvelo_anndata2sce(adata)
-}
-
-#' @importFrom S4Vectors make_zero_col_DFrame
-.scvelo_anndata2sce <- function(adata) {
-    assays <- .extractor_python_dict(adata$layers, c("Mu", "Ms", "velocity"), single=TRUE, transpose=TRUE)
-    coldata <- .extractor_python_dict(adata$obs, names(adata$obs))
-    rowdata <- .extractor_python_dict(adata$var, names(adata$var))
-    metadata <- .extractor_python_dict(adata$uns, c('velocity_params', 'velocity_graph', 'velocity_graph_neg'), single=TRUE)
-
-    if (!is.null(rowdata)) {
-        rowdata <- do.call(DataFrame, rowdata)
-    } else {
-        rowdata <- make_zero_col_DFrame(nrow(assays[[1]]))
-        rownames(rowdata) <- rownames(assays[[1]])
-    }
-
-    if (!is.null(coldata)) {
-        coldata <- do.call(DataFrame, coldata)
-    } else {
-        coldata <- make_zero_col_DFrame(ncol(assays[[1]]))
-        rownames(coldata) <- colnames(assays[[1]])
-    }
-
-    SummarizedExperiment(assays, colData=coldata, rowData=rowdata,
-        metadata=metadata)
+    AnnData2SCE(adata)
 }
 
 #' @export

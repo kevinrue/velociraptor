@@ -15,6 +15,7 @@ Imports:
     S4Vectors,
     DelayedArray,
     basilisk,
+    zellkonverter,
     scuttle,
     SingleCellExperiment,
     BiocParallel,
