@@ -247,7 +247,9 @@ setMethod("scvelo", "SummarizedExperiment", function(x, ...,
 #' @importFrom SingleCellExperiment reducedDimNames reducedDim
 setMethod("scvelo", "SingleCellExperiment", function(x, ..., sf.X=sizeFactors(x), dimred=NULL, use.dimred=NULL) {
     if (is.null(dimred)) {
-        dimred <- reducedDim(x, use.dimred)
+        if (!is.null(use.dimred)) {
+            dimred <- reducedDim(x, use.dimred)
+        }
     }
     callNextMethod(x, ..., sf.X=sf.X, dimred=dimred)
 })
