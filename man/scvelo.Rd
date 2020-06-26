@@ -92,7 +92,7 @@ containing the velocity pseudotime for each cell.
 \item the \code{velocity} entry of the \code{\link{assays}},
 containing the velocity vectors for each cell.
 }
-This will always have number of columns equal to the number of cells supplied in \code{x},
+The output will always have number of columns equal to the number of cells supplied in \code{x},
 though the number of rows will depend on whether any subsetting (if \code{subset.row} is supplied) 
 or feature selection (if \code{use.theirs=TRUE}) was performed.
 }
