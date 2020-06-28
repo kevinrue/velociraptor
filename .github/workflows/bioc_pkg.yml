@@ -1,56 +1,28 @@
 on:
   push:
-    branches:
-      - master
+  #  branches:
+  #    - master
   pull_request:
     branches:
       - master
 
-name: build-check-deploy
+name: build_check_deploy
 
 jobs:
   build_check_deploy:
     runs-on: ubuntu-latest
     container: bioconductor/bioconductor_docker:devel
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
     steps:
-      # Source: https://github.com/lcolladotor/derfinder/blob/master/.github/workflows/check-bioc.yml#L117
-      - name: Install latest git
-        run: |
-          ## git version provided
-          git --version
-          ## to be able to install software properties
-          sudo apt-get update -y
-          ## to be able to use add-apt-repository
-          sudo apt-get install software-properties-common -y
-          ## to use stable releases of git that are already in a PPA at
-          ## https://launchpad.net/~git-core/+archive/ubuntu/candidate
-          sudo add-apt-repository ppa:git-core/candidate -y
-          ## Update
-          sudo apt-get update -y
-          ## Upgrade git and other tools
-          sudo apt-get upgrade -y
-          ## latest git version
-          git --version
-        shell: bash {0}
-
       - name: Checkout
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v1
 
       - name: Query dependencies
         run: |
           install.packages('remotes')
           saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
         shell: Rscript {0}
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
-        with:
-          path: /usr/local/lib/R/site-library
-          key: ${{ runner.os }}-r-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-r-1-
 
       # This lets us augment with additional dependencies
       - name: Install system dependencies
@@ -61,10 +33,10 @@ jobs:
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
+          sudo apt-get install -y libglpk-dev
 
       - name: Install dependencies
         run: |
-          BiocManager::install("theislab/zellkonverter")
           remotes::install_deps(dependencies = TRUE, repos = BiocManager::repositories(), Ncpu = 2L)
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
@@ -75,14 +47,38 @@ jobs:
         run: rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "error", check_dir = "check")
         shell: Rscript {0}
 
+      - name: BiocCheck
+        run: |
+          BiocManager::install("BiocCheck")
+          BiocCheck::BiocCheck(".")
+        shell: Rscript {0}
+
       - name: Publish to Registry
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
-          name: docker.pkg.github.com/${{ github.repository }}/master:latest
+          name: docker.pkg.github.com/${{ github.repository }}/velociraptor:latest
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
+
+      - name: Show testthat output
+        if: always()
+        run: find check -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: check-results
+          path: check
+
+      - name: Test coverage
+        run: |
+          install.packages("covr")
+          covr::codecov(token = "${{secrets.CODECOV_TOKEN}}")
+        shell: Rscript {0}
 
       - name: Build pkgdown
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -99,6 +95,13 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: docs # The folder the action should deploy.
+
+      - name: Session info
+        run: |
+          options(width = 100)
+          pkgs <- installed.packages()[, "Package"]
+          sessioninfo::session_info(pkgs, include_base = TRUE)
+        shell: Rscript {0}
