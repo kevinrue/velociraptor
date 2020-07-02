@@ -28,6 +28,7 @@ Suggests:
     scran,
     scater,
     scuttle
+Remotes: theislab/zellkonverter
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
