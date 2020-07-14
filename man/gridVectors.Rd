@@ -34,7 +34,7 @@ Summarize the velocity vectors into a grid, usually for easy plotting.
 \details{
 This partitions the bounding box of \code{x} into a grid with \code{resolution} units in each dimension.
 The locations and vectors of all cells in each block are averaged to obtain a representative of that block.
-This is most obviously useful for visualization to avoid overplotting of velocity vectors. 
+This is most obviously useful for visualization to avoid overplotting of velocity vectors.
 
 If \code{scale=TRUE}, per-block vectors are scaled so that the median vector length is comparable to the spacing between blocks.
 This improves visualization when the scales of \code{x} and \code{v} are not immediately comparable.

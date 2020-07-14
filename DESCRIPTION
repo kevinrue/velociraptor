@@ -27,7 +27,8 @@ Suggests:
     rmarkdown,
     scran,
     scater,
-    scuttle
+    scRNAseq,
+    ggplot2
 Remotes: theislab/zellkonverter
 StagedInstall: no
 License: MIT + file LICENSE
@@ -36,3 +37,4 @@ RoxygenNote: 7.1.1
 URL: https://github.com/kevinrue/velociraptor
 BugReports: https://github.com/kevinrue/velociraptor/issues
 biocViews: SingleCell, GeneExpression
+VignetteBuilder: knitr
