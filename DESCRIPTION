@@ -28,7 +28,8 @@ Suggests:
     scran,
     scater,
     scRNAseq,
-    ggplot2
+    ggplot2,
+    Rtsne
 Remotes: theislab/zellkonverter
 StagedInstall: no
 License: MIT + file LICENSE
