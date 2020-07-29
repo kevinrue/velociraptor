@@ -4,8 +4,10 @@ author:
 - name: Kevin "the Destroyer" Rue-Albrecht
 - name: Aaron "Cholesterol" Lun
   email: infinite.monkeys.with.keyboards@gmail.com
-- name: Charlotte "Sledgehammer" Soneson
+- name: Charlotte Soneson
+  email: charlottesoneson@gmail.com
 package: velociraptor
+bibliography: velociraptor.bib
 output:
   BiocStyle::html_document
 vignette: >
@@ -26,7 +28,8 @@ This package provides a lightweight interface between the Bioconductor `SingleCe
 and the `r basilisk::PyPiLink("scvelo")` Python package for RNA velocity calculations.
 The interface is comparable to that of many other `SingleCellExperiment`-compatible functions,
 allowing users to plug in RNA velocity calculations into the existing Bioconductor analysis framework.
-To demonstrate, we will use some spliced/unspliced data from the `r Biocpkg("scRNAseq")` package.
+To demonstrate, we will use a data set from @Hermann2018-spermatogenesis, provided via the `r Biocpkg("scRNAseq")` package.
+This data set contains gene-wise estimates of spliced and unspliced UMI counts for 2,325 mouse spermatogenic cells.
 
 ```{r}
 library(scRNAseq)
@@ -51,8 +54,11 @@ top.hvgs <- getTopHVGs(dec, n=2000)
 
 We can plug these choices into the `scvelo()` function with our `SingleCellExperiment` object.
 Here, we will use the `"spliced"` count matrix as a proxy for the typical exonic count matrix.
-There are some subtle differences between the two - see `?scvelo` for some commentary about this -
+While this count matrix is not required for the velocity estimation in itself, it is used internally to retrieve the principal component space that is used by `r basilisk::PyPiLink("scvelo")` to find nearest neighbors.
+There are some subtle differences between the spliced count matrix and the typical exonic count matrix - see `?scvelo` for some commentary about this -
 but the spliced counts are generally a satisfactory replacement.
+By default, `scvelo()` uses the steady-state approach to estimate velocities. 
+The stochastic and dynamical models implemented in `r basilisk::PyPiLink("scvelo")` are accessible as well, by modifying the `mode` argument. 
 
 ```{r}
 library(velociraptor)
@@ -131,3 +137,5 @@ velo.out4
 ```{r}
 sessionInfo()
 ```
+
+# References

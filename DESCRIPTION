@@ -27,11 +27,15 @@ Suggests:
     rmarkdown,
     scran,
     scater,
-    scuttle
+    scRNAseq,
+    ggplot2,
+    Rtsne
+Remotes: theislab/zellkonverter
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 URL: https://github.com/kevinrue/velociraptor
 BugReports: https://github.com/kevinrue/velociraptor/issues
 biocViews: SingleCell, GeneExpression
+VignetteBuilder: knitr
