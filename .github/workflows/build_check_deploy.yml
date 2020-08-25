@@ -32,6 +32,7 @@ jobs:
         run: |
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          echo "$sysreqs"
           sudo -s eval "$sysreqs"
           sudo apt-get install -y libglpk-dev
           sudo apt-get install -y devscripts
