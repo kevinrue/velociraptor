@@ -9,6 +9,7 @@ Depends:
     SummarizedExperiment
 Imports:
     methods,
+    stats,
     Matrix,
     BiocGenerics,
     reticulate,
