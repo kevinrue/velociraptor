@@ -32,9 +32,14 @@ jobs:
         run: |
           Rscript -e "remotes::install_github('r-hub/sysreqs')"
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-          sudo apt-get install -y libglpk-dev
-          sudo apt-get install -y devscripts
+          echo "$sysreqs"
+          #sudo -s eval "$sysreqs"
+          export DEBIAN_FRONTEND=noninteractive
+          sudo apt-get -y update
+          #apt-get install python2-minimal # needed?
+          apt-get install -y pandoc
+          apt-get install -y pandoc-citeproc
+          apt-get install -y devscripts
 
       - name: Install dependencies
         run: |
