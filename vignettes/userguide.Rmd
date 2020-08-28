@@ -1,8 +1,8 @@
 ---
 title: Computing RNA velocity in a Bioconductor framework
 author:
-- name: Kevin "the Destroyer" Rue-Albrecht
-- name: Aaron "Cholesterol" Lun
+- name: Kevin Rue-Albrecht
+- name: Aaron Lun
   email: infinite.monkeys.with.keyboards@gmail.com
 - name: Charlotte Soneson
   email: charlottesoneson@gmail.com
