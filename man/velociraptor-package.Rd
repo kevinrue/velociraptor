@@ -7,6 +7,7 @@
 \title{velociraptor: Toolkit for Single-Cell Velocity}
 \description{
 Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
+    The basilisk package is used to manage Conda environments.
 }
 \seealso{
 Useful links:
