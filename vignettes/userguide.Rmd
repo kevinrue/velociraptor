@@ -1,8 +1,8 @@
 ---
 title: Computing RNA velocity in a Bioconductor framework
 author:
-- name: Kevin "the Destroyer" Rue-Albrecht
-- name: Aaron "Cholesterol" Lun
+- name: Kevin Rue-Albrecht
+- name: Aaron Lun
   email: infinite.monkeys.with.keyboards@gmail.com
 - name: Charlotte Soneson
   email: charlottesoneson@gmail.com
@@ -35,6 +35,16 @@ This data set contains gene-wise estimates of spliced and unspliced UMI counts f
 library(scRNAseq)
 sce <- HermannSpermatogenesisData()
 sce
+```
+
+# Downsampling for demonstration
+
+The full data set requires up to 12 GB of memory for the example usage presented in this vignette.
+For demonstration purposes, we downsample the data set to the first 500 cells.
+Feel free to skip this downsampling step if you have access to sufficient memory.
+
+```{r}
+sce <- sce[, 1:500]
 ```
 
 # Basic workflow
