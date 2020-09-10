@@ -47,13 +47,17 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
-      - name: BiocCheck
+      - name: Install BiocCheck
         run: |
           BiocManager::install("BiocCheck")
+        shell: Rscript {0}
+
+      - name: BiocCheck
+        run: |
           BiocCheck::BiocCheck(".")
         shell: Rscript {0}
 
-      - name: Check
+      - name: R CMD check
         env:
           _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual"), error_on = "error", check_dir = "check")

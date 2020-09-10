@@ -39,8 +39,9 @@ sce
 
 # Downsampling for demonstration
 
-The full data set requires up to 11 GB of memory for the example usage presented in this vignette.
+The full data set requires up to 12 GB of memory for the example usage presented in this vignette.
 For demonstration purposes, we downsample the data set to the first 500 cells.
+Feel free to skip this downsampling step if you have access to sufficient memory.
 
 ```{r}
 sce <- sce[, 1:500]
