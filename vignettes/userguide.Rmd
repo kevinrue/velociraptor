@@ -112,6 +112,10 @@ velo.out2 <- scvelo(sce, assay.X=1, subset.row=top.hvgs, use.dimred="PCA")
 velo.out2
 ```
 
+```{r, include=FALSE}
+rm(velo.out2)
+```
+
 We also provide an option to use the `r basilisk::PyPiLink("scvelo")` pipeline without modification,
 i.e., relying on their normalization and feature selection.
 This sacrifices consistency with other Bioconductor workflows but enables perfect mimicry of a pure Python-based analysis. 
@@ -122,6 +126,10 @@ velo.out3 <- scvelo(sce, assay.X=1, use.theirs=TRUE)
 velo.out3
 ```
 
+```{r, include=FALSE}
+rm(velo.out3)
+```
+
 Advanced users can tinker with the settings of individual `r basilisk::PyPiLink("scvelo")` steps
 by setting named lists of arguments in the `scvelo.params=` argument.
 For example, to tinker with the behavior of the `recover_dynamics` step, we could do:
@@ -130,6 +138,10 @@ For example, to tinker with the behavior of the `recover_dynamics` step, we coul
 velo.out4 <- scvelo(sce, assay.X=1, subset.row=top.hvgs,
     scvelo.params=list(recover_dynamics=list(max_iter=20)))
 velo.out4
+```
+
+```{r, include=FALSE}
+rm(velo.out4)
 ```
 
 # Session information
