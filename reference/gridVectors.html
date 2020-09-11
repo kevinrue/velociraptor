@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package • velociraptor</title>
+<title>Summarize vectors into a grid — gridVectors • velociraptor</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package" />
-<meta property="og:description" content="Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments." />
+<meta property="og:title" content="Summarize vectors into a grid — gridVectors" />
+<meta property="og:description" content="Summarize the velocity vectors into a grid, usually for easy plotting." />
 
 
 
@@ -124,36 +123,74 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>velociraptor: Toolkit for Single-Cell Velocity</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kevinrue/velociraptor/blob/master/R/velociraptor-package.R'><code>R/velociraptor-package.R</code></a></small>
-    <div class="hidden name"><code>velociraptor-package.Rd</code></div>
+    <h1>Summarize vectors into a grid</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kevinrue/velociraptor/blob/master/R/gridVectors.R'><code>R/gridVectors.R</code></a></small>
+    <div class="hidden name"><code>gridVectors.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments.</p>
+    <p>Summarize the velocity vectors into a grid, usually for easy plotting.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>gridVectors</span>(<span class='kw'>x</span>, <span class='kw'>v</span>, resolution = <span class='fl'>40</span>, scale = <span class='fl'>TRUE</span>, as.data.frame = <span class='fl'>TRUE</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A low-dimensional embedding of the dataset where each cell is a row.</p></td>
+    </tr>
+    <tr>
+      <th>v</th>
+      <td><p>A low-dimensional projection of the velocity vectors, of the same dimensions as <code>x</code>.</p></td>
+    </tr>
+    <tr>
+      <th>resolution</th>
+      <td><p>Integer scalar specifying the resolution of the grid,
+in terms of the number of grid intervals along each axis.</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>Logical scalar indicating whether the averaged vectors should be scaled by the grid resolution.</p></td>
+    </tr>
+    <tr>
+      <th>as.data.frame</th>
+      <td><p>Logical scalar indicating whether the output should be a data.frame.
+If <code>FALSE</code>, a list of two matrices is returned.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/kevinrue/velociraptor'>https://github.com/kevinrue/velociraptor</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/kevinrue/velociraptor/issues'>https://github.com/kevinrue/velociraptor/issues</a></p></li>
-</ul>
+    <p>If <code>as.data.frame=FALSE</code>, a list is returned containing <code>start</code> and <code>end</code>,
+two numeric matrices with one row per non-empty block in the grid and one column per column in <code>x</code>.
+<code>start</code> contains the mean location of all cells inside that block,
+and <code>end</code> contains the endpoint after adding the (scaled) average of the block's cell's velocity vectors.</p>
+<p>If <code>as.data.frame=TRUE</code>, a data.frame is returned with numeric columns of the same contents as the list above.
+Column names are prefixed by <code>start.*</code> and <code>end.*</code>.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-</div>
+    <p>This partitions the bounding box of <code>x</code> into a grid with <code>resolution</code> units in each dimension.
+The locations and vectors of all cells in each block are averaged to obtain a representative of that block.
+This is most obviously useful for visualization to avoid overplotting of velocity vectors.</p>
+<p>If <code>scale=TRUE</code>, per-block vectors are scaled so that the median vector length is comparable to the spacing between blocks.
+This improves visualization when the scales of <code>x</code> and <code>v</code> are not immediately comparable.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p><strong>Maintainer</strong>: Kevin Rue-Albrecht <a href='mailto:kevin.rue-albrecht@ndlcs.ox.ac.uk'>kevin.rue-albrecht@ndlcs.ox.ac.uk</a> (<a href='https://orcid.org/0000-0003-3899-3872'>ORCID</a>)</p>
-<p>Authors:</p><ul>
-<li><p>Aaron Lun <a href='mailto:infinite.monkeys.with.keyboards@gmail.com'>infinite.monkeys.with.keyboards@gmail.com</a> (<a href='https://orcid.org/0000-0002-3564-4813'>ORCID</a>)</p></li>
-<li><p>Charlotte Soneson <a href='mailto:charlottesoneson@gmail.com'>charlottesoneson@gmail.com</a> (<a href='https://orcid.org/0000-0003-3833-2169'>ORCID</a>)</p></li>
-</ul>
+    <p>Aaron Lun</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10000</span>), ncol=<span class='fl'>2</span>)
+<span class='kw'>tsne.vectors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10000</span>), ncol=<span class='fl'>2</span>)
 
+<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>gridVectors</span>(<span class='kw'>tsne.results</span>, <span class='kw'>tsne.vectors</span>)
 
+<span class='co'># Demonstration for plotting.</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tsne.results</span>[,<span class='fl'>1</span>], <span class='kw'>tsne.results</span>[,<span class='fl'>2</span>], col=<span class='st'>'grey'</span>)
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span>(<span class='kw'>out</span><span class='op'>$</span><span class='kw'>start.1</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>start.2</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>end.1</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>end.2</span>, length=<span class='fl'>0.05</span>)
+</div><div class='img'><img src='gridVectors-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

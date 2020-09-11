@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package • velociraptor</title>
+<title>Project velocities onto an embedding — embedVelocity • velociraptor</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package" />
-<meta property="og:description" content="Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments." />
+<meta property="og:title" content="Project velocities onto an embedding — embedVelocity" />
+<meta property="og:description" content="Project the velocity vector for each cell onto an existing low-dimensional embedding." />
 
 
 
@@ -124,36 +123,59 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>velociraptor: Toolkit for Single-Cell Velocity</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kevinrue/velociraptor/blob/master/R/velociraptor-package.R'><code>R/velociraptor-package.R</code></a></small>
-    <div class="hidden name"><code>velociraptor-package.Rd</code></div>
+    <h1>Project velocities onto an embedding</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kevinrue/velociraptor/blob/master/R/embedVelocity.R'><code>R/embedVelocity.R</code></a></small>
+    <div class="hidden name"><code>embedVelocity.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments.</p>
+    <p>Project the velocity vector for each cell onto an existing low-dimensional embedding.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>embedVelocity</span>(<span class='kw'>x</span>, <span class='kw'>v</span>, <span class='kw'>...</span>)</pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p>A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.</p></td>
+    </tr>
+    <tr>
+      <th>v</th>
+      <td><p>A SingleCellExperiment containing the output of the velocity calculations,
+typically after running <code><a href='scvelo.html'>scvelo</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Further arguments to pass to the <code>velocity_embedding</code> Python function from <span class="pkg">scVelo</span>.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <div class='dont-index'><p>Useful links:</p><ul>
-<li><p><a href='https://github.com/kevinrue/velociraptor'>https://github.com/kevinrue/velociraptor</a></p></li>
-<li><p>Report bugs at <a href='https://github.com/kevinrue/velociraptor/issues'>https://github.com/kevinrue/velociraptor/issues</a></p></li>
-</ul>
+    <p>A numeric matrix of the same dimensions as <code>x</code>, containing the projected velocity vectors in that embedding.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-</div>
+    <p>This is a simple wrapper around the <code>scvelo.tools.velocity_embedding</code> function.
+Briefly, we construct a cell-cell transition matrix where a cell is more likely to transition to one of its neighbors
+if its velocity vector is pointing in the same direction as that neighbor.
+The resulting matrix is then used to compute a weighted average of the positions in <code>x</code>,
+allowing us to compute a velocity in the low-dimensional embedding.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p><strong>Maintainer</strong>: Kevin Rue-Albrecht <a href='mailto:kevin.rue-albrecht@ndlcs.ox.ac.uk'>kevin.rue-albrecht@ndlcs.ox.ac.uk</a> (<a href='https://orcid.org/0000-0003-3899-3872'>ORCID</a>)</p>
-<p>Authors:</p><ul>
-<li><p>Aaron Lun <a href='mailto:infinite.monkeys.with.keyboards@gmail.com'>infinite.monkeys.with.keyboards@gmail.com</a> (<a href='https://orcid.org/0000-0002-3564-4813'>ORCID</a>)</p></li>
-<li><p>Charlotte Soneson <a href='mailto:charlottesoneson@gmail.com'>charlottesoneson@gmail.com</a> (<a href='https://orcid.org/0000-0003-3833-2169'>ORCID</a>)</p></li>
-</ul>
+    <p>Aaron Lun</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span>(<span class='kw'>scvelo</span>, echo=<span class='fl'>FALSE</span>) <span class='co'># recycling that example.</span>
+</div><div class='output co'>#&gt; <span class='message'>Loading required package: SingleCellExperiment</span></div><div class='input'>
+<span class='co'># Making up a new embedding.</span>
+<span class='kw'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='kw'>out</span>)), ncol=<span class='fl'>2</span>)
 
-
+<span class='co'># Projecting the future state of each cell:</span>
+<span class='kw'>projected</span> <span class='op'>&lt;-</span> <span class='fu'>embedVelocity</span>(<span class='kw'>tsne.results</span>, <span class='kw'>out</span>)
+</div><div class='output co'>#&gt; <span class='message'>Note: using the 'X' assay as the X matrix</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
