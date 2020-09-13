@@ -1,4 +1,4 @@
-<img src="man/figures/logo.png" align="right" alt="logo.png" width="120" />
+<img src="man/figures/logo.png" align="right" alt="logo.png" width="150" />
 
 # velociraptor
 
