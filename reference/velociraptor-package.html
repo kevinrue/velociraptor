@@ -8,6 +8,13 @@
 
 <title>velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package • velociraptor</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -40,8 +47,12 @@
 
 
 <meta property="og:title" content="velociraptor: Toolkit for Single-Cell Velocity — velociraptor-package" />
-<meta property="og:description" content="Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments." />
+<meta property="og:description" content="
+This package provides Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
+    We use the basilisk package to manage Conda environments,
+    and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
+    The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class." />
+<meta property="og:image" content="/logo.png" />
 
 
 
@@ -73,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.2</span>
       </span>
     </div>
 
@@ -130,8 +141,11 @@
     </div>
 
     <div class="ref-description">
-    <p>Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments.</p>
+    <p><img src='figures/logo.png' align='right' alt='logo' width='120' /></p>
+<p>This package provides Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
+    We use the basilisk package to manage Conda environments,
+    and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
+    The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.</p>
     </div>
 
 
@@ -146,7 +160,7 @@
 </div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p><strong>Maintainer</strong>: Kevin Rue-Albrecht <a href='mailto:kevin.rue-albrecht@ndlcs.ox.ac.uk'>kevin.rue-albrecht@ndlcs.ox.ac.uk</a> (<a href='https://orcid.org/0000-0003-3899-3872'>ORCID</a>)</p>
+    <p><strong>Maintainer</strong>: Kevin Rue-Albrecht <a href='mailto:kevinrue67@gmail.com'>kevinrue67@gmail.com</a> (<a href='https://orcid.org/0000-0003-3899-3872'>ORCID</a>)</p>
 <p>Authors:</p><ul>
 <li><p>Aaron Lun <a href='mailto:infinite.monkeys.with.keyboards@gmail.com'>infinite.monkeys.with.keyboards@gmail.com</a> (<a href='https://orcid.org/0000-0002-3564-4813'>ORCID</a>)</p></li>
 <li><p>Charlotte Soneson <a href='mailto:charlottesoneson@gmail.com'>charlottesoneson@gmail.com</a> (<a href='https://orcid.org/0000-0003-3833-2169'>ORCID</a>)</p></li>
