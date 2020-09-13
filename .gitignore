@@ -5,3 +5,6 @@
 renv
 renv.lock
 velociraptor.Rproj
+.DS_Store
+docs
+pkgdown

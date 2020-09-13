@@ -6,8 +6,12 @@
 \alias{velociraptor-package}
 \title{velociraptor: Toolkit for Single-Cell Velocity}
 \description{
-Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    The basilisk package is used to manage Conda environments.
+\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+
+This package provides Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
+    We use the basilisk package to manage Conda environments,
+    and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
+    The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.
 }
 \seealso{
 Useful links:
@@ -18,7 +22,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Kevin Rue-Albrecht \email{kevin.rue-albrecht@ndlcs.ox.ac.uk} (\href{https://orcid.org/0000-0003-3899-3872}{ORCID})
+\strong{Maintainer}: Kevin Rue-Albrecht \email{kevinrue67@gmail.com} (\href{https://orcid.org/0000-0003-3899-3872}{ORCID})
 
 Authors:
 \itemize{

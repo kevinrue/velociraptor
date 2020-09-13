@@ -1,3 +1,4 @@
+<img src="man/figures/logo.png" align="right" alt="logo.png" width="180" />
 
 # velociraptor
 
@@ -15,13 +16,3 @@ You can install the latest version of velociraptor from [GitHub](https://github.
 install.packages("remotes")
 remotes::install_github("kevinrue/velociraptor")
 ```
-
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
-library(velociraptor)
-## basic example code
-```
-
