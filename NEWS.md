@@ -1,3 +1,7 @@
+# velociraptor 0.99.3
+
+* Explicitly declare all Conda dependencies for `scvelo`.
+
 # velociraptor 0.99.2
 
 * Add hexsticker.
