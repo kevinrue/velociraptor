@@ -3,7 +3,7 @@
 # velociraptor
 
 <!-- badges: start -->
-[![R build status](https://github.com/kevinrue/velociraptor/workflows/build-check-deploy/badge.svg)](https://github.com/kevinrue/velociraptor/actions)
+[![R build status](https://github.com/kevinrue/velociraptor/workflows/build_check_deploy/badge.svg)](https://github.com/kevinrue/velociraptor/actions)
 <!-- badges: end -->
 
 The goal of velociraptor is to provide an R toolkit for single-cell velocity computation.
