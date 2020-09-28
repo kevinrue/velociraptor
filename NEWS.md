@@ -1,3 +1,7 @@
+# velociraptor 0.99.8
+
+* Trigger new build to repeat `ExperimentHub` download.
+
 # velociraptor 0.99.7
 
 * Delete empty line to force cache update. See <https://github.com/rubocop-hq/rubocop/pull/4342#issuecomment-305449759>.
