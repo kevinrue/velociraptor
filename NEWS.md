@@ -1,3 +1,7 @@
+# velociraptor 0.99.7
+
+* Delete empty line to force cache update. See <https://github.com/rubocop-hq/rubocop/pull/4342#issuecomment-305449759>.
+
 # velociraptor 0.99.6
 
 * Set `autoscale=FALSE` in the call to `scvelo` function `velocity_embedding` to avoid issue related to Qt and plotting.
