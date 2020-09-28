@@ -263,12 +263,12 @@
 <div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
 </pre></div>
-<pre><code>## R version 4.0.2 Patched (2020-09-17 r79226)
+<pre><code>## R version 4.0.2 Patched (2020-09-24 r79253)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 20.04.1 LTS
 ## 
 ## Matrix products: default
-## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-openmp/libopenblasp-r0.3.8.so
+## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
 ## 
 ## locale:
 ##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -283,15 +283,15 @@
 ## 
 ## other attached packages:
 ##  [1] scater_1.17.5               ggplot2_3.3.2              
-##  [3] velociraptor_0.99.4         scran_1.17.16              
-##  [5] scuttle_0.99.13             scRNAseq_2.3.13            
+##  [3] velociraptor_0.99.4         scran_1.17.18              
+##  [5] scuttle_0.99.14             scRNAseq_2.3.13            
 ##  [7] SingleCellExperiment_1.11.7 SummarizedExperiment_1.19.6
-##  [9] DelayedArray_0.15.8         matrixStats_0.56.0         
+##  [9] DelayedArray_0.15.9         matrixStats_0.56.0         
 ## [11] Matrix_1.2-18               Biobase_2.49.1             
 ## [13] GenomicRanges_1.41.6        GenomeInfoDb_1.25.11       
 ## [15] IRanges_2.23.10             S4Vectors_0.27.13          
-## [17] BiocGenerics_0.35.4         knitr_1.29                 
-## [19] BiocStyle_2.17.0           
+## [17] BiocGenerics_0.35.4         knitr_1.30                 
+## [19] BiocStyle_2.17.1           
 ## 
 ## loaded via a namespace (and not attached):
 ##   [1] Rtsne_0.15                    ggbeeswarm_0.6.0             
@@ -304,10 +304,10 @@
 ##  [15] dbplyr_1.4.4                  shiny_1.5.0                  
 ##  [17] BiocManager_1.30.10           compiler_4.0.2               
 ##  [19] httr_1.4.2                    dqrng_0.2.1                  
-##  [21] basilisk_1.1.16               backports_1.1.10             
+##  [21] basilisk_1.1.17               backports_1.1.10             
 ##  [23] assertthat_0.2.1              fastmap_1.0.1                
 ##  [25] limma_3.45.14                 later_1.1.0.1                
-##  [27] BiocSingular_1.5.0            htmltools_0.5.0              
+##  [27] BiocSingular_1.5.1            htmltools_0.5.0              
 ##  [29] tools_4.0.2                   rsvd_1.0.3                   
 ##  [31] igraph_1.2.5                  gtable_0.3.0                 
 ##  [33] glue_1.4.2                    GenomeInfoDbData_1.2.3       
@@ -316,35 +316,36 @@
 ##  [39] pkgdown_1.6.1                 vctrs_0.3.4                  
 ##  [41] ExperimentHub_1.15.3          zellkonverter_0.99.4         
 ##  [43] DelayedMatrixStats_1.11.1     xfun_0.17                    
-##  [45] stringr_1.4.0                 mime_0.9                     
-##  [47] lifecycle_0.2.0               irlba_2.3.3                  
-##  [49] statmod_1.4.34                AnnotationHub_2.21.5         
-##  [51] edgeR_3.31.4                  zlibbioc_1.35.0              
-##  [53] scales_1.1.1                  basilisk.utils_1.1.10        
-##  [55] ragg_0.3.1                    promises_1.1.1               
-##  [57] yaml_2.2.1                    curl_4.3                     
-##  [59] memoise_1.1.0                 reticulate_1.16              
-##  [61] gridExtra_2.3                 datasets_4.0.2               
-##  [63] stringi_1.5.3                 RSQLite_2.2.0                
-##  [65] BiocVersion_3.12.0            desc_1.2.0                   
-##  [67] filelock_1.0.2                BiocParallel_1.23.2          
-##  [69] cpp11_0.2.1                   rlang_0.4.7                  
-##  [71] pkgconfig_2.0.3               systemfonts_0.3.1            
-##  [73] bitops_1.0-6                  evaluate_0.14                
-##  [75] lattice_0.20-41               purrr_0.3.4                  
-##  [77] labeling_0.3                  bit_4.0.4                    
-##  [79] tidyselect_1.1.0              magrittr_1.5                 
-##  [81] bookdown_0.20                 R6_2.4.1                     
-##  [83] generics_0.0.2                DBI_1.1.0                    
-##  [85] pillar_1.4.6                  withr_2.2.0                  
-##  [87] RCurl_1.98-1.2                tibble_3.0.3                 
-##  [89] crayon_1.3.4                  BiocFileCache_1.13.1         
-##  [91] rmarkdown_2.3                 viridis_0.5.1                
-##  [93] locfit_1.5-9.4                grid_4.0.2                   
-##  [95] blob_1.2.1                    digest_0.6.25                
-##  [97] xtable_1.8-4                  httpuv_1.5.4                 
-##  [99] munsell_0.5.0                 viridisLite_0.3.0            
-## [101] beeswarm_0.2.3                vipor_0.4.5</code></pre>
+##  [45] stringr_1.4.0                 beachmat_2.5.5               
+##  [47] mime_0.9                      lifecycle_0.2.0              
+##  [49] irlba_2.3.3                   statmod_1.4.34               
+##  [51] AnnotationHub_2.21.5          edgeR_3.31.4                 
+##  [53] zlibbioc_1.35.0               scales_1.1.1                 
+##  [55] basilisk.utils_1.1.11         ragg_0.3.1                   
+##  [57] promises_1.1.1                yaml_2.2.1                   
+##  [59] curl_4.3                      gridExtra_2.3                
+##  [61] memoise_1.1.0                 reticulate_1.16              
+##  [63] datasets_4.0.2                stringi_1.5.3                
+##  [65] RSQLite_2.2.0                 BiocVersion_3.12.0           
+##  [67] desc_1.2.0                    filelock_1.0.2               
+##  [69] BiocParallel_1.23.2           cpp11_0.2.1                  
+##  [71] rlang_0.4.7                   pkgconfig_2.0.3              
+##  [73] systemfonts_0.3.1             bitops_1.0-6                 
+##  [75] evaluate_0.14                 lattice_0.20-41              
+##  [77] purrr_0.3.4                   labeling_0.3                 
+##  [79] bit_4.0.4                     tidyselect_1.1.0             
+##  [81] magrittr_1.5                  bookdown_0.20                
+##  [83] R6_2.4.1                      generics_0.0.2               
+##  [85] DBI_1.1.0                     pillar_1.4.6                 
+##  [87] withr_2.3.0                   RCurl_1.98-1.2               
+##  [89] tibble_3.0.3                  crayon_1.3.4                 
+##  [91] BiocFileCache_1.13.1          rmarkdown_2.3                
+##  [93] viridis_0.5.1                 locfit_1.5-9.4               
+##  [95] grid_4.0.2                    blob_1.2.1                   
+##  [97] digest_0.6.25                 xtable_1.8-4                 
+##  [99] httpuv_1.5.4                  munsell_0.5.0                
+## [101] viridisLite_0.3.0             beeswarm_0.2.3               
+## [103] vipor_0.4.5</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
