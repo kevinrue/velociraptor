@@ -39,7 +39,7 @@ embedVelocity <- function(x, v, ...) {
 .run_embedder <- function(v, ...) {
     scv <- import("scvelo")
 
-    args <- list(..., basis="target")
+    args <- list(..., basis="target", autoscale=FALSE)
     adata <- SCE2AnnData(v)
 
     do.call(scv$tl$velocity_embedding, c(list(data=adata), args))
