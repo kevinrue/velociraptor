@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
       </span>
     </div>
 
@@ -111,10 +111,9 @@
 <a href="#overview" class="anchor"></a>Overview</h1>
 <p>This package provides a lightweight interface between the Bioconductor <code>SingleCellExperiment</code> data structure and the <a href="https://pypi.org/project/scvelo">scvelo</a> Python package for RNA velocity calculations. The interface is comparable to that of many other <code>SingleCellExperiment</code>-compatible functions, allowing users to plug in RNA velocity calculations into the existing Bioconductor analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.12/scRNAseq">scRNAseq</a></em> package. This data set contains gene-wise estimates of spliced and unspliced UMI counts for 2,325 mouse spermatogenic cells.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">scRNAseq</span>)
-<span class="kw">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scRNAseq/man/HermannSpermatogenesisData.html">HermannSpermatogenesisData</a></span>()
-<span class="kw">sce</span>
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scRNAseq</span><span class="op">)</span>
+<span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scRNAseq/man/HermannSpermatogenesisData.html">HermannSpermatogenesisData</a></span><span class="op">(</span><span class="op">)</span>
+<span class="va">sce</span></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 54448 2325 
 ## metadata(0):
@@ -133,27 +132,24 @@
 <a href="#downsampling-for-demonstration" class="anchor"></a>Downsampling for demonstration</h1>
 <p>The full data set requires up to 12 GB of memory for the example usage presented in this vignette. For demonstration purposes, we downsample the data set to the first 500 cells. Feel free to skip this downsampling step if you have access to sufficient memory.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">sce</span> <span class="op">&lt;-</span> <span class="kw">sce</span>[, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span>]
-</pre></div>
+<span class="va">sce</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></pre></div>
 </div>
 <div id="basic-workflow" class="section level1">
 <h1 class="hasAnchor">
 <a href="#basic-workflow" class="anchor"></a>Basic workflow</h1>
 <p>We assume that feature selection has already been performed by the user using any method (see <a href="https://osca.bioconductor.org/feature-selection.html">here</a> for some suggestions). We will use the log-expression method from the <em><a href="https://bioconductor.org/packages/3.12/scran">scran</a></em> method here.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">scuttle</span>)
-<span class="kw">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span>(<span class="kw">sce</span>, assay.type=<span class="fl">1</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span>
+<span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span>, assay.type<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">scran</span>)
-<span class="kw">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html">modelGeneVar</a></span>(<span class="kw">sce</span>)
-<span class="kw">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span>(<span class="kw">dec</span>, n=<span class="fl">2000</span>)
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scran</span><span class="op">)</span>
+<span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html">modelGeneVar</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>
+<span class="va">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n<span class="op">=</span><span class="fl">2000</span><span class="op">)</span></pre></div>
 <p>We can plug these choices into the <code><a href="../reference/scvelo.html">scvelo()</a></code> function with our <code>SingleCellExperiment</code> object. Here, we will use the <code>"spliced"</code> count matrix as a proxy for the typical exonic count matrix. While this count matrix is not required for the velocity estimation in itself, it is used internally to retrieve the principal component space that is used by <a href="https://pypi.org/project/scvelo">scvelo</a> to find nearest neighbors. There are some subtle differences between the spliced count matrix and the typical exonic count matrix - see <code><a href="../reference/scvelo.html">?scvelo</a></code> for some commentary about this - but the spliced counts are generally a satisfactory replacement. By default, <code><a href="../reference/scvelo.html">scvelo()</a></code> uses the steady-state approach to estimate velocities. The stochastic and dynamical models implemented in <a href="https://pypi.org/project/scvelo">scvelo</a> are accessible as well, by modifying the <code>mode</code> argument.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/kevinrue/velociraptor">velociraptor</a></span>)
-<span class="kw">velo.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span>(<span class="kw">sce</span>, subset.row=<span class="kw">top.hvgs</span>, assay.X=<span class="st">"spliced"</span>)
-<span class="kw">velo.out</span>
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kevinrue/velociraptor">velociraptor</a></span><span class="op">)</span>
+<span class="va">velo.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>, assay.X<span class="op">=</span><span class="st">"spliced"</span><span class="op">)</span>
+<span class="va">velo.out</span></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -170,26 +166,24 @@
 ## altExpNames(0):</code></pre>
 <p>The <code><a href="../reference/scvelo.html">scvelo()</a></code> function produces a <code>SingleCellExperiment</code> containing all of the outputs of the calculation in Python. Of particular interest is the <code>velocity_pseudotime</code> vector that captures the relative progression of each cell along the biological process driving the velocity vectors. We can visualize this effect below in a <span class="math inline">\(t\)</span>-SNE plot generated by <em><a href="https://bioconductor.org/packages/3.12/scater">scater</a></em> on the top HVGs.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://bioconductor.org/packages/scater">scater</a></span>)
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">100</span>)
-<span class="kw">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runPCA.html">runPCA</a></span>(<span class="kw">sce</span>, subset_row=<span class="kw">top.hvgs</span>)
-<span class="kw">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE</a></span>(<span class="kw">sce</span>, dimred=<span class="st">"PCA"</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
+<span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">sce</span>, subset_row<span class="op">=</span><span class="va">top.hvgs</span><span class="op">)</span>
+<span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE</a></span><span class="op">(</span><span class="va">sce</span>, dimred<span class="op">=</span><span class="st">"PCA"</span><span class="op">)</span>
 
-<span class="kw">sce</span><span class="op">$</span><span class="kw">velocity_pseudotime</span> <span class="op">&lt;-</span> <span class="kw">velo.out</span><span class="op">$</span><span class="kw">velocity_pseudotime</span>
-<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span>(<span class="kw">sce</span>, colour_by=<span class="st">"velocity_pseudotime"</span>)
-</pre></div>
+<span class="va">sce</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">&lt;-</span> <span class="va">velo.out</span><span class="op">$</span><span class="va">velocity_pseudotime</span>
+<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span></pre></div>
 <p><img src="userguide_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>It is also straightforward to embed the velocity vectors into our desired low-dimensional space, as shown below for the <span class="math inline">\(t\)</span>-SNE coordinates. This uses a grid-based approach to summarize the per-cell vectors into local representatives for effective visualization.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span>(<span class="fu">reducedDim</span>(<span class="kw">sce</span>, <span class="st">"TSNE"</span>), <span class="kw">velo.out</span>)
-<span class="kw">grid.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gridVectors.html">gridVectors</a></span>(<span class="fu">reducedDim</span>(<span class="kw">sce</span>, <span class="st">"TSNE"</span>), <span class="kw">embedded</span>)
+<span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span>
+<span class="va">grid.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gridVectors.html">gridVectors</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">embedded</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span>)
-<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span>(<span class="kw">sce</span>, colour_by=<span class="st">"velocity_pseudotime"</span>) <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span>(data=<span class="kw">grid.df</span>, mapping=<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(x=<span class="kw">start.1</span>, y=<span class="kw">start.2</span>, 
-        xend=<span class="kw">end.1</span>, yend=<span class="kw">end.2</span>), arrow=<span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span>(length=<span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span>(<span class="fl">0.05</span>, <span class="st">"inches"</span>)))
-</pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">grid.df</span>, mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">start.1</span>, y<span class="op">=</span><span class="va">start.2</span>, 
+        xend<span class="op">=</span><span class="va">end.1</span>, yend<span class="op">=</span><span class="va">end.2</span><span class="op">)</span>, arrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="st">"inches"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
 <p><img src="userguide_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>And that’s it, really.</p>
 </div>
@@ -200,9 +194,8 @@
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># Only setting assay.X= for the initial AnnData creation,</span>
 <span class="co"># it is not actually used in any further steps.</span>
-<span class="kw">velo.out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span>(<span class="kw">sce</span>, assay.X=<span class="fl">1</span>, subset.row=<span class="kw">top.hvgs</span>, use.dimred=<span class="st">"PCA"</span>) 
-<span class="kw">velo.out2</span>
-</pre></div>
+<span class="va">velo.out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>, use.dimred<span class="op">=</span><span class="st">"PCA"</span><span class="op">)</span> 
+<span class="va">velo.out2</span></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -219,9 +212,8 @@
 ## altExpNames(0):</code></pre>
 <p>We also provide an option to use the <a href="https://pypi.org/project/scvelo">scvelo</a> pipeline without modification, i.e., relying on their normalization and feature selection. This sacrifices consistency with other Bioconductor workflows but enables perfect mimicry of a pure Python-based analysis. In this case, arguments like <code>subset.row=</code> are simply ignored.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">velo.out3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span>(<span class="kw">sce</span>, assay.X=<span class="fl">1</span>, use.theirs=<span class="fl">TRUE</span>)
-<span class="kw">velo.out3</span>
-</pre></div>
+<span class="va">velo.out3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, use.theirs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">velo.out3</span></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 54448 500 
 ## metadata(5): pca neighbors velocity_params velocity_graph
@@ -238,10 +230,9 @@
 ## altExpNames(0):</code></pre>
 <p>Advanced users can tinker with the settings of individual <a href="https://pypi.org/project/scvelo">scvelo</a> steps by setting named lists of arguments in the <code>scvelo.params=</code> argument. For example, to tinker with the behavior of the <code>recover_dynamics</code> step, we could do:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw">velo.out4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span>(<span class="kw">sce</span>, assay.X=<span class="fl">1</span>, subset.row=<span class="kw">top.hvgs</span>,
-    scvelo.params=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(recover_dynamics=<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(max_iter=<span class="fl">20</span>)))
-<span class="kw">velo.out4</span>
-</pre></div>
+<span class="va">velo.out4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>,
+    scvelo.params<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>recover_dynamics<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>max_iter<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">velo.out4</span></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -261,8 +252,7 @@
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
 <div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span>()
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>## R version 4.0.2 Patched (2020-09-24 r79253)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 20.04.1 LTS
@@ -283,7 +273,7 @@
 ## 
 ## other attached packages:
 ##  [1] scater_1.17.5               ggplot2_3.3.2              
-##  [3] velociraptor_0.99.6         scran_1.17.18              
+##  [3] velociraptor_0.99.7         scran_1.17.18              
 ##  [5] scuttle_0.99.14             scRNAseq_2.3.13            
 ##  [7] SingleCellExperiment_1.11.7 SummarizedExperiment_1.19.6
 ##  [9] DelayedArray_0.15.9         matrixStats_0.56.0         

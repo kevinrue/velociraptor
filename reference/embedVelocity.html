@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <p>Project the velocity vector for each cell onto an existing low-dimensional embedding.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>embedVelocity</span>(<span class='kw'>x</span>, <span class='kw'>v</span>, <span class='kw'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>v</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,13 +175,13 @@ allowing us to compute a velocity in the low-dimensional embedding.</p>
     <p>Aaron Lun</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span>(<span class='kw'>scvelo</span>, echo=<span class='fl'>FALSE</span>) <span class='co'># recycling that example.</span>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/example.html'>example</a></span><span class='op'>(</span><span class='va'>scvelo</span>, echo<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='co'># recycling that example.</span>
 </div><div class='output co'>#&gt; <span class='message'>Loading required package: SingleCellExperiment</span></div><div class='input'>
 <span class='co'># Making up a new embedding.</span>
-<span class='kw'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>2</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span>(<span class='kw'>out</span>)), ncol=<span class='fl'>2</span>)
+<span class='va'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>2</span><span class='op'>*</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>)</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 
 <span class='co'># Projecting the future state of each cell:</span>
-<span class='kw'>projected</span> <span class='op'>&lt;-</span> <span class='fu'>embedVelocity</span>(<span class='kw'>tsne.results</span>, <span class='kw'>out</span>)
+<span class='va'>projected</span> <span class='op'>&lt;-</span> <span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>tsne.results</span>, <span class='va'>out</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Note: using the 'X' assay as the X matrix</span></div><div class='input'>
 </div></pre>
   </div>

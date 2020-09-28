@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.7</span>
       </span>
     </div>
 
@@ -140,7 +140,7 @@
     <p>Summarize the velocity vectors into a grid, usually for easy plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gridVectors</span>(<span class='kw'>x</span>, <span class='kw'>v</span>, resolution = <span class='fl'>40</span>, scale = <span class='fl'>TRUE</span>, as.data.frame = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>v</span>, resolution <span class='op'>=</span> <span class='fl'>40</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,14 +189,14 @@ This improves visualization when the scales of <code>x</code> and <code>v</code>
     <p>Aaron Lun</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10000</span>), ncol=<span class='fl'>2</span>)
-<span class='kw'>tsne.vectors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10000</span>), ncol=<span class='fl'>2</span>)
+    <pre class="examples"><div class='input'><span class='va'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
+<span class='va'>tsne.vectors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
 
-<span class='kw'>out</span> <span class='op'>&lt;-</span> <span class='fu'>gridVectors</span>(<span class='kw'>tsne.results</span>, <span class='kw'>tsne.vectors</span>)
+<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>tsne.results</span>, <span class='va'>tsne.vectors</span><span class='op'>)</span>
 
 <span class='co'># Demonstration for plotting.</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tsne.results</span>[,<span class='fl'>1</span>], <span class='kw'>tsne.results</span>[,<span class='fl'>2</span>], col=<span class='st'>'grey'</span>)
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span>(<span class='kw'>out</span><span class='op'>$</span><span class='kw'>start.1</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>start.2</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>end.1</span>, <span class='kw'>out</span><span class='op'>$</span><span class='kw'>end.2</span>, length=<span class='fl'>0.05</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, <span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'grey'</span><span class='op'>)</span>
+</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>$</span><span class='va'>start.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>start.2</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.2</span>, length<span class='op'>=</span><span class='fl'>0.05</span><span class='op'>)</span>
 </div><div class='img'><img src='gridVectors-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
