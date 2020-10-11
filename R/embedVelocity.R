@@ -3,9 +3,15 @@
 #' Project the velocity vector for each cell onto an existing low-dimensional embedding.
 #'
 #' @param x A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
-#' @param v A \linkS4class{SingleCellExperiment} containing the output of the velocity calculations,
+#' Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.
+#' @param vobj A \linkS4class{SingleCellExperiment} containing the output of the velocity calculations,
 #' typically after running \code{\link{scvelo}}.
-#' @param ... Further arguments to pass to the \code{velocity_embedding} Python function from \pkg{scVelo}.
+#' @param ... For the generic, further arguments to pass to specific methods.
+#'
+#' For the ANY method, further arguments to pass to the \code{velocity_embedding} Python function from \pkg{scVelo}.
+#'
+#' For the SingleCellExperiment method, further arguments to pass to the ANY method.
+#' @param use.dimred String or integer scalar specifying the reduced dimensions to retrieve from \code{x}.
 #'
 #' @details
 #' This is a simple wrapper around the \code{scvelo.tools.velocity_embedding} function.
@@ -28,21 +34,38 @@
 #' projected <- embedVelocity(tsne.results, out)
 #'
 #' @export
+#' @name embedVelocity
+NULL
+
 #' @importFrom SingleCellExperiment reducedDim<-
-embedVelocity <- function(x, v, ...) {
-    reducedDim(v, "X_target") <- as.matrix(x)
-    basiliskRun(env=velo.env, fun=.run_embedder, v=v, ...)
+.embed_velocity <- function(x, vobj, ...) {
+    reducedDim(vobj, "X_target") <- as.matrix(x)
+    basiliskRun(env=velo.env, fun=.run_embedder, vobj=vobj, ...)
 }
 
 #' @importFrom reticulate import
 #' @importFrom zellkonverter SCE2AnnData
-.run_embedder <- function(v, ...) {
+.run_embedder <- function(vobj, ...) {
     scv <- import("scvelo")
 
     args <- list(..., basis="target", autoscale=FALSE)
-    adata <- SCE2AnnData(v)
+    adata <- SCE2AnnData(vobj)
 
     do.call(scv$tl$velocity_embedding, c(list(data=adata), args))
 
     adata$obsm["velocity_target"]
 }
+
+#' @export
+#' @rdname embedVelocity
+setGeneric("embedVelocity", function(x, vobj, ...) standardGeneric("embedVelocity"))
+
+#' @export
+#' @rdname embedVelocity
+setMethod("embedVelocity", "ANY", .embed_velocity)
+
+#' @export
+#' @rdname embedVelocity
+setMethod("embedVelocity", "SingleCellExperiment", function(x, vobj, ..., use.dimred=1) {
+    .embed_velocity(reducedDim(x, use.dimred), vobj, ...)
+})

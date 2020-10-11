@@ -2,14 +2,26 @@
 % Please edit documentation in R/gridVectors.R
 \name{gridVectors}
 \alias{gridVectors}
+\alias{gridVectors,ANY-method}
+\alias{gridVectors,SingleCellExperiment-method}
 \title{Summarize vectors into a grid}
 \usage{
-gridVectors(x, v, resolution = 40, scale = TRUE, as.data.frame = TRUE)
+gridVectors(x, embedded, ...)
+
+\S4method{gridVectors}{ANY}(x, embedded, resolution = 40, scale = TRUE, as.data.frame = TRUE)
+
+\S4method{gridVectors}{SingleCellExperiment}(x, embedded, ..., use.dimred = 1)
 }
 \arguments{
-\item{x}{A low-dimensional embedding of the dataset where each cell is a row.}
+\item{x}{A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
+Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.}
 
-\item{v}{A low-dimensional projection of the velocity vectors, of the same dimensions as \code{x}.}
+\item{embedded}{A low-dimensional projection of the velocity vectors into the embedding of \code{x}.
+This should be of the same dimensions as \code{x} and is typically produced by \code{\link{embedVelocity}}.}
+
+\item{...}{For the generic, further arguments to pass to specific methods.
+
+For the SingleCellExperiment method, further arguments to pass to the ANY method.}
 
 \item{resolution}{Integer scalar specifying the resolution of the grid,
 in terms of the number of grid intervals along each axis.}
@@ -18,6 +30,8 @@ in terms of the number of grid intervals along each axis.}
 
 \item{as.data.frame}{Logical scalar indicating whether the output should be a data.frame.
 If \code{FALSE}, a list of two matrices is returned.}
+
+\item{use.dimred}{String or integer scalar specifying the reduced dimensions to retrieve from \code{x}.}
 }
 \value{
 If \code{as.data.frame=FALSE}, a list is returned containing \code{start} and \code{end},
@@ -37,7 +51,7 @@ The locations and vectors of all cells in each block are averaged to obtain a re
 This is most obviously useful for visualization to avoid overplotting of velocity vectors.
 
 If \code{scale=TRUE}, per-block vectors are scaled so that the median vector length is comparable to the spacing between blocks.
-This improves visualization when the scales of \code{x} and \code{v} are not immediately comparable.
+This improves visualization when the scales of \code{x} and \code{embedded} are not immediately comparable.
 }
 \examples{
 tsne.results <- matrix(rnorm(10000), ncol=2)
@@ -49,6 +63,9 @@ out <- gridVectors(tsne.results, tsne.vectors)
 plot(tsne.results[,1], tsne.results[,2], col='grey')
 arrows(out$start.1, out$start.2, out$end.1, out$end.2, length=0.05)
 
+}
+\seealso{
+\code{\link{embedVelocity}}, to generate \code{embedded}.
 }
 \author{
 Aaron Lun

@@ -2,17 +2,30 @@
 % Please edit documentation in R/embedVelocity.R
 \name{embedVelocity}
 \alias{embedVelocity}
+\alias{embedVelocity,ANY-method}
+\alias{embedVelocity,SingleCellExperiment-method}
 \title{Project velocities onto an embedding}
 \usage{
-embedVelocity(x, v, ...)
+embedVelocity(x, vobj, ...)
+
+\S4method{embedVelocity}{ANY}(x, vobj, ...)
+
+\S4method{embedVelocity}{SingleCellExperiment}(x, vobj, ..., use.dimred = 1)
 }
 \arguments{
-\item{x}{A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.}
+\item{x}{A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
+Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.}
 
-\item{v}{A \linkS4class{SingleCellExperiment} containing the output of the velocity calculations,
+\item{vobj}{A \linkS4class{SingleCellExperiment} containing the output of the velocity calculations,
 typically after running \code{\link{scvelo}}.}
 
-\item{...}{Further arguments to pass to the \code{velocity_embedding} Python function from \pkg{scVelo}.}
+\item{...}{For the generic, further arguments to pass to specific methods.
+
+For the ANY method, further arguments to pass to the \code{velocity_embedding} Python function from \pkg{scVelo}.
+
+For the SingleCellExperiment method, further arguments to pass to the ANY method.}
+
+\item{use.dimred}{String or integer scalar specifying the reduced dimensions to retrieve from \code{x}.}
 }
 \value{
 A numeric matrix of the same dimensions as \code{x}, containing the projected velocity vectors in that embedding.

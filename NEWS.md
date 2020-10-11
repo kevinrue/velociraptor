@@ -1,3 +1,7 @@
+# velociraptor 0.99.9
+
+* Converted various functions to S4 generics for easier use with `SingleCellExperiment` objects.
+
 # velociraptor 0.99.8
 
 * Trigger new build to repeat `ExperimentHub` download.

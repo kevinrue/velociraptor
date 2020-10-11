@@ -15,6 +15,11 @@ test_that("embedVelocity works correctly", {
     tsne.results <- matrix(rnorm(2*ncol(out)), ncol=2)
     projected <- embedVelocity(tsne.results, out)
     expect_identical(dim(tsne.results), dim(projected))
+
+    # Same results inside an SCE.
+    reducedDim(sce1, "TSNE") <- tsne.results
+    projected2 <- embedVelocity(sce1, out, use.dimred="TSNE")
+    expect_identical(projected, projected2)
 })
 
 test_that("gridVectors works correctly", {
@@ -26,4 +31,9 @@ test_that("gridVectors works correctly", {
 
     out <- gridVectors(tsne.results, projected, as.data.frame=FALSE)
     expect_type(out, "list")
+
+    # Same results inside an SCE.
+    reducedDim(sce1, "TSNE") <- tsne.results
+    out2 <- gridVectors(sce1, projected, use.dimred="TSNE", as.data.frame=FALSE)
+    expect_identical(out, out2)
 })
