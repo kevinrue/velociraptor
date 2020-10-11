@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.9</span>
       </span>
     </div>
 
@@ -140,18 +140,31 @@
     <p>Summarize the velocity vectors into a grid, usually for easy plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>v</span>, resolution <span class='op'>=</span> <span class='fl'>40</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S4 method for ANY</span>
+<span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, resolution <span class='op'>=</span> <span class='fl'>40</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span>, use.dimred <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A low-dimensional embedding of the dataset where each cell is a row.</p></td>
+      <td><p>A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
+Alternatively, a SingleCellExperiment containing such coordinates in its <code>reducedDims</code>.</p></td>
     </tr>
     <tr>
-      <th>v</th>
-      <td><p>A low-dimensional projection of the velocity vectors, of the same dimensions as <code>x</code>.</p></td>
+      <th>embedded</th>
+      <td><p>A low-dimensional projection of the velocity vectors into the embedding of <code>x</code>.
+This should be of the same dimensions as <code>x</code> and is typically produced by <code><a href='embedVelocity.html'>embedVelocity</a></code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>For the generic, further arguments to pass to specific methods.</p>
+<p>For the SingleCellExperiment method, further arguments to pass to the ANY method.</p></td>
     </tr>
     <tr>
       <th>resolution</th>
@@ -166,6 +179,10 @@ in terms of the number of grid intervals along each axis.</p></td>
       <th>as.data.frame</th>
       <td><p>Logical scalar indicating whether the output should be a data.frame.
 If <code>FALSE</code>, a list of two matrices is returned.</p></td>
+    </tr>
+    <tr>
+      <th>use.dimred</th>
+      <td><p>String or integer scalar specifying the reduced dimensions to retrieve from <code>x</code>.</p></td>
     </tr>
     </table>
 
@@ -183,7 +200,10 @@ Column names are prefixed by <code>start.*</code> and <code>end.*</code>.</p>
 The locations and vectors of all cells in each block are averaged to obtain a representative of that block.
 This is most obviously useful for visualization to avoid overplotting of velocity vectors.</p>
 <p>If <code>scale=TRUE</code>, per-block vectors are scaled so that the median vector length is comparable to the spacing between blocks.
-This improves visualization when the scales of <code>x</code> and <code>v</code> are not immediately comparable.</p>
+This improves visualization when the scales of <code>x</code> and <code>embedded</code> are not immediately comparable.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='embedVelocity.html'>embedVelocity</a></code>, to generate <code>embedded</code>.</p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Aaron Lun</p>

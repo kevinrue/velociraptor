@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.9</span>
       </span>
     </div>
 
@@ -140,23 +140,36 @@
     <p>Project the velocity vector for each cell onto an existing low-dimensional embedding.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>v</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>vobj</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S4 method for ANY</span>
+<span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>vobj</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S4 method for SingleCellExperiment</span>
+<span class='fu'>embedVelocity</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>vobj</span>, <span class='va'>...</span>, use.dimred <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.</p></td>
+      <td><p>A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
+Alternatively, a SingleCellExperiment containing such coordinates in its <code>reducedDims</code>.</p></td>
     </tr>
     <tr>
-      <th>v</th>
+      <th>vobj</th>
       <td><p>A SingleCellExperiment containing the output of the velocity calculations,
 typically after running <code><a href='scvelo.html'>scvelo</a></code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Further arguments to pass to the <code>velocity_embedding</code> Python function from <span class="pkg">scVelo</span>.</p></td>
+      <td><p>For the generic, further arguments to pass to specific methods.</p>
+<p>For the ANY method, further arguments to pass to the <code>velocity_embedding</code> Python function from <span class="pkg">scVelo</span>.</p>
+<p>For the SingleCellExperiment method, further arguments to pass to the ANY method.</p></td>
+    </tr>
+    <tr>
+      <th>use.dimred</th>
+      <td><p>String or integer scalar specifying the reduced dimensions to retrieve from <code>x</code>.</p></td>
     </tr>
     </table>
 
