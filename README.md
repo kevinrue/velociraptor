@@ -4,6 +4,8 @@
 
 <!-- badges: start -->
 [![R build status](https://github.com/kevinrue/velociraptor/workflows/build_check_deploy/badge.svg)](https://github.com/kevinrue/velociraptor/actions)
+[![Codecov.io coverage status](https://codecov.io/github/kevinrue/velociraptor/coverage.svg?branch=master)](https://codecov.io/github/kevinrue/velociraptor)
+[![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/kevinrue/velociraptor)](https://hub.docker.com/r/kevinrue/velociraptor)
 <!-- badges: end -->
 
 _velociraptor_ provides an R toolkit for single-cell velocity computation.
