@@ -10,7 +10,14 @@
 
 _velociraptor_ provides an R toolkit for single-cell velocity computation.
 
-# Installation
+## Bioconductor release status
+
+|      Branch      |    R CMD check   | Last updated |
+|:----------------:|:----------------:|:------------:|
+| [_devel_](http://bioconductor.org/packages/devel/bioc/html/TVTB.html) | [![Bioconductor-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/TVTB.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/TVTB) | ![](http://bioconductor.org/shields/lastcommit/devel/bioc/TVTB.svg) |
+| [_release_](http://bioconductor.org/packages/release/bioc/html/TVTB.html) | [![Bioconductor-release Build Status](http://bioconductor.org/shields/build/release/bioc/TVTB.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/TVTB) | ![](http://bioconductor.org/shields/lastcommit/release/bioc/TVTB.svg) |
+
+## Installation
 
 _velociraptor_ can be easily installed from [Bioconductor](https://bioconductor.org/packages/velociraptor/) using `BiocManager::install()`:
 
