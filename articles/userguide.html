@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -86,7 +86,8 @@
 
       
 
-      </header><script src="userguide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="userguide_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="userguide_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
+<script src="userguide_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Computing RNA velocity in a Bioconductor framework</h1>
@@ -109,11 +110,11 @@
 <div id="overview" class="section level1">
 <h1 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h1>
-<p>This package provides a lightweight interface between the Bioconductor <code>SingleCellExperiment</code> data structure and the <a href="https://pypi.org/project/scvelo">scvelo</a> Python package for RNA velocity calculations. The interface is comparable to that of many other <code>SingleCellExperiment</code>-compatible functions, allowing users to plug in RNA velocity calculations into the existing Bioconductor analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.12/scRNAseq">scRNAseq</a></em> package. This data set contains gene-wise estimates of spliced and unspliced UMI counts for 2,325 mouse spermatogenic cells.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scRNAseq</span><span class="op">)</span>
+<p>This package provides a lightweight interface between the Bioconductor <code>SingleCellExperiment</code> data structure and the <a href="https://pypi.org/project/scvelo">scvelo</a> Python package for RNA velocity calculations. The interface is comparable to that of many other <code>SingleCellExperiment</code>-compatible functions, allowing users to plug in RNA velocity calculations into the existing Bioconductor analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.13/scRNAseq">scRNAseq</a></em> package. This data set contains gene-wise estimates of spliced and unspliced UMI counts for 2,325 mouse spermatogenic cells.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scRNAseq</span><span class="op">)</span>
 <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scRNAseq/man/HermannSpermatogenesisData.html">HermannSpermatogenesisData</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">sce</span></pre></div>
+<span class="va">sce</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 54448 2325 
 ## metadata(0):
@@ -131,25 +132,25 @@
 <h1 class="hasAnchor">
 <a href="#downsampling-for-demonstration" class="anchor"></a>Downsampling for demonstration</h1>
 <p>The full data set requires up to 12 GB of memory for the example usage presented in this vignette. For demonstration purposes, we downsample the data set to the first 500 cells. Feel free to skip this downsampling step if you have access to sufficient memory.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="va">sce</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sce</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></code></pre></div>
 </div>
 <div id="basic-workflow" class="section level1">
 <h1 class="hasAnchor">
 <a href="#basic-workflow" class="anchor"></a>Basic workflow</h1>
-<p>We assume that feature selection has already been performed by the user using any method (see <a href="https://osca.bioconductor.org/feature-selection.html">here</a> for some suggestions). We will use the log-expression method from the <em><a href="https://bioconductor.org/packages/3.12/scran">scran</a></em> method here.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span>
+<p>We assume that feature selection has already been performed by the user using any method (see <a href="https://osca.bioconductor.org/feature-selection.html">here</a> for some suggestions). We will use the log-expression method from the <em><a href="https://bioconductor.org/packages/3.13/scran">scran</a></em> method here.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span>
 <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span>, assay.type<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">scran</span><span class="op">)</span>
 <span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html">modelGeneVar</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span>
-<span class="va">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n<span class="op">=</span><span class="fl">2000</span><span class="op">)</span></pre></div>
+<span class="va">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n<span class="op">=</span><span class="fl">2000</span><span class="op">)</span></code></pre></div>
 <p>We can plug these choices into the <code><a href="../reference/scvelo.html">scvelo()</a></code> function with our <code>SingleCellExperiment</code> object. Here, we will use the <code>"spliced"</code> count matrix as a proxy for the typical exonic count matrix. While this count matrix is not required for the velocity estimation in itself, it is used internally to retrieve the principal component space that is used by <a href="https://pypi.org/project/scvelo">scvelo</a> to find nearest neighbors. There are some subtle differences between the spliced count matrix and the typical exonic count matrix - see <code><a href="../reference/scvelo.html">?scvelo</a></code> for some commentary about this - but the spliced counts are generally a satisfactory replacement. By default, <code><a href="../reference/scvelo.html">scvelo()</a></code> uses the steady-state approach to estimate velocities. The stochastic and dynamical models implemented in <a href="https://pypi.org/project/scvelo">scvelo</a> are accessible as well, by modifying the <code>mode</code> argument.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kevinrue/velociraptor">velociraptor</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/kevinrue/velociraptor">velociraptor</a></span><span class="op">)</span>
 <span class="va">velo.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>, assay.X<span class="op">=</span><span class="st">"spliced"</span><span class="op">)</span>
-<span class="va">velo.out</span></pre></div>
+<span class="va">velo.out</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -164,26 +165,26 @@
 ##   velocity_confidence velocity_confidence_transition
 ## reducedDimNames(1): X_pca
 ## altExpNames(0):</code></pre>
-<p>The <code><a href="../reference/scvelo.html">scvelo()</a></code> function produces a <code>SingleCellExperiment</code> containing all of the outputs of the calculation in Python. Of particular interest is the <code>velocity_pseudotime</code> vector that captures the relative progression of each cell along the biological process driving the velocity vectors. We can visualize this effect below in a <span class="math inline">\(t\)</span>-SNE plot generated by <em><a href="https://bioconductor.org/packages/3.12/scater">scater</a></em> on the top HVGs.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span>
+<p>The <code><a href="../reference/scvelo.html">scvelo()</a></code> function produces a <code>SingleCellExperiment</code> containing all of the outputs of the calculation in Python. Of particular interest is the <code>velocity_pseudotime</code> vector that captures the relative progression of each cell along the biological process driving the velocity vectors. We can visualize this effect below in a <span class="math inline">\(t\)</span>-SNE plot generated by <em><a href="https://bioconductor.org/packages/3.13/scater">scater</a></em> on the top HVGs.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/">scater</a></span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runPCA.html">runPCA</a></span><span class="op">(</span><span class="va">sce</span>, subset_row<span class="op">=</span><span class="va">top.hvgs</span><span class="op">)</span>
 <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runTSNE.html">runTSNE</a></span><span class="op">(</span><span class="va">sce</span>, dimred<span class="op">=</span><span class="st">"PCA"</span><span class="op">)</span>
 
 <span class="va">sce</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">&lt;-</span> <span class="va">velo.out</span><span class="op">$</span><span class="va">velocity_pseudotime</span>
-<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span></code></pre></div>
 <p><img src="userguide_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>It is also straightforward to embed the velocity vectors into our desired low-dimensional space, as shown below for the <span class="math inline">\(t\)</span>-SNE coordinates. This uses a grid-based approach to summarize the per-cell vectors into local representatives for effective visualization.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span>
 <span class="va">grid.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gridVectors.html">gridVectors</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">embedded</span><span class="op">)</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">grid.df</span>, mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">start.1</span>, y<span class="op">=</span><span class="va">start.2</span>, 
-        xend<span class="op">=</span><span class="va">end.1</span>, yend<span class="op">=</span><span class="va">end.2</span><span class="op">)</span>, arrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="st">"inches"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></pre></div>
+        xend<span class="op">=</span><span class="va">end.1</span>, yend<span class="op">=</span><span class="va">end.2</span><span class="op">)</span>, arrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="st">"inches"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="userguide_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>And that’s it, really.</p>
 </div>
@@ -191,11 +192,11 @@
 <h1 class="hasAnchor">
 <a href="#advanced-options" class="anchor"></a>Advanced options</h1>
 <p><code><a href="../reference/scvelo.html">scvelo()</a></code> interally performs a PCA step that we can bypass by supplying our own PC coordinates. Indeed, it is often the case that we have already performed PCA in the earlier analysis steps, so we can just re-use those results to (i) save time and (ii) improve consistency with the other steps. Here, we computed the PCA coordinates in <code><a href="https://rdrr.io/pkg/scater/man/runPCA.html">runPCA()</a></code> above, so let’s just recycle that:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># Only setting assay.X= for the initial AnnData creation,</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Only setting assay.X= for the initial AnnData creation,</span>
 <span class="co"># it is not actually used in any further steps.</span>
 <span class="va">velo.out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>, use.dimred<span class="op">=</span><span class="st">"PCA"</span><span class="op">)</span> 
-<span class="va">velo.out2</span></pre></div>
+<span class="va">velo.out2</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -211,9 +212,9 @@
 ## reducedDimNames(1): X_pca
 ## altExpNames(0):</code></pre>
 <p>We also provide an option to use the <a href="https://pypi.org/project/scvelo">scvelo</a> pipeline without modification, i.e., relying on their normalization and feature selection. This sacrifices consistency with other Bioconductor workflows but enables perfect mimicry of a pure Python-based analysis. In this case, arguments like <code>subset.row=</code> are simply ignored.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="va">velo.out3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, use.theirs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">velo.out3</span></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">velo.out3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, use.theirs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">velo.out3</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 54448 500 
 ## metadata(5): pca neighbors velocity_params velocity_graph
@@ -229,10 +230,10 @@
 ## reducedDimNames(1): X_pca
 ## altExpNames(0):</code></pre>
 <p>Advanced users can tinker with the settings of individual <a href="https://pypi.org/project/scvelo">scvelo</a> steps by setting named lists of arguments in the <code>scvelo.params=</code> argument. For example, to tinker with the behavior of the <code>recover_dynamics</code> step, we could do:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="va">velo.out4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>,
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">velo.out4</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">sce</span>, assay.X<span class="op">=</span><span class="fl">1</span>, subset.row<span class="op">=</span><span class="va">top.hvgs</span>,
     scvelo.params<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>recover_dynamics<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>max_iter<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">velo.out4</span></pre></div>
+<span class="va">velo.out4</span></code></pre></div>
 <pre><code>## class: SingleCellExperiment 
 ## dim: 2000 500 
 ## metadata(4): neighbors velocity_params velocity_graph
@@ -251,11 +252,11 @@
 <div id="session-information" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session information</h1>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>## R version 4.0.2 (2020-06-22)
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## R Under development (unstable) (2020-11-12 r79424)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04 LTS
+## Running under: Ubuntu 20.04.1 LTS
 ## 
 ## Matrix products: default
 ## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
@@ -272,77 +273,77 @@
 ## [1] parallel stats    graphics utils    stats4   methods  base    
 ## 
 ## other attached packages:
-##  [1] scater_1.17.5               ggplot2_3.3.2              
-##  [3] velociraptor_0.99.9         scran_1.17.21              
-##  [5] scuttle_0.99.18             scRNAseq_2.3.15            
-##  [7] SingleCellExperiment_1.11.8 SummarizedExperiment_1.19.9
-##  [9] Biobase_2.49.1              GenomicRanges_1.41.6       
-## [11] GenomeInfoDb_1.25.11        IRanges_2.23.10            
-## [13] S4Vectors_0.27.14           BiocGenerics_0.35.4        
-## [15] MatrixGenerics_1.1.4        matrixStats_0.57.0         
-## [17] knitr_1.30                  BiocStyle_2.17.1           
+##  [1] scater_1.19.3               ggplot2_3.3.2              
+##  [3] velociraptor_1.1.0          scran_1.19.2               
+##  [5] scuttle_1.1.1               scRNAseq_2.5.0             
+##  [7] SingleCellExperiment_1.13.1 SummarizedExperiment_1.21.0
+##  [9] Biobase_2.51.0              GenomicRanges_1.43.0       
+## [11] GenomeInfoDb_1.27.0         IRanges_2.25.2             
+## [13] S4Vectors_0.29.3            BiocGenerics_0.37.0        
+## [15] MatrixGenerics_1.3.0        matrixStats_0.57.0         
+## [17] knitr_1.30                  BiocStyle_2.19.0           
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] backports_1.1.10              AnnotationHub_2.21.5         
-##   [3] BiocFileCache_1.13.1          systemfonts_0.3.2            
-##   [5] igraph_1.2.6                  lazyeval_0.2.2               
-##   [7] BiocParallel_1.23.2           digest_0.6.25                
-##   [9] ensembldb_2.13.1              htmltools_0.5.0              
-##  [11] viridis_0.5.1                 magrittr_1.5                 
-##  [13] memoise_1.1.0                 limma_3.45.14                
-##  [15] Biostrings_2.57.2             askpass_1.1                  
-##  [17] pkgdown_1.6.1                 prettyunits_1.1.1            
-##  [19] colorspace_1.4-1              blob_1.2.1                   
-##  [21] rappdirs_0.3.1                textshaping_0.1.2            
-##  [23] xfun_0.18                     dplyr_1.0.2                  
-##  [25] crayon_1.3.4                  RCurl_1.98-1.2               
-##  [27] jsonlite_1.7.1                glue_1.4.2                   
-##  [29] gtable_0.3.0                  zlibbioc_1.35.0              
-##  [31] XVector_0.29.3                DelayedArray_0.15.16         
-##  [33] BiocSingular_1.5.2            scales_1.1.1                 
-##  [35] DBI_1.1.0                     edgeR_3.31.4                 
-##  [37] Rcpp_1.0.5                    viridisLite_0.3.0            
-##  [39] xtable_1.8-4                  progress_1.2.2               
-##  [41] reticulate_1.16               dqrng_0.2.1                  
-##  [43] bit_4.0.4                     rsvd_1.0.3                   
-##  [45] httr_1.4.2                    ellipsis_0.3.1               
-##  [47] farver_2.0.3                  pkgconfig_2.0.3              
-##  [49] XML_3.99-0.5                  dbplyr_1.4.4                 
-##  [51] locfit_1.5-9.4                labeling_0.3                 
-##  [53] tidyselect_1.1.0              rlang_0.4.8                  
-##  [55] later_1.1.0.1                 AnnotationDbi_1.51.3         
-##  [57] munsell_0.5.0                 BiocVersion_3.12.0           
-##  [59] tools_4.0.2                   generics_0.0.2               
-##  [61] RSQLite_2.2.1                 ExperimentHub_1.15.3         
-##  [63] evaluate_0.14                 stringr_1.4.0                
-##  [65] fastmap_1.0.1                 yaml_2.2.1                   
-##  [67] ragg_0.4.0                    grDevices_4.0.2              
-##  [69] bit64_4.0.5                   fs_1.5.0                     
-##  [71] purrr_0.3.4                   AnnotationFilter_1.13.0      
+##   [1] AnnotationHub_2.23.0          BiocFileCache_1.15.1         
+##   [3] systemfonts_0.3.2             igraph_1.2.6                 
+##   [5] lazyeval_0.2.2                BiocParallel_1.25.1          
+##   [7] digest_0.6.27                 ensembldb_2.15.1             
+##   [9] htmltools_0.5.0               viridis_0.5.1                
+##  [11] magrittr_1.5                  memoise_1.1.0                
+##  [13] limma_3.47.0                  Biostrings_2.59.0            
+##  [15] askpass_1.1                   pkgdown_1.6.1                
+##  [17] prettyunits_1.1.1             colorspace_2.0-0             
+##  [19] blob_1.2.1                    rappdirs_0.3.1               
+##  [21] textshaping_0.2.1             xfun_0.19                    
+##  [23] dplyr_1.0.2                   crayon_1.3.4                 
+##  [25] RCurl_1.98-1.2                jsonlite_1.7.1               
+##  [27] glue_1.4.2                    gtable_0.3.0                 
+##  [29] zlibbioc_1.37.0               XVector_0.31.0               
+##  [31] DelayedArray_0.17.1           BiocSingular_1.7.0           
+##  [33] scales_1.1.1                  DBI_1.1.0                    
+##  [35] edgeR_3.33.0                  Rcpp_1.0.5                   
+##  [37] viridisLite_0.3.0             xtable_1.8-4                 
+##  [39] progress_1.2.2                reticulate_1.18              
+##  [41] dqrng_0.2.1                   bit_4.0.4                    
+##  [43] rsvd_1.0.3                    httr_1.4.2                   
+##  [45] ellipsis_0.3.1                farver_2.0.3                 
+##  [47] pkgconfig_2.0.3               XML_3.99-0.5                 
+##  [49] dbplyr_2.0.0                  locfit_1.5-9.4               
+##  [51] labeling_0.4.2                tidyselect_1.1.0             
+##  [53] rlang_0.4.8                   later_1.1.0.1                
+##  [55] AnnotationDbi_1.53.0          munsell_0.5.0                
+##  [57] BiocVersion_3.13.1            tools_4.1.0                  
+##  [59] generics_0.1.0                RSQLite_2.2.1                
+##  [61] ExperimentHub_1.17.0          evaluate_0.14                
+##  [63] stringr_1.4.0                 fastmap_1.0.1                
+##  [65] yaml_2.2.1                    ragg_0.4.0                   
+##  [67] grDevices_4.1.0               bit64_4.0.5                  
+##  [69] fs_1.5.0                      purrr_0.3.4                  
+##  [71] AnnotationFilter_1.15.0       sparseMatrixStats_1.3.0      
 ##  [73] mime_0.9                      xml2_1.3.2                   
-##  [75] biomaRt_2.45.5                compiler_4.0.2               
+##  [75] biomaRt_2.47.1                compiler_4.1.0               
 ##  [77] beeswarm_0.2.3                filelock_1.0.2               
-##  [79] curl_4.3                      interactiveDisplayBase_1.27.5
-##  [81] tibble_3.0.3                  statmod_1.4.34               
-##  [83] stringi_1.5.3                 basilisk.utils_1.1.11        
-##  [85] GenomicFeatures_1.41.3        desc_1.2.0                   
-##  [87] lattice_0.20-41               bluster_0.99.1               
-##  [89] ProtGenerics_1.21.0           Matrix_1.2-18                
-##  [91] vctrs_0.3.4                   pillar_1.4.6                 
+##  [79] curl_4.3                      interactiveDisplayBase_1.29.0
+##  [81] tibble_3.0.4                  statmod_1.4.35               
+##  [83] stringi_1.5.3                 basilisk.utils_1.3.0         
+##  [85] GenomicFeatures_1.43.2        desc_1.2.0                   
+##  [87] lattice_0.20-41               bluster_1.1.0                
+##  [89] ProtGenerics_1.23.1           Matrix_1.2-18                
+##  [91] vctrs_0.3.5                   pillar_1.4.6                 
 ##  [93] lifecycle_0.2.0               BiocManager_1.30.10          
-##  [95] BiocNeighbors_1.7.0           bitops_1.0-6                 
+##  [95] BiocNeighbors_1.9.2           bitops_1.0-6                 
 ##  [97] irlba_2.3.3                   httpuv_1.5.4                 
-##  [99] rtracklayer_1.49.5            R6_2.4.1                     
-## [101] bookdown_0.20                 promises_1.1.1               
+##  [99] rtracklayer_1.51.0            R6_2.5.0                     
+## [101] bookdown_0.21                 promises_1.1.1               
 ## [103] gridExtra_2.3                 vipor_0.4.5                  
-## [105] zellkonverter_0.99.5          assertthat_0.2.1             
-## [107] openssl_1.4.3                 rprojroot_1.3-2              
-## [109] withr_2.3.0                   GenomicAlignments_1.25.3     
-## [111] Rsamtools_2.5.3               datasets_4.0.2               
+## [105] zellkonverter_1.1.0           assertthat_0.2.1             
+## [107] openssl_1.4.3                 rprojroot_2.0.2              
+## [109] withr_2.3.0                   GenomicAlignments_1.27.1     
+## [111] Rsamtools_2.7.0               datasets_4.1.0               
 ## [113] GenomeInfoDbData_1.2.4        hms_0.5.3                    
-## [115] grid_4.0.2                    beachmat_2.5.8               
-## [117] basilisk_1.1.18               rmarkdown_2.4                
-## [119] DelayedMatrixStats_1.11.1     Rtsne_0.15                   
+## [115] grid_4.1.0                    beachmat_2.7.0               
+## [117] basilisk_1.3.0                rmarkdown_2.5                
+## [119] DelayedMatrixStats_1.13.0     Rtsne_0.15                   
 ## [121] shiny_1.5.0                   ggbeeswarm_0.6.0</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">

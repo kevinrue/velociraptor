@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.99.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -97,15 +97,42 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#velociraptor" class="anchor"></a>velociraptor</h1></div>
 <!-- badges: start -->
-<p><a href="https://github.com/kevinrue/velociraptor/actions"><img src="https://github.com/kevinrue/velociraptor/workflows/build_check_deploy/badge.svg" alt="R build status"></a> <!-- badges: end --></p>
-<p>The goal of velociraptor is to provide an R toolkit for single-cell velocity computation.</p>
+<p><a href="https://github.com/kevinrue/velociraptor/actions"><img src="https://github.com/kevinrue/velociraptor/workflows/build_check_deploy/badge.svg" alt="R build status"></a> <a href="https://codecov.io/github/kevinrue/velociraptor"><img src="https://codecov.io/github/kevinrue/velociraptor/coverage.svg?branch=master" alt="Codecov.io coverage status"></a> <a href="https://hub.docker.com/r/kevinrue/velociraptor"><img src="https://img.shields.io/docker/cloud/automated/kevinrue/velociraptor" alt="Docker Cloud Automated build"></a> <!-- badges: end --></p>
+<p><em>velociraptor</em> provides an R toolkit for single-cell velocity computation.</p>
+<div id="bioconductor-release-status" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bioconductor-release-status" class="anchor"></a>Bioconductor release status</h2>
+<table class="table">
+<thead><tr class="header">
+<th align="center">Branch</th>
+<th align="center">R CMD check</th>
+<th align="center">Last updated</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="center"><a href="http://bioconductor.org/packages/devel/bioc/html/velociraptor.html"><em>devel</em></a></td>
+<td align="center"><a href="http://bioconductor.org/checkResults/devel/bioc-LATEST/velociraptor"><img src="http://bioconductor.org/shields/build/devel/bioc/velociraptor.svg" alt="Bioconductor-devel Build Status"></a></td>
+<td align="center"><img src="http://bioconductor.org/shields/lastcommit/devel/bioc/velociraptor.svg"></td>
+</tr>
+<tr class="even">
+<td align="center"><a href="http://bioconductor.org/packages/release/bioc/html/velociraptor.html"><em>release</em></a></td>
+<td align="center"><a href="http://bioconductor.org/checkResults/release/bioc-LATEST/velociraptor"><img src="http://bioconductor.org/shields/build/release/bioc/velociraptor.svg" alt="Bioconductor-release Build Status"></a></td>
+<td align="center"><img src="http://bioconductor.org/shields/lastcommit/release/bioc/velociraptor.svg"></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the latest version of velociraptor from <a href="https://github.com/kevinrue/velociraptor">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"kevinrue/velociraptor"</span><span class="op">)</span></pre></div>
+<p><em>velociraptor</em> can be easily installed from <a href="https://bioconductor.org/packages/velociraptor/">Bioconductor</a> using <code><a href="https://rdrr.io/pkg/BiocManager/man/install.html">BiocManager::install()</a></code>:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span><span class="op">)</span>
+<span class="co"># or also...</span>
+<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>Setting <code>dependencies = TRUE</code> should ensure that all packages, including the ones in the <code>Suggests:</code> field of the <code>DESCRIPTION</code> file, are installed - this can be essential if you want to reproduce the code in the vignette, for example.</p>
 </div>
 </div>
 
