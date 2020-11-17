@@ -14,8 +14,8 @@ _velociraptor_ provides an R toolkit for single-cell velocity computation.
 
 |      Branch      |    R CMD check   | Last updated |
 |:----------------:|:----------------:|:------------:|
-| [_devel_](http://bioconductor.org/packages/devel/bioc/html/TVTB.html) | [![Bioconductor-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/TVTB.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/TVTB) | ![](http://bioconductor.org/shields/lastcommit/devel/bioc/TVTB.svg) |
-| [_release_](http://bioconductor.org/packages/release/bioc/html/TVTB.html) | [![Bioconductor-release Build Status](http://bioconductor.org/shields/build/release/bioc/TVTB.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/TVTB) | ![](http://bioconductor.org/shields/lastcommit/release/bioc/TVTB.svg) |
+| [_devel_](http://bioconductor.org/packages/devel/bioc/html/velociraptor.html) | [![Bioconductor-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/velociraptor) | ![](http://bioconductor.org/shields/lastcommit/devel/bioc/velociraptor.svg) |
+| [_release_](http://bioconductor.org/packages/release/bioc/html/velociraptor.html) | [![Bioconductor-release Build Status](http://bioconductor.org/shields/build/release/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/velociraptor) | ![](http://bioconductor.org/shields/lastcommit/release/bioc/velociraptor.svg) |
 
 ## Installation
 
