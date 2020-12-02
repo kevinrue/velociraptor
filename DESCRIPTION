@@ -34,7 +34,9 @@ Suggests:
     scater,
     scRNAseq,
     ggplot2,
-    Rtsne
+    Rtsne,
+    cowplot,
+    GGally
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8
