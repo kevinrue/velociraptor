@@ -68,7 +68,7 @@
 #' 
 #' @export
 #' @importFrom grDevices col2rgb
-#' @importFrom graphics layout
+#' @importFrom graphics layout abline points
 #' @importFrom SummarizedExperiment assay rowData
 #' @importFrom SingleCellExperiment reducedDim reducedDims reducedDimNames
 plotVelocity <- function(x, genes, use.dimred = 1,
@@ -158,6 +158,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
             if (any(colMatrix[4, ] != 255)) {
                 warning("ignoring 'colour.alpha' in phase plot, ",
                         "as 'colour_by' already specifies alpha channels")
+                cols <- colour_by
             } else {
                 cols <- paste0(colour_by, as.hexmode(colour.alpha))
             }

@@ -76,8 +76,10 @@
 #'   calculate and add streamlines from the RNA velocity field to the plot,
 #'   \code{\link[viridisLite]{viridis}} for creation of color palettes.
 #' 
+#' @export
 #' @importFrom S4Vectors DataFrame
-#' @importFrom ggplot2 ggplot aes geom_point labs scale_colour_gradientn scale_alpha_continuous coord_munch theme_minimal theme element_blank
+# #' @importFrom ggplot2 ggplot aes geom_point labs scale_colour_gradientn scale_alpha_continuous coord_munch theme_minimal theme element_blank
+#' @import ggplot2 
 #' @importFrom metR geom_streamline
 plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                colour_by = "#444444", colour.alpha = 0.2,
@@ -111,6 +113,10 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         is.logical(colour.streamlines)
         length(colour.streamlines) == 1L
         .isValidColour(colour.streamlines.map)
+        is.numeric(arrow.angle)
+        length(arrow.angle) == 1L
+        is.numeric(arrow.length)
+        length(arrow.length) == 1L
     })
     if (is.numeric(use.dimred)) {
         stopifnot(exprs = {
