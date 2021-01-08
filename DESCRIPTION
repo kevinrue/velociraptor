@@ -10,7 +10,8 @@ Description: This package provides Bioconductor-friendly wrappers for RNA veloci
     and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
     The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.
 Depends:
-    SummarizedExperiment
+    SummarizedExperiment,
+    ggplot2
 Imports:
     methods,
     stats,
