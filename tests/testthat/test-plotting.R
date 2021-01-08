@@ -22,11 +22,19 @@ tsne.results <- matrix(rnorm(2*ncol(out1)), ncol=2)
 em1 <- embedVelocity(reducedDim(out1, 1), out1)[,1:2]
 em2 <- embedVelocity(reducedDim(out2, 1), out2)[,1:2]
 
+out3 <- out1
+colData(out3) <- cbind(colData(out3), type = sample(letters, ncol(out3), replace = TRUE))
+rowData(out3) <- rowData(out3)[, -grep("gamma", colnames(rowData(out3)))]
+
+out4 <- out2
+rowData(out4) <- rowData(out4)[, -grep("fit_[us]0", colnames(rowData(out4)))]
+
 test_that("plotVelocity runs", {
     
     expect_error(plotVelocity("error", genes2))
     expect_error(plotVelocity(out1, "error"))
-    expect_error(plotVelocity(out1, genes2, "error"))
+    expect_error(plotVelocity(out1, genes2, use.dimred = "error"))
+    expect_error(plotVelocity(out1, genes2, use.dimred = FALSE))
     expect_error(plotVelocity(out1, genes2, 1, "error"))
     expect_error(plotVelocity(out1, genes2, 1, which.plots = "error"))
     expect_error(plotVelocity(out1, genes2, 1, genes.per.row = "error"))
@@ -37,6 +45,7 @@ test_that("plotVelocity runs", {
     expect_error(plotVelocity(out1, genes2, 1, max.abs.velo = "error"))
     expect_error(plotVelocity(out1, genes2, 1, max.abs.velo = -1))
     
+
     tf <- tempfile(fileext = ".png")
     png(tf)
     expect_warning(res0 <- plotVelocity(out1, genes1, which.plots = "phase", colour_by = "#44444422"))
@@ -45,8 +54,12 @@ test_that("plotVelocity runs", {
     expect_identical(res1, c(2, 3))
     expect_warning(res2 <- plotVelocity(out2, genes1))
     expect_identical(res1, res2)
-    res3 <- plotVelocity(out2, genes2)
+    res3 <- plotVelocity(out4, genes2)
     expect_identical(res1, res3)
+    res4 <- plotVelocity(out3, genes2, which.plots = "phase", colour_by = "type")
+    expect_identical(res0, res4)
+    res5 <- plotVelocity(out2, genes2)
+    expect_identical(res1, res5)
     dev.off()
     expect_true(file.exists(tf))
     unlink(tf)
@@ -56,6 +69,7 @@ test_that("plotVelocityStream runs", {
     expect_error(plotVelocityStream("error", em2))
     expect_error(plotVelocityStream(out2, "error"))
     expect_error(plotVelocityStream(out2, em2, use.dimred = "error"))
+    expect_error(plotVelocityStream(out2, em2, use.dimred = FALSE))
     expect_error(plotVelocityStream(out2, em2, colour_by = "error"))
     expect_error(plotVelocityStream(out2, em2, colour.alpha = 2))
     expect_error(plotVelocityStream(out2, em2, grid.resolution = "error"))
@@ -73,6 +87,7 @@ test_that("plotVelocityStream runs", {
     png(tf)
     expect_warning(print(plotVelocityStream(out2, em2, colour_by = "#44444422")))
     print(plotVelocityStream(out2, em2))
+    print(plotVelocityStream(out3, em2, colour_by = "type"))
     print(plotVelocityStream(out2, em2, colour.streamlines = TRUE))
     dev.off()
     expect_true(file.exists(tf))
