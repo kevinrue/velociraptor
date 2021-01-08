@@ -76,7 +76,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                          which.plots = c("phase", "velocity", "expression"),
                          genes.per.row = 1,
                          colour_by = "#222222",
-                         colour.alpha = 100, # 0..255
+                         colour.alpha = 100,
                          colours.velocity = c("#A50026", "#D73027", "#F46D43",
                                               "#FDAE61", "#FEE08B", "#FFFFBF",
                                               "#D9EF8B", "#A6D96A", "#66BD63",
