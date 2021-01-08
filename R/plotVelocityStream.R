@@ -77,7 +77,7 @@
 #'   \code{\link[viridisLite]{viridis}} for creation of color palettes.
 #' 
 #' @importFrom S4Vectors DataFrame
-#' @importFrom ggplot2 ggplot aes geom_point labs scale_colour_gradientn scale_alpha_continuous coord_munch
+#' @importFrom ggplot2 ggplot aes geom_point labs scale_colour_gradientn scale_alpha_continuous coord_munch theme_minimal theme element_blank
 #' @importFrom metR geom_streamline
 plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                colour_by = "#444444", colour.alpha = 0.2,
@@ -178,15 +178,20 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                  min.L = stream.min.L, res = stream.res,
                                  inherit.aes = FALSE) +
             scale_colour_gradientn(colours = colour.streamlines.map, guide = "none") +
-            scale_alpha_continuous(guide = "none")
+            scale_alpha_continuous(guide = "none") +
+            theme_minimal() + theme(axis.text = element_blank(),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank())
     } else {
-        p <- p +
-            geom_streamline(mapping = aes(x = x, y = y, dx = dx, dy = dy,
-                                          size = stream.width * ..step..),
-                            data = plotdat2, size = 0.3, jitter = 2, L = stream.L,
-                            min.L = stream.min.L, res = stream.res,
-                            arrow.angle = arrow.angle, arrow.length = arrow.length,
-                            inherit.aes = FALSE)
+        p <- p + geom_streamline(mapping = aes(x = x, y = y, dx = dx, dy = dy,
+                                               size = stream.width * ..step..),
+                                 data = plotdat2, size = 0.3, jitter = 2, L = stream.L,
+                                 min.L = stream.min.L, res = stream.res,
+                                 arrow.angle = arrow.angle, arrow.length = arrow.length,
+                                 inherit.aes = FALSE) +
+            theme_minimal() + theme(axis.text = element_blank(),
+                                    panel.grid.major = element_blank(),
+                                    panel.grid.minor = element_blank())
     }
     
     return(p)

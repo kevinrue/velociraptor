@@ -98,13 +98,13 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         all(which.plots %in% c("phase", "velocity", "expression"))
         is.numeric(genes.per.row)
         length(genes.per.row) == 1L
-        (.isValidColour(colour_by) && (length(colour_by) == 1L || length(colour_by) == ncol(x))) ||
+        (all(.isValidColour(colour_by)) && (length(colour_by) == 1L || length(colour_by) == ncol(x))) ||
             (is.character(colour_by) && length(colour_by) == 1L && colour_by %in% colnames(colData(x)))
         is.numeric(colour.alpha)
         length(colour.alpha) == 1L
         colour.alpha >= 0 && colour.alpha <= 255
-        .isValidColour(colours.velocity)
-        .isValidColour(colours.expression)
+        all(.isValidColour(colours.velocity))
+        all(.isValidColour(colours.expression))
         is.numeric(max.abs.velo)
         length(max.abs.velo) == 1L
         max.abs.velo >= 0.0
@@ -150,7 +150,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         # spliced/unspliced phase portrait with model estimates
         if ("phase" %in% which.plots) {
             par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
-            if (!.isValidColour(colour_by)) {
+            if (!all(.isValidColour(colour_by))) {
                 coli <- factor(x[[colour_by]])
                 colour_by <- .gg_color_hue(nlevels(coli))[as.numeric(coli)]
             }
@@ -189,7 +189,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
             if (!is.null(gamma) && is.finite(gamma)) {
                 if (!is.null(beta) && is.finite(beta)) {
                     # in the dynamical model
-                    abline(a = 0, b = (gamma / beta), lty = 3)
+                    abline(a = 0, b = gamma / beta * scaling, lty = 3)
                 } else {
                     # in a static model
                     abline(a = 0, b = gamma, lty = 3)
