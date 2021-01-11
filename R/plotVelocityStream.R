@@ -78,9 +78,6 @@
 #' 
 #' @export
 #' @importFrom S4Vectors DataFrame
-# #' @importFrom ggplot2 ggplot aes geom_point labs scale_colour_gradientn scale_alpha_continuous coord_munch theme_minimal theme element_blank
-#' @import ggplot2 
-#' @importFrom metR geom_streamline
 plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                colour_by = "#444444", colour.alpha = 0.2,
                                grid.resolution = 60, scale = TRUE,
@@ -162,42 +159,49 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     if (!.isValidColour(colour_by)) {
         plotdat1 <- cbind(plotdat1, col = colData(sce)[, colour_by])
     }
-    p <- ggplot(plotdat1, aes(x = x, y = y)) +
-        labs(x = paste(use.dimred, "1"), y = paste(use.dimred, "2"))
+    p <- ggplot2::ggplot(plotdat1, ggplot2::aes(x = x, y = y)) +
+        ggplot2::labs(x = paste(use.dimred, "1"), y = paste(use.dimred, "2"))
     if (.isValidColour(colour_by)) {
         colMatrix <- grDevices::col2rgb(col = colour_by, alpha = TRUE)
         if (any(colMatrix[4, ] != 255)) {
             warning("ignoring 'colour.alpha' as 'colour_by' already specifies alpha channels")
             colour.alpha <- colMatrix[4, ] / 255
         }
-        p <- p + geom_point(colour = colour_by, alpha = colour.alpha)
+        p <- p + ggplot2::geom_point(colour = colour_by, alpha = colour.alpha)
     } else {
-        p <- p + geom_point(aes(colour = col), alpha = colour.alpha) + labs(colour = colour_by)
+        p <- p + ggplot2::geom_point(ggplot2::aes(colour = col), alpha = colour.alpha) +
+            ggplot2::labs(colour = colour_by)
     }
     if (colour.streamlines) {
         # remark: when coloring streamlines, we currently cannot have any arrows
-        p <- p + geom_streamline(mapping = aes(x = x, y = y, dx = dx, dy = dy,
-                                               size = stream.width * ..step.., alpha = ..step..,
-                                               colour = sqrt(..dx..^2 + ..dy..^2)),
-                                 arrow = NULL, lineend = "round",
-                                 data = plotdat2, size = 0.6, jitter = 2, L = stream.L,
-                                 min.L = stream.min.L, res = stream.res,
-                                 inherit.aes = FALSE) +
-            scale_colour_gradientn(colours = colour.streamlines.map, guide = "none") +
-            scale_alpha_continuous(guide = "none") +
-            theme_minimal() + theme(axis.text = element_blank(),
-                                    panel.grid.major = element_blank(),
-                                    panel.grid.minor = element_blank())
+        p <- p +
+            metR::geom_streamline(mapping = ggplot2::aes(x = x, y = y, dx = dx, dy = dy,
+                                                         size = stream.width * ..step..,
+                                                         alpha = ..step..,
+                                                         colour = sqrt(..dx..^2 + ..dy..^2)),
+                                  arrow = NULL, lineend = "round",
+                                  data = plotdat2, size = 0.6, jitter = 2,
+                                  L = stream.L, min.L = stream.min.L,
+                                  res = stream.res, inherit.aes = FALSE) +
+            ggplot2::scale_colour_gradientn(colours = colour.streamlines.map,
+                                            guide = "none") +
+            ggplot2::scale_alpha_continuous(guide = "none") +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(axis.text = ggplot2::element_blank(),
+                           panel.grid.major = ggplot2::element_blank(),
+                           panel.grid.minor = ggplot2::element_blank())
     } else {
-        p <- p + geom_streamline(mapping = aes(x = x, y = y, dx = dx, dy = dy,
-                                               size = stream.width * ..step..),
-                                 data = plotdat2, size = 0.3, jitter = 2, L = stream.L,
-                                 min.L = stream.min.L, res = stream.res,
-                                 arrow.angle = arrow.angle, arrow.length = arrow.length,
-                                 inherit.aes = FALSE) +
-            theme_minimal() + theme(axis.text = element_blank(),
-                                    panel.grid.major = element_blank(),
-                                    panel.grid.minor = element_blank())
+        p <- p +
+            metR::geom_streamline(mapping = ggplot2::aes(x = x, y = y, dx = dx, dy = dy,
+                                                         size = stream.width * ..step..),
+                                  data = plotdat2, size = 0.3, jitter = 2,
+                                  L = stream.L, min.L = stream.min.L,
+                                  res = stream.res, arrow.angle = arrow.angle,
+                                  arrow.length = arrow.length, inherit.aes = FALSE) +
+            ggplot2::theme_minimal() +
+            ggplot2::theme(axis.text = ggplot2::element_blank(),
+                           panel.grid.major = ggplot2::element_blank(),
+                           panel.grid.minor = ggplot2::element_blank())
     }
     
     return(p)

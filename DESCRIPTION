@@ -10,8 +10,7 @@ Description: This package provides Bioconductor-friendly wrappers for RNA veloci
     and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
     The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.
 Depends:
-    SummarizedExperiment,
-    ggplot2
+    SummarizedExperiment
 Imports:
     methods,
     stats,
@@ -25,8 +24,7 @@ Imports:
     scuttle,
     SingleCellExperiment,
     BiocParallel,
-    BiocSingular,
-    metR
+    BiocSingular
 Suggests:
     BiocStyle,
     testthat,
@@ -35,7 +33,11 @@ Suggests:
     scran,
     scater,
     scRNAseq,
-    Rtsne
+    Rtsne,
+    graphics,
+    grDevices,
+    ggplot2,
+    metR
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8

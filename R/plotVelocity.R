@@ -39,8 +39,8 @@
 #'   absolute velocity to limit the color scale for the \code{"velocity"} graph.
 #'
 #' @details Please note that \code{plotVelocity} will modify parameters of
-#'   the current graphics device using \code{par()}, in order to create the
-#'   layout for the generated graph panels.
+#'   the current graphics device using \code{\link{layout}} and \code{\link{par}},
+#'   in order to create the layout for the generated graph panels.
 #' 
 #' @return Invisible a two element vector with the numbers of rows and columns
 #'   of the generated graph panel layout.
@@ -67,8 +67,6 @@
 #' for creation of color palettes.
 #' 
 #' @export
-#' @importFrom grDevices col2rgb
-#' @importFrom graphics layout abline points
 #' @importFrom SummarizedExperiment assay rowData
 #' @importFrom SingleCellExperiment reducedDim reducedDims reducedDimNames
 plotVelocity <- function(x, genes, use.dimred = 1,
@@ -132,8 +130,8 @@ plotVelocity <- function(x, genes, use.dimred = 1,
     nrows <- ceiling(length(genes) / genes.per.row)
     ncols <- genes.per.row * nplts
     
-    layout(mat = matrix(seq.int(length(genes) * nplts),
-                        nrow = nrows, ncol = ncols, byrow = TRUE))
+    graphics::layout(mat = matrix(seq.int(length(genes) * nplts),
+                                  nrow = nrows, ncol = ncols, byrow = TRUE))
     
     # extract data from x
     S <- assay(x, assay.splicedM)
@@ -190,10 +188,10 @@ plotVelocity <- function(x, genes, use.dimred = 1,
             if (!is.null(gamma) && is.finite(gamma)) {
                 if (!is.null(beta) && is.finite(beta)) {
                     # in the dynamical model
-                    abline(a = 0, b = gamma / beta * scaling, lty = 3)
+                    graphics::abline(a = 0, b = gamma / beta * scaling, lty = 3)
                 } else {
                     # in a static model
-                    abline(a = 0, b = gamma, lty = 3)
+                    graphics::abline(a = 0, b = gamma, lty = 3)
                 }
             }
 
@@ -221,7 +219,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                 # see https://github.com/theislab/scvelo/blob/95d90de3d0935ce58a01218c9f179c9494ff593e/scvelo/plotting/simulation.py#L54
                 ut <- .unspliced(tau, u0, alpha, beta) * scaling + u0_offset
                 st <- .spliced(tau, s0, u0, alpha, beta, gamma) + s0_offset
-                points(st, ut, pch = ".", col = "purple")
+                graphics::points(st, ut, pch = ".", col = "purple")
             }
         }
         

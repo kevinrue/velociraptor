@@ -25,15 +25,13 @@
 }
 
 # ggplot2-like colour scale in HCL space
-#' @importFrom grDevices hcl
 .gg_color_hue <- function(n) {
     hues <- seq(15, 375, length = n + 1)
-    hcl(h = hues, l = 65, c = 100)[1:n]
+    grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
 # check if x is a valid R colour
 #' @author Michael Stadler
-#' @importFrom grDevices col2rgb
 .isValidColour <- function (x) {
     vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)), 
                                              error = function(e) FALSE),
@@ -42,7 +40,6 @@
 
 # map numeric values to colours
 #' @author Michael Stadler
-#' @importFrom grDevices col2rgb colorRamp rgb
 .valueToColour <- function (x, rng = range(x, na.rm = TRUE),
                            col = c("#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4",
                                    "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61",
@@ -78,20 +75,18 @@
 
 # add a color bar to the bottom right corner of a plot
 #' @author Michael Stadler
-#' @importFrom graphics par rect text
-#' @importFrom grDevices colorRampPalette
 .colbar <- function(rng, cols, width = 0.3, n = 32) {
-    pusr <- par("usr")
+    pusr <- graphics::par("usr")
     x0 <- pusr[1] + (1 - width) * diff(pusr[1:2])
-    x1 <- pusr[2] - par("cxy")[1]
+    x1 <- pusr[2] - graphics::par("cxy")[1]
     xs <- seq(x0, x1, length.out = n + 1)
     y0 <- pusr[3]
-    y1 <- y0 + 0.5 * par("cxy")[2]
-    lcols <- colorRampPalette(cols)(n)
-    rect(xs[-(n+1)], y0, xs[-1], y1, col = lcols, border = NA)
+    y1 <- y0 + 0.5 * graphics::par("cxy")[2]
+    lcols <- grDevices::colorRampPalette(cols)(n)
+    graphics::rect(xs[-(n+1)], y0, xs[-1], y1, col = lcols, border = NA)
     xl <- c(xs[1], mean(xs), xs[n+1])
-    text(x = xl, y = y0, adj = c(0.5, 1.1), xpd = NA,
-         signif(c(rng[1], mean(rng), rng[2]), digits = 2))
+    graphics::text(x = xl, y = y0, adj = c(0.5, 1.1), xpd = NA,
+                   signif(c(rng[1], mean(rng), rng[2]), digits = 2))
 }
 
 # helper functions to calculate (un)spliced counts from starting point and model parameters

@@ -77,8 +77,8 @@ cell colored by velocity and (spliced) expression.
 }
 \details{
 Please note that \code{plotVelocity} will modify parameters of
-  the current graphics device using \code{par()}, in order to create the
-  layout for the generated graph panels.
+  the current graphics device using \code{\link{layout}} and \code{\link{par}},
+  in order to create the layout for the generated graph panels.
 }
 \examples{
 library(scuttle)
