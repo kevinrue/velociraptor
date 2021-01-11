@@ -66,6 +66,10 @@ test_that("plotVelocity runs", {
 })
 
 test_that("plotVelocityStream runs", {
+
+    skip_if_not_installed("ggplot2")
+    skip_if_not_installed("metR")
+    
     expect_error(plotVelocityStream("error", em2))
     expect_error(plotVelocityStream(out2, "error"))
     expect_error(plotVelocityStream(out2, em2, use.dimred = "error"))
