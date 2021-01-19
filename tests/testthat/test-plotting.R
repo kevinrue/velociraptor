@@ -33,14 +33,6 @@ test_that(".gg_color_hue works correctly", {
     res <- lapply(1:10, .gg_color_hue)
     expect_identical(lengths(res), 1:10)
     expect_true(all(unlist(lapply(res, is.character))))
-    expect_true(all(unlist(lapply(res, .isValidColor))))
-})
-
-test_that(".isValidColor works correctly", {
-    expect_false(.isValidColor("error"))
-    expect_true(all(.isValidColor(1:10)))
-    expect_true(all(.isValidColor(c("red","green","blue"))))
-    expect_true(all(.isValidColor(c("#2244FF", "#44556677"))))
 })
 
 test_that(".valueToColor() works properly", {

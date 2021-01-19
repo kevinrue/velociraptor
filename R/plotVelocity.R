@@ -96,13 +96,9 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         all(which.plots %in% c("phase", "velocity", "expression"))
         is.numeric(genes.per.row)
         length(genes.per.row) == 1L
-        (all(.isValidColor(color_by)) && (length(color_by) == 1L || length(color_by) == ncol(x))) ||
-            (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(x)))
         is.numeric(color.alpha)
         length(color.alpha) == 1L
         color.alpha >= 0 && color.alpha <= 255
-        all(.isValidColor(colors.velocity))
-        all(.isValidColor(colors.expression))
         is.numeric(max.abs.velo)
         length(max.abs.velo) == 1L
         max.abs.velo >= 0.0
@@ -148,8 +144,8 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         # spliced/unspliced phase portrait with model estimates
         if ("phase" %in% which.plots) {
             par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
-            if (!all(.isValidColor(color_by))) {
-                coli <- factor(x[[color_by]])
+            if (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(x))) {
+                coli <- factor(colData(x)[, color_by])
                 color_by <- .gg_color_hue(nlevels(coli))[as.numeric(coli)]
             }
             colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
@@ -261,14 +257,6 @@ plotVelocity <- function(x, genes, use.dimred = 1,
     grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
-# check if x is a valid R color
-#' @author Michael Stadler
-.isValidColor <- function (x) {
-    vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)), 
-                                             error = function(e) FALSE),
-           FUN.VALUE = logical(1), USE.NAMES = FALSE)
-}
-
 # map numeric values to colors
 #' @author Michael Stadler
 .valueToColor <- function (x, rng = range(x, na.rm = TRUE),
@@ -279,8 +267,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
     stopifnot(exprs = {
         is.numeric(x)
         is.numeric(rng) && length(rng) == 2L && rng[1] < rng[2]
-        all(.isValidColor(col))
-        .isValidColor(NA.col) && length(NA.col) == 1L
+        length(NA.col) == 1L
         is.null(alpha) || (is.numeric(alpha) && length(alpha) == 1L &&
                                alpha >= 0 && alpha <= 255)
     })
