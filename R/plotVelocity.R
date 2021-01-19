@@ -261,6 +261,14 @@ plotVelocity <- function(x, genes, use.dimred = 1,
     grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
+# check if x is a valid R color
+#' @author Michael Stadler
+.isValidColor <- function (x) {
+    vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)), 
+                                             error = function(e) FALSE),
+           FUN.VALUE = logical(1), USE.NAMES = FALSE)
+}
+
 # map numeric values to colors
 #' @author Michael Stadler
 .valueToColor <- function (x, rng = range(x, na.rm = TRUE),

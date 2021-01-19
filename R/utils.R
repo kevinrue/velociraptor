@@ -23,11 +23,3 @@
     names(values) <- names
     values
 }
-
-# check if x is a valid R color
-#' @author Michael Stadler
-.isValidColor <- function (x) {
-    vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)), 
-                                             error = function(e) FALSE),
-           FUN.VALUE = logical(1), USE.NAMES = FALSE)
-}
