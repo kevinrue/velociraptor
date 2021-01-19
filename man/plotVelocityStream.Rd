@@ -8,16 +8,16 @@ plotVelocityStream(
   sce,
   embedded,
   use.dimred = 1,
-  colour_by = "#444444",
-  colour.alpha = 0.2,
+  color_by = "#444444",
+  color.alpha = 0.2,
   grid.resolution = 60,
   scale = TRUE,
   stream.L = 10,
   stream.min.L = 0,
   stream.res = 4,
   stream.width = 8,
-  colour.streamlines = FALSE,
-  colour.streamlines.map = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
+  color.streamlines = FALSE,
+  color.streamlines.map = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
     "#21908C", "#22A884", "#43BF71", "#7AD151", "#BBDF27", "#FDE725"),
   arrow.angle = 8,
   arrow.length = 0.8
@@ -35,11 +35,11 @@ and is typically produced by \code{\link{embedVelocity}}.}
 \item{use.dimred}{String or integer scalar specifying the reduced dimensions
 to retrieve from \code{sce}.}
 
-\item{colour_by}{A character scalar specifying a column in \code{colData(sce)}
-to colour cells in the phase graph. Alternatively, \code{colour_by} can be
-set to a valid R colour to be used to colour cells.}
+\item{color_by}{A character scalar specifying a column in \code{colData(sce)}
+to color cells in the phase graph. Alternatively, \code{color_by} can be
+set to a valid R color to be used to color cells.}
 
-\item{colour.alpha}{An integer scalar giving the transparency of coloured
+\item{color.alpha}{An integer scalar giving the transparency of colored
 cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).}
 
 \item{grid.resolution}{Integer scalar specifying the resolution of the grid,
@@ -59,11 +59,11 @@ for computation).}
 
 \item{stream.width}{A numeric scalar controlling the width of streamlines.}
 
-\item{colour.streamlines}{Logical scalar. If \code{TRUE} streamlines will
+\item{color.streamlines}{Logical scalar. If \code{TRUE} streamlines will
 be colored by local velocity. Arrows cannot be shown in that case.}
 
-\item{colour.streamlines.map}{A character vector specifying the
-colour range used for mapping local velocities to streamline colors. The
+\item{color.streamlines.map}{A character vector specifying the
+color range used for mapping local velocities to streamline colors. The
 default is \code{viridisLite::viridis(11)}.}
 
 \item{arrow.angle, arrow.length}{Numeric scalars giving the \code{angle} and
@@ -106,7 +106,7 @@ out <- scvelo(datlist, mode = "dynamical")
 em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 
 plotVelocityStream(out, em)
-plotVelocityStream(out, em, colour.streamlines = TRUE)
+plotVelocityStream(out, em, color.streamlines = TRUE)
 
 }
 \seealso{

@@ -24,23 +24,23 @@
     values
 }
 
-# ggplot2-like colour scale in HCL space
+# ggplot2-like color scale in HCL space
 .gg_color_hue <- function(n) {
     hues <- seq(15, 375, length = n + 1)
     grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
 }
 
-# check if x is a valid R colour
+# check if x is a valid R color
 #' @author Michael Stadler
-.isValidColour <- function (x) {
+.isValidColor <- function (x) {
     vapply(X = x, FUN = function(y) tryCatch(is.matrix(grDevices::col2rgb(y)), 
                                              error = function(e) FALSE),
            FUN.VALUE = logical(1), USE.NAMES = FALSE)
 }
 
-# map numeric values to colours
+# map numeric values to colors
 #' @author Michael Stadler
-.valueToColour <- function (x, rng = range(x, na.rm = TRUE),
+.valueToColor <- function (x, rng = range(x, na.rm = TRUE),
                            col = c("#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4",
                                    "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61",
                                    "#F46D43", "#D53E4F", "#9E0142"),
@@ -48,8 +48,8 @@
     stopifnot(exprs = {
         is.numeric(x)
         is.numeric(rng) && length(rng) == 2L && rng[1] < rng[2]
-        all(.isValidColour(col))
-        .isValidColour(NA.col) && length(NA.col) == 1L
+        all(.isValidColor(col))
+        .isValidColor(NA.col) && length(NA.col) == 1L
         is.null(alpha) || (is.numeric(alpha) && length(alpha) == 1L &&
                                alpha >= 0 && alpha <= 255)
     })

@@ -12,10 +12,10 @@
 #'   and is typically produced by \code{\link{embedVelocity}}.
 #' @param use.dimred String or integer scalar specifying the reduced dimensions
 #'   to retrieve from \code{sce}.
-#' @param colour_by A character scalar specifying a column in \code{colData(sce)}
-#'   to colour cells in the phase graph. Alternatively, \code{colour_by} can be
-#'   set to a valid R colour to be used to colour cells.
-#' @param colour.alpha An integer scalar giving the transparency of coloured
+#' @param color_by A character scalar specifying a column in \code{colData(sce)}
+#'   to color cells in the phase graph. Alternatively, \code{color_by} can be
+#'   set to a valid R color to be used to color cells.
+#' @param color.alpha An integer scalar giving the transparency of colored
 #'   cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).
 #' @param grid.resolution Integer scalar specifying the resolution of the grid,
 #'   in terms of the number of grid intervals along each axis.
@@ -28,10 +28,10 @@
 #'   streamlines (higher numbers increase smoothness of lines but also the time
 #'   for computation).
 #' @param stream.width A numeric scalar controlling the width of streamlines.
-#' @param colour.streamlines Logical scalar. If \code{TRUE} streamlines will
+#' @param color.streamlines Logical scalar. If \code{TRUE} streamlines will
 #'   be colored by local velocity. Arrows cannot be shown in that case.
-#' @param colour.streamlines.map A character vector specifying the
-#'   colour range used for mapping local velocities to streamline colors. The
+#' @param color.streamlines.map A character vector specifying the
+#'   color range used for mapping local velocities to streamline colors. The
 #'   default is \code{viridisLite::viridis(11)}.
 #' @param arrow.angle,arrow.length Numeric scalars giving the \code{angle} and
 #'   \code{length} of arrowheads.
@@ -68,7 +68,7 @@
 #' em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 #' 
 #' plotVelocityStream(out, em)
-#' plotVelocityStream(out, em, colour.streamlines = TRUE)
+#' plotVelocityStream(out, em, color.streamlines = TRUE)
 #' 
 #' @seealso \code{\link{gridVectors}} used to summarize velocity vectors into
 #'   a grid (velocity field), the \pkg{ggplot2} package used for plotting,
@@ -79,12 +79,12 @@
 #' @export
 #' @importFrom S4Vectors DataFrame
 plotVelocityStream <- function(sce, embedded, use.dimred = 1,
-                               colour_by = "#444444", colour.alpha = 0.2,
+                               color_by = "#444444", color.alpha = 0.2,
                                grid.resolution = 60, scale = TRUE,
                                stream.L = 10, stream.min.L = 0, stream.res = 4,
                                stream.width = 8,
-                               colour.streamlines = FALSE,
-                               colour.streamlines.map = c("#440154", "#482576", "#414487",
+                               color.streamlines = FALSE,
+                               color.streamlines.map = c("#440154", "#482576", "#414487",
                                                           "#35608D", "#2A788E", "#21908C",
                                                           "#22A884", "#43BF71", "#7AD151",
                                                           "#BBDF27", "#FDE725"),
@@ -94,11 +94,11 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         is.matrix(embedded)
         ncol(embedded) == 2L
         ncol(sce) == nrow(embedded)
-        (.isValidColour(colour_by) && (length(colour_by) == 1L || length(colour_by) == ncol(sce))) ||
-            (is.character(colour_by) && length(colour_by) == 1L && colour_by %in% colnames(colData(sce)))
-        is.numeric(colour.alpha)
-        length(colour.alpha) == 1L
-        colour.alpha >= 0 && colour.alpha <= 1.0
+        (.isValidColor(color_by) && (length(color_by) == 1L || length(color_by) == ncol(sce))) ||
+            (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(sce)))
+        is.numeric(color.alpha)
+        length(color.alpha) == 1L
+        color.alpha >= 0 && color.alpha <= 1.0
         is.numeric(stream.L)
         length(stream.L) == 1L
         is.numeric(stream.min.L)
@@ -107,9 +107,9 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         length(stream.res) == 1L
         is.numeric(stream.width)
         length(stream.width) == 1L
-        is.logical(colour.streamlines)
-        length(colour.streamlines) == 1L
-        .isValidColour(colour.streamlines.map)
+        is.logical(color.streamlines)
+        length(color.streamlines) == 1L
+        .isValidColor(color.streamlines.map)
         is.numeric(arrow.angle)
         length(arrow.angle) == 1L
         is.numeric(arrow.length)
@@ -159,35 +159,35 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     # plot it using ggplot2 and metR::geom_streamline
     plotdat1 <- data.frame(xy)
     colnames(plotdat1) <- c("x", "y")
-    if (!.isValidColour(colour_by)) {
-        plotdat1 <- cbind(plotdat1, col = colData(sce)[, colour_by])
+    if (!.isValidColor(color_by)) {
+        plotdat1 <- cbind(plotdat1, col = colData(sce)[, color_by])
     }
     p <- ggplot2::ggplot(plotdat1, ggplot2::aes(x = x, y = y)) +
         ggplot2::labs(x = paste(use.dimred, "1"), y = paste(use.dimred, "2"))
-    if (.isValidColour(colour_by)) {
-        colMatrix <- grDevices::col2rgb(col = colour_by, alpha = TRUE)
+    if (.isValidColor(color_by)) {
+        colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
         if (any(colMatrix[4, ] != 255)) {
-            warning("ignoring 'colour.alpha' as 'colour_by' already specifies alpha channels")
-            colour.alpha <- colMatrix[4, ] / 255
+            warning("ignoring 'color.alpha' as 'color_by' already specifies alpha channels")
+            color.alpha <- colMatrix[4, ] / 255
         }
-        p <- p + ggplot2::geom_point(colour = colour_by, alpha = colour.alpha)
+        p <- p + ggplot2::geom_point(color = color_by, alpha = color.alpha)
     } else {
-        p <- p + ggplot2::geom_point(ggplot2::aes(colour = col), alpha = colour.alpha) +
-            ggplot2::labs(colour = colour_by)
+        p <- p + ggplot2::geom_point(ggplot2::aes(color = col), alpha = color.alpha) +
+            ggplot2::labs(color = color_by)
     }
-    if (colour.streamlines) {
+    if (color.streamlines) {
         # remark: when coloring streamlines, we currently cannot have any arrows
         p <- p +
             metR::geom_streamline(mapping = ggplot2::aes(x = x, y = y, dx = dx, dy = dy,
                                                          size = stream.width * ..step..,
                                                          alpha = ..step..,
-                                                         colour = sqrt(..dx..^2 + ..dy..^2)),
+                                                         color = sqrt(..dx..^2 + ..dy..^2)),
                                   arrow = NULL, lineend = "round",
                                   data = plotdat2, size = 0.6, jitter = 2,
                                   L = stream.L, min.L = stream.min.L,
                                   res = stream.res, inherit.aes = FALSE) +
-            ggplot2::scale_colour_gradientn(colours = colour.streamlines.map,
-                                            guide = "none") +
+            ggplot2::scale_color_gradientn(colors = color.streamlines.map,
+                                           guide = "none") +
             ggplot2::scale_alpha_continuous(guide = "none") +
             ggplot2::theme_minimal() +
             ggplot2::theme(axis.text = ggplot2::element_blank(),

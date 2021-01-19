@@ -12,11 +12,11 @@ plotVelocity(
   assay.unsplicedM = "Mu",
   which.plots = c("phase", "velocity", "expression"),
   genes.per.row = 1,
-  colour_by = "#222222",
-  colour.alpha = 100,
-  colours.velocity = c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE08B",
-    "#FFFFBF", "#D9EF8B", "#A6D96A", "#66BD63", "#1A9850", "#006837"),
-  colours.expression = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
+  color_by = "#222222",
+  color.alpha = 100,
+  colors.velocity = c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF",
+    "#D9EF8B", "#A6D96A", "#66BD63", "#1A9850", "#006837"),
+  colors.expression = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
     "#21908C", "#22A884", "#43BF71", "#7AD151", "#BBDF27", "#FDE725"),
   max.abs.velo = 0.001
 )
@@ -41,25 +41,25 @@ to retrieve from \code{x}.}
 \item{which.plots}{A character vector specifying which plots to create for
 each gene. Possible values are \code{"phase", "velocity", "expression"} and
 correspond to the phase graph or reduced dimension graphs with cells
-coloured by velocity or (spliced) expression.}
+colored by velocity or (spliced) expression.}
 
 \item{genes.per.row}{An integer scalar with the numbers of genes to visualize
 per row of plots. For example, if \code{which.plots =  c("phase","expression")}
 and \code{genes.per.row = 2}, the resulting figure will have four plot
 panels per row.}
 
-\item{colour_by}{A character scalar specifying a column in \code{colData(x)}
-to colour cells in the phase graph. Alternatively, \code{colour_by} can be
-set to vector of valid R colours, either of length one (recycled for all
-cells) or of length \code{ncol(x)}, which will then be used to colour cells
+\item{color_by}{A character scalar specifying a column in \code{colData(x)}
+to color cells in the phase graph. Alternatively, \code{color_by} can be
+set to vector of valid R colors, either of length one (recycled for all
+cells) or of length \code{ncol(x)}, which will then be used to color cells
 in the phase graph.}
 
-\item{colour.alpha}{An integer scalar giving the transparency of the
-cell colours in all graphs. Possible values between 0 (fully transparent)
+\item{color.alpha}{An integer scalar giving the transparency of the
+cell colors in all graphs. Possible values between 0 (fully transparent)
 and 255 (opaque).}
 
-\item{colours.velocity, colours.expression}{Character vectors specifying the
-colour ranges used for mapping velocities and expression values. The
+\item{colors.velocity, colors.expression}{Character vectors specifying the
+color ranges used for mapping velocities and expression values. The
 defaults are \code{RColorBrewer::brewer.pal(11, "RdYlGn")} for the
 velocities and \code{viridisLite::viridis(11)} for the expression values.}
 

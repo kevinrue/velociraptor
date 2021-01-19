@@ -18,21 +18,21 @@
 #' @param which.plots A character vector specifying which plots to create for
 #'   each gene. Possible values are \code{"phase", "velocity", "expression"} and
 #'   correspond to the phase graph or reduced dimension graphs with cells
-#'   coloured by velocity or (spliced) expression.
+#'   colored by velocity or (spliced) expression.
 #' @param genes.per.row An integer scalar with the numbers of genes to visualize
 #'   per row of plots. For example, if \code{which.plots =  c("phase","expression")}
 #'   and \code{genes.per.row = 2}, the resulting figure will have four plot
 #'   panels per row.
-#' @param colour_by A character scalar specifying a column in \code{colData(x)}
-#'   to colour cells in the phase graph. Alternatively, \code{colour_by} can be
-#'   set to vector of valid R colours, either of length one (recycled for all
-#'   cells) or of length \code{ncol(x)}, which will then be used to colour cells
+#' @param color_by A character scalar specifying a column in \code{colData(x)}
+#'   to color cells in the phase graph. Alternatively, \code{color_by} can be
+#'   set to vector of valid R colors, either of length one (recycled for all
+#'   cells) or of length \code{ncol(x)}, which will then be used to color cells
 #'   in the phase graph.
-#' @param colour.alpha An integer scalar giving the transparency of the
-#'   cell colours in all graphs. Possible values between 0 (fully transparent)
+#' @param color.alpha An integer scalar giving the transparency of the
+#'   cell colors in all graphs. Possible values between 0 (fully transparent)
 #'   and 255 (opaque).
-#' @param colours.velocity,colours.expression Character vectors specifying the
-#'   colour ranges used for mapping velocities and expression values. The
+#' @param colors.velocity,colors.expression Character vectors specifying the
+#'   color ranges used for mapping velocities and expression values. The
 #'   defaults are \code{RColorBrewer::brewer.pal(11, "RdYlGn")} for the
 #'   velocities and \code{viridisLite::viridis(11)} for the expression values.
 #' @param max.abs.velo A numeric scalar greater than zero giving the maximum
@@ -73,13 +73,13 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                          assay.splicedM = "Ms", assay.unsplicedM = "Mu",
                          which.plots = c("phase", "velocity", "expression"),
                          genes.per.row = 1,
-                         colour_by = "#222222",
-                         colour.alpha = 100,
-                         colours.velocity = c("#A50026", "#D73027", "#F46D43",
+                         color_by = "#222222",
+                         color.alpha = 100,
+                         colors.velocity = c("#A50026", "#D73027", "#F46D43",
                                               "#FDAE61", "#FEE08B", "#FFFFBF",
                                               "#D9EF8B", "#A6D96A", "#66BD63",
                                               "#1A9850", "#006837"),
-                         colours.expression = c("#440154", "#482576", "#414487",
+                         colors.expression = c("#440154", "#482576", "#414487",
                                                 "#35608D", "#2A788E", "#21908C",
                                                 "#22A884", "#43BF71", "#7AD151",
                                                 "#BBDF27", "#FDE725"),
@@ -96,13 +96,13 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         all(which.plots %in% c("phase", "velocity", "expression"))
         is.numeric(genes.per.row)
         length(genes.per.row) == 1L
-        (all(.isValidColour(colour_by)) && (length(colour_by) == 1L || length(colour_by) == ncol(x))) ||
-            (is.character(colour_by) && length(colour_by) == 1L && colour_by %in% colnames(colData(x)))
-        is.numeric(colour.alpha)
-        length(colour.alpha) == 1L
-        colour.alpha >= 0 && colour.alpha <= 255
-        all(.isValidColour(colours.velocity))
-        all(.isValidColour(colours.expression))
+        (all(.isValidColor(color_by)) && (length(color_by) == 1L || length(color_by) == ncol(x))) ||
+            (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(x)))
+        is.numeric(color.alpha)
+        length(color.alpha) == 1L
+        color.alpha >= 0 && color.alpha <= 255
+        all(.isValidColor(colors.velocity))
+        all(.isValidColor(colors.expression))
         is.numeric(max.abs.velo)
         length(max.abs.velo) == 1L
         max.abs.velo >= 0.0
@@ -148,17 +148,17 @@ plotVelocity <- function(x, genes, use.dimred = 1,
         # spliced/unspliced phase portrait with model estimates
         if ("phase" %in% which.plots) {
             par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
-            if (!all(.isValidColour(colour_by))) {
-                coli <- factor(x[[colour_by]])
-                colour_by <- .gg_color_hue(nlevels(coli))[as.numeric(coli)]
+            if (!all(.isValidColor(color_by))) {
+                coli <- factor(x[[color_by]])
+                color_by <- .gg_color_hue(nlevels(coli))[as.numeric(coli)]
             }
-            colMatrix <- grDevices::col2rgb(col = colour_by, alpha = TRUE)
+            colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
             if (any(colMatrix[4, ] != 255)) {
-                warning("ignoring 'colour.alpha' in phase plot, ",
-                        "as 'colour_by' already specifies alpha channels")
-                cols <- colour_by
+                warning("ignoring 'color.alpha' in phase plot, ",
+                        "as 'color_by' already specifies alpha channels")
+                cols <- color_by
             } else {
-                cols <- paste0(colour_by, as.hexmode(colour.alpha))
+                cols <- paste0(color_by, as.hexmode(color.alpha))
             }
             plot(s, u, xlab = "spliced", ylab = "unspliced", pch = "*",
                  col = cols, main = gene,
@@ -230,25 +230,25 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                 warning("velocity estimates for ", gene, " are all non-finite")
             }
             mx <- max(c(max.abs.velo, abs(z)), na.rm = TRUE)
-            cols <- .valueToColour(z, rng = c(-mx, mx), col = colours.velocity,
-                                   alpha = colour.alpha)
+            cols <- .valueToColor(z, rng = c(-mx, mx), col = colors.velocity,
+                                  alpha = color.alpha)
             par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
             plot(xy[,1], xy[,2],
                  xlab = paste0(use.dimred, " 1"), ylab = paste0(use.dimred, " 2"),
                  main = "velocity", pch = "*", col = cols, axes = FALSE)
-            .colbar(c(-mx, mx), colours.velocity)
+            .colbar(c(-mx, mx), colors.velocity)
         }
         
         # expression plot
         if ("expression" %in% which.plots) {
             z <- s
-            cols <- .valueToColour(z, col = colours.expression,
-                                   alpha = colour.alpha)
+            cols <- .valueToColor(z, col = colors.expression,
+                                   alpha = color.alpha)
             par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
             plot(xy[,1], xy[,2],
                  xlab = paste0(use.dimred, " 1"), ylab = paste0(use.dimred, " 2"),
                  main = "expression", pch = "*", col = cols, axes = FALSE)
-            .colbar(range(z, na.rm = TRUE), colours.expression)
+            .colbar(range(z, na.rm = TRUE), colors.expression)
         }
     }
     
