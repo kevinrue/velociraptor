@@ -162,7 +162,7 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     if (!.isValidColor(color_by)) {
         plotdat1 <- cbind(plotdat1, col = colData(sce)[, color_by])
     }
-    p <- ggplot2::ggplot(plotdat1, ggplot2::aes(x = x, y = y)) +
+    p <- ggplot2::ggplot(plotdat1, ggplot2::aes(x = !!ggplot2::sym("x"), y = !!ggplot2::sym("y"))) +
         ggplot2::labs(x = paste(use.dimred, "1"), y = paste(use.dimred, "2"))
     if (.isValidColor(color_by)) {
         colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
@@ -172,16 +172,19 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         }
         p <- p + ggplot2::geom_point(color = color_by, alpha = color.alpha)
     } else {
-        p <- p + ggplot2::geom_point(ggplot2::aes(color = col), alpha = color.alpha) +
+        p <- p + ggplot2::geom_point(ggplot2::aes(color = !!ggplot2::sym("col")), alpha = color.alpha) +
             ggplot2::labs(color = color_by)
     }
     if (color.streamlines) {
         # remark: when coloring streamlines, we currently cannot have any arrows
         p <- p +
-            metR::geom_streamline(mapping = ggplot2::aes(x = x, y = y, dx = dx, dy = dy,
-                                                         size = stream.width * ..step..,
-                                                         alpha = ..step..,
-                                                         color = sqrt(..dx..^2 + ..dy..^2)),
+            metR::geom_streamline(mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                         y = !!ggplot2::sym("y"),
+                                                         dx = !!ggplot2::sym("dx"),
+                                                         dy = !!ggplot2::sym("dy"),
+                                                         size = stream.width * !!ggplot2::sym("..step.."),
+                                                         alpha = !!ggplot2::sym("..step.."),
+                                                         color = sqrt(!!ggplot2::sym("..dx..")^2 + !!ggplot2::sym("..dy..")^2)),
                                   arrow = NULL, lineend = "round",
                                   data = plotdat2, size = 0.6, jitter = 2,
                                   L = stream.L, min.L = stream.min.L,
@@ -195,8 +198,11 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                            panel.grid.minor = ggplot2::element_blank())
     } else {
         p <- p +
-            metR::geom_streamline(mapping = ggplot2::aes(x = x, y = y, dx = dx, dy = dy,
-                                                         size = stream.width * ..step..),
+            metR::geom_streamline(mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                         y = !!ggplot2::sym("y"),
+                                                         dx = !!ggplot2::sym("dx"),
+                                                         dy = !!ggplot2::sym("dy"),
+                                                         size = stream.width * !!ggplot2::sym("..step..")),
                                   data = plotdat2, size = 0.3, jitter = 2,
                                   L = stream.L, min.L = stream.min.L,
                                   res = stream.res, arrow.angle = arrow.angle,
