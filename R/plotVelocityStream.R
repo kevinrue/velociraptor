@@ -89,29 +89,9 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                                           "#22A884", "#43BF71", "#7AD151",
                                                           "#BBDF27", "#FDE725"),
                                arrow.angle = 8, arrow.length = 0.8) {
-    stopifnot(exprs = {
-        is(sce, "SingleCellExperiment")
-        is.matrix(embedded)
-        ncol(embedded) == 2L
-        ncol(sce) == nrow(embedded)
-        is.numeric(color.alpha)
-        length(color.alpha) == 1L
-        color.alpha >= 0 && color.alpha <= 1.0
-        is.numeric(stream.L)
-        length(stream.L) == 1L
-        is.numeric(stream.min.L)
-        length(stream.min.L) == 1L
-        is.numeric(stream.res)
-        length(stream.res) == 1L
-        is.numeric(stream.width)
-        length(stream.width) == 1L
-        is.logical(color.streamlines)
-        length(color.streamlines) == 1L
-        is.numeric(arrow.angle)
-        length(arrow.angle) == 1L
-        is.numeric(arrow.length)
-        length(arrow.length) == 1L
-    })
+    if (ncol(sce) != nrow(embedded)) {
+        stop("'sce' and 'embedded' do not have consistent dimensions.")
+    }
     if (is.numeric(use.dimred)) {
         stopifnot(exprs = {
             length(use.dimred) == 1L

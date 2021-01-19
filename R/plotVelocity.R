@@ -86,19 +86,13 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                          max.abs.velo = 0.001) {
     # check arguments
     genes <- unique(genes)
+    if (!all(genes %in% rownames(x))) {
+        stop("not all 'genes' are not found in 'x'")
+    }
     stopifnot(exprs = {
-        is.character(genes)
-        all(genes %in% rownames(x))
-        assay.splicedM %in% assayNames(x)
-        assay.unsplicedM %in% assayNames(x)
-        "velocity" %in% assayNames(x)
-        is.character(which.plots)
         all(which.plots %in% c("phase", "velocity", "expression"))
         is.numeric(genes.per.row)
         length(genes.per.row) == 1L
-        is.numeric(color.alpha)
-        length(color.alpha) == 1L
-        color.alpha >= 0 && color.alpha <= 255
         is.numeric(max.abs.velo)
         length(max.abs.velo) == 1L
         max.abs.velo >= 0.0
