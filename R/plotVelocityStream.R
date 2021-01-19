@@ -94,8 +94,6 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         is.matrix(embedded)
         ncol(embedded) == 2L
         ncol(sce) == nrow(embedded)
-        (.isValidColor(color_by) && (length(color_by) == 1L || length(color_by) == ncol(sce))) ||
-            (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(sce)))
         is.numeric(color.alpha)
         length(color.alpha) == 1L
         color.alpha >= 0 && color.alpha <= 1.0
@@ -109,7 +107,6 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
         length(stream.width) == 1L
         is.logical(color.streamlines)
         length(color.streamlines) == 1L
-        .isValidColor(color.streamlines.map)
         is.numeric(arrow.angle)
         length(arrow.angle) == 1L
         is.numeric(arrow.length)
@@ -159,12 +156,15 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     # plot it using ggplot2 and metR::geom_streamline
     plotdat1 <- data.frame(xy)
     colnames(plotdat1) <- c("x", "y")
-    if (!.isValidColor(color_by)) {
+    if (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(sce))) {
         plotdat1 <- cbind(plotdat1, col = colData(sce)[, color_by])
+        colByFeat <- TRUE
+    } else {
+        colByFeat <- FALSE
     }
     p <- ggplot2::ggplot(plotdat1, ggplot2::aes(x = !!ggplot2::sym("x"), y = !!ggplot2::sym("y"))) +
         ggplot2::labs(x = paste(use.dimred, "1"), y = paste(use.dimred, "2"))
-    if (.isValidColor(color_by)) {
+    if (!colByFeat) {
         colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
         if (any(colMatrix[4, ] != 255)) {
             warning("ignoring 'color.alpha' as 'color_by' already specifies alpha channels")
