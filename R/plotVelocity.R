@@ -28,9 +28,8 @@
 #'   set to vector of valid R colors, either of length one (recycled for all
 #'   cells) or of length \code{ncol(x)}, which will then be used to color cells
 #'   in the phase graph.
-#' @param color.alpha An integer scalar giving the transparency of the
-#'   cell colors in all graphs. Possible values between 0 (fully transparent)
-#'   and 255 (opaque).
+#' @param color.alpha An integer scalar giving the transparency of colored
+#'   cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).
 #' @param colors.velocity,colors.expression Character vectors specifying the
 #'   color ranges used for mapping velocities and expression values. The
 #'   defaults are \code{RColorBrewer::brewer.pal(11, "RdYlGn")} for the
@@ -42,8 +41,8 @@
 #'   the current graphics device using \code{\link{layout}} and \code{\link{par}},
 #'   in order to create the layout for the generated graph panels.
 #' 
-#' @return Invisible a two element vector with the numbers of rows and columns
-#'   of the generated graph panel layout.
+#' @return A patchwork object with the plots selected by \code{which.plot} for
+#'   the genes in \code{genes}, arranged in a grid according to \code{genes.per.row}.
 #'
 #' @author Michael Stadler
 #' 
@@ -64,7 +63,8 @@
 #' @seealso 
 #' \code{\link{scvelo}}, to generate \code{x},
 #' \code{\link[RColorBrewer]{brewer.pal}} and \code{\link[viridisLite]{viridis}}
-#' for creation of color palettes.
+#' for creation of color palettes, packages \pkg{ggplot2} and \pkg{patchwork}
+#' used to generate and arrange the plots.
 #' 
 #' @export
 #' @importFrom SummarizedExperiment assay rowData
@@ -74,7 +74,7 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                          which.plots = c("phase", "velocity", "expression"),
                          genes.per.row = 1,
                          color_by = "#222222",
-                         color.alpha = 100,
+                         color.alpha = 0.4,
                          colors.velocity = c("#A50026", "#D73027", "#F46D43",
                                               "#FDAE61", "#FEE08B", "#FFFFBF",
                                               "#D9EF8B", "#A6D96A", "#66BD63",
@@ -103,57 +103,58 @@ plotVelocity <- function(x, genes, use.dimred = 1,
             use.dimred <= length(reducedDims(x))
         })
         use.dimred <- reducedDimNames(x)[use.dimred]
-    }
-    else if (is.character(use.dimred)) {
+    } else if (is.character(use.dimred)) {
         stopifnot(exprs = {
             length(use.dimred) == 1L
             use.dimred %in% reducedDimNames(x)
         })
-    }
-    else {
+    } else {
         stop("'use.dimred' is not a valid value for use in reducedDim(x, use.dimred)")
     }
 
-    # create plot panel layout
-    which.plots <- unique(which.plots)
-    nplts <- length(which.plots)
-    nrows <- ceiling(length(genes) / genes.per.row)
-    ncols <- genes.per.row * nplts
-    
-    graphics::layout(mat = matrix(seq.int(length(genes) * nplts),
-                                  nrow = nrows, ncol = ncols, byrow = TRUE))
-    
     # extract data from x
     S <- assay(x, assay.splicedM)
     U <- assay(x, assay.unsplicedM)
     V <- assay(x, "velocity")
     rd <- rowData(x)
     xy <- reducedDim(x, use.dimred)
+    df2 <- data.frame(x = xy[, 1],
+                      y = xy[, 2])
+
     
     # iterate over genes and create graphs
+    pL <- list()
     for (gene in genes) {
-        s <- as.vector(S[gene, ])
-        u <- as.vector(U[gene, ])
+        df1 <- data.frame(s = as.vector(S[gene, ]),
+                          u = as.vector(U[gene, ]))
 
         # spliced/unspliced phase portrait with model estimates
         if ("phase" %in% which.plots) {
-            par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
             if (is.character(color_by) && length(color_by) == 1L && color_by %in% colnames(colData(x))) {
-                coli <- factor(colData(x)[, color_by])
-                color_by <- .gg_color_hue(nlevels(coli))[as.numeric(coli)]
-            }
-            colMatrix <- grDevices::col2rgb(col = color_by, alpha = TRUE)
-            if (any(colMatrix[4, ] != 255)) {
-                warning("ignoring 'color.alpha' in phase plot, ",
-                        "as 'color_by' already specifies alpha channels")
-                cols <- color_by
+                df1$col <- factor(colData(x)[, color_by])
+                colByFeat <- TRUE
+            } else if (length(color_by) == 1L || length(color_by) == ncol(x)) {
+                df1$col <- color_by
+                colByFeat <- FALSE
             } else {
-                cols <- paste0(color_by, as.hexmode(color.alpha))
+                stop("invalid 'colour_by' (not in colData(x), nor of the right length)")
             }
-            plot(s, u, xlab = "spliced", ylab = "unspliced", pch = "*",
-                 col = cols, main = gene,
-                 xlim = range(c(0, s), na.rm = TRUE),
-                 ylim = range(c(0, u), na.rm = TRUE))
+            p1 <- ggplot2::ggplot(df1, ggplot2::aes(x = !!ggplot2::sym("s"),
+                                                    y = !!ggplot2::sym("u"))) +
+                ggplot2::xlim(0, max(df1$s, na.rm = TRUE)) +
+                ggplot2::ylim(0, max(df1$u, na.rm = TRUE)) +
+                ggplot2::labs(title = gene, x = "spliced", y = "unspliced") +
+                ggplot2::theme_minimal() +
+                ggplot2::theme(panel.grid.major = ggplot2::element_blank(),
+                               panel.grid.minor = ggplot2::element_blank(),
+                               axis.ticks = ggplot2::element_line(color = "grey20"),
+                               panel.border = ggplot2::element_rect(fill = NA, color = "grey20"))
+            if (colByFeat) {
+                p1 <- p1 + ggplot2::geom_point(ggplot2::aes(color = !!ggplot2::sym("col")),
+                                               alpha = color.alpha, show.legend = FALSE)
+            } else {
+                p1 <- p1 + ggplot2::geom_point(color = df1$col, alpha = color.alpha)
+            }
 
             # gene specific model parameters
             #   scvelo(..., mode = "dynamical") creates "fit_" prefixes,
@@ -178,10 +179,14 @@ plotVelocity <- function(x, genes, use.dimred = 1,
             if (!is.null(gamma) && is.finite(gamma)) {
                 if (!is.null(beta) && is.finite(beta)) {
                     # in the dynamical model
-                    graphics::abline(a = 0, b = gamma / beta * scaling, lty = 3)
+                    p1 <- p1 + ggplot2::geom_abline(intercept = 0,
+                                                    slope = gamma / beta * scaling,
+                                                    linetype = "dashed")
                 } else {
                     # in a static model
-                    graphics::abline(a = 0, b = gamma, lty = 3)
+                    p1 <- p1 + ggplot2::geom_abline(intercept = 0,
+                                                    slope = gamma,
+                                                    linetype = "dashed")
                 }
             }
 
@@ -209,96 +214,60 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                 # see https://github.com/theislab/scvelo/blob/95d90de3d0935ce58a01218c9f179c9494ff593e/scvelo/plotting/simulation.py#L54
                 ut <- .unspliced(tau, u0, alpha, beta) * scaling + u0_offset
                 st <- .spliced(tau, s0, u0, alpha, beta, gamma) + s0_offset
-                graphics::points(st, ut, pch = ".", col = "purple")
+                p1 <- p1 + geom_point(data = data.frame(x = st, y = ut),
+                                      mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                             y = !!ggplot2::sym("y")),
+                                      color = "purple", shape = 46)
             }
+            pL <- c(pL, list(p1))
         }
         
         # velocity plot
         if ("velocity" %in% which.plots) {
-            z <- as.vector(V[gene, ])
-            if (all(!is.finite(z))) {
+            df2$z <- as.vector(V[gene, ])
+            if (all(!is.finite(df2$z))) {
                 warning("velocity estimates for ", gene, " are all non-finite")
             }
-            mx <- max(c(max.abs.velo, abs(z)), na.rm = TRUE)
-            cols <- .valueToColor(z, rng = c(-mx, mx), col = colors.velocity,
-                                  alpha = color.alpha)
-            par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
-            plot(xy[,1], xy[,2],
-                 xlab = paste0(use.dimred, " 1"), ylab = paste0(use.dimred, " 2"),
-                 main = "velocity", pch = "*", col = cols, axes = FALSE)
-            .colbar(c(-mx, mx), colors.velocity)
+            mx <- max(c(max.abs.velo, abs(df2$z)), na.rm = TRUE)
+            p2 <- ggplot2::ggplot(df2, ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                    y = !!ggplot2::sym("y"),
+                                                    color = !!ggplot2::sym("z"))) +
+                ggplot2::geom_point(alpha = color.alpha) +
+                ggplot2::scale_color_gradientn(colours = colors.velocity,
+                                               limits = c(-mx, mx)) +
+                ggplot2::labs(title = "velocity", x = paste0(use.dimred, " 1"),
+                              y = paste0(use.dimred, " 2"), color = ggplot2::element_blank()) +
+                ggplot2::theme_minimal() +
+                ggplot2::theme(axis.text = ggplot2::element_blank(),
+                               panel.grid.major = ggplot2::element_blank(),
+                               panel.grid.minor = ggplot2::element_blank())
+            pL <- c(pL, list(p2))
         }
         
         # expression plot
         if ("expression" %in% which.plots) {
-            z <- s
-            cols <- .valueToColor(z, col = colors.expression,
-                                   alpha = color.alpha)
-            par(mar = c(3,3,2,0), mgp = c(1.75, 0.75, 0))
-            plot(xy[,1], xy[,2],
-                 xlab = paste0(use.dimred, " 1"), ylab = paste0(use.dimred, " 2"),
-                 main = "expression", pch = "*", col = cols, axes = FALSE)
-            .colbar(range(z, na.rm = TRUE), colors.expression)
+            df2$z <- as.vector(S[gene, ])
+            p3 <- ggplot2::ggplot(df2, ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                    y = !!ggplot2::sym("y"),
+                                                    color = !!ggplot2::sym("z"))) +
+                ggplot2::geom_point(alpha = color.alpha) +
+                ggplot2::scale_color_gradientn(colours = colors.expression) +
+                ggplot2::labs(title = "expression", x = paste0(use.dimred, " 1"),
+                              y = paste0(use.dimred, " 2"), color = ggplot2::element_blank()) +
+                ggplot2::theme_minimal() +
+                ggplot2::theme(axis.text = ggplot2::element_blank(),
+                               panel.grid.major = ggplot2::element_blank(),
+                               panel.grid.minor = ggplot2::element_blank())
+            pL <- c(pL, list(p3))
         }
     }
     
-    return(invisible(c(nrows, ncols)))
-}
+    # create plot panel layout
+    nplts <- length(unique(which.plots))
+    nrows <- ceiling(length(genes) / genes.per.row)
+    p <- do.call(patchwork::wrap_plots, c(pL, list(nrow = nrows)))
 
-# ggplot2-like color scale in HCL space
-.gg_color_hue <- function(n) {
-    hues <- seq(15, 375, length = n + 1)
-    grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
-}
-
-# map numeric values to colors
-#' @author Michael Stadler
-.valueToColor <- function (x, rng = range(x, na.rm = TRUE),
-                           col = c("#5E4FA2", "#3288BD", "#66C2A5", "#ABDDA4",
-                                   "#E6F598", "#FFFFBF", "#FEE08B", "#FDAE61",
-                                   "#F46D43", "#D53E4F", "#9E0142"),
-                           NA.col = "lightgray", alpha = NULL) {
-    stopifnot(exprs = {
-        is.numeric(x)
-        is.numeric(rng) && length(rng) == 2L && rng[1] < rng[2]
-        length(NA.col) == 1L
-        is.null(alpha) || (is.numeric(alpha) && length(alpha) == 1L &&
-                               alpha >= 0 && alpha <= 255)
-    })
-    colMatrix <- grDevices::col2rgb(col = col, alpha = TRUE)
-    if (!is.null(alpha)) {
-        if (all(colMatrix[4, ] == 255)) 
-            colMatrix[4, ] <- as.integer(alpha)
-        else warning("ignoring 'alpha', as 'col' already specifies alpha channels")
-    }
-    col <- grDevices::rgb(colMatrix[1, ], colMatrix[2, ], colMatrix[3,],
-                          colMatrix[4, ], maxColorValue = 255)
-    i <- !is.na(x)
-    x[i & x < rng[1]] <- rng[1]
-    x[i & x > rng[2]] <- rng[2]
-    colfunc <- grDevices::colorRamp(col, alpha = TRUE)
-    xcolMatrix <- colfunc((x[i] - rng[1])/(rng[2] - rng[1]))
-    xcol <- rep(NA.col, length(x))
-    xcol[i] <- grDevices::rgb(xcolMatrix[, 1], xcolMatrix[, 2], 
-                              xcolMatrix[, 3], xcolMatrix[, 4],
-                              maxColorValue = 255)
-    return(xcol)
-}
-
-# add a color bar to the bottom right corner of a plot
-#' @author Michael Stadler
-.colbar <- function(rng, cols, width = 0.3, n = 32) {
-    pusr <- graphics::par("usr")
-    x0 <- pusr[1] + (1 - width) * diff(pusr[1:2])
-    x1 <- pusr[2] - graphics::par("cxy")[1]
-    xs <- seq(x0, x1, length.out = n + 1)
-    y0 <- pusr[3]
-    y1 <- y0 + 0.5 * graphics::par("cxy")[2]
-    lcols <- grDevices::colorRampPalette(cols)(n)
-    graphics::rect(xs[-(n+1)], y0, xs[-1], y1, col = lcols, border = NA)
-    xl <- c(xs[1], mean(xs), xs[n+1])
-    graphics::text(x = xl, y = y0, adj = c(0.5, 1.1), xpd = NA,
-                   signif(c(rng[1], mean(rng), rng[2]), digits = 2))
+    return(p)
 }
 
 # helper functions to calculate (un)spliced counts from starting point and model parameters

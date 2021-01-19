@@ -37,6 +37,7 @@ Suggests:
     graphics,
     grDevices,
     ggplot2,
+    patchwork,
     metR
 StagedInstall: no
 License: MIT + file LICENSE

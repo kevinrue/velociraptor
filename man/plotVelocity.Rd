@@ -13,7 +13,7 @@ plotVelocity(
   which.plots = c("phase", "velocity", "expression"),
   genes.per.row = 1,
   color_by = "#222222",
-  color.alpha = 100,
+  color.alpha = 0.4,
   colors.velocity = c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF",
     "#D9EF8B", "#A6D96A", "#66BD63", "#1A9850", "#006837"),
   colors.expression = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
@@ -54,9 +54,8 @@ set to vector of valid R colors, either of length one (recycled for all
 cells) or of length \code{ncol(x)}, which will then be used to color cells
 in the phase graph.}
 
-\item{color.alpha}{An integer scalar giving the transparency of the
-cell colors in all graphs. Possible values between 0 (fully transparent)
-and 255 (opaque).}
+\item{color.alpha}{An integer scalar giving the transparency of colored
+cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).}
 
 \item{colors.velocity, colors.expression}{Character vectors specifying the
 color ranges used for mapping velocities and expression values. The
@@ -67,8 +66,8 @@ velocities and \code{viridisLite::viridis(11)} for the expression values.}
 absolute velocity to limit the color scale for the \code{"velocity"} graph.}
 }
 \value{
-Invisible a two element vector with the numbers of rows and columns
-  of the generated graph panel layout.
+A patchwork object with the plots selected by \code{which.plot} for
+  the genes in \code{genes}, arranged in a grid according to \code{genes.per.row}.
 }
 \description{
 For a each gene in a set of genes, show the phase graph (spliced versus
@@ -98,7 +97,8 @@ plotVelocity(out2, c("Gene_0031","Gene_0268"))
 \seealso{
 \code{\link{scvelo}}, to generate \code{x},
 \code{\link[RColorBrewer]{brewer.pal}} and \code{\link[viridisLite]{viridis}}
-for creation of color palettes.
+for creation of color palettes, packages \pkg{ggplot2} and \pkg{patchwork}
+used to generate and arrange the plots.
 }
 \author{
 Michael Stadler
