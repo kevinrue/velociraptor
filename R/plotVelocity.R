@@ -214,10 +214,10 @@ plotVelocity <- function(x, genes, use.dimred = 1,
                 # see https://github.com/theislab/scvelo/blob/95d90de3d0935ce58a01218c9f179c9494ff593e/scvelo/plotting/simulation.py#L54
                 ut <- .unspliced(tau, u0, alpha, beta) * scaling + u0_offset
                 st <- .spliced(tau, s0, u0, alpha, beta, gamma) + s0_offset
-                p1 <- p1 + geom_point(data = data.frame(x = st, y = ut),
-                                      mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
-                                                             y = !!ggplot2::sym("y")),
-                                      color = "purple", shape = 46)
+                p1 <- p1 + ggplot2::geom_point(data = data.frame(x = st, y = ut),
+                                               mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
+                                                                      y = !!ggplot2::sym("y")),
+                                               color = "purple", shape = 46)
             }
             pL <- c(pL, list(p1))
         }
