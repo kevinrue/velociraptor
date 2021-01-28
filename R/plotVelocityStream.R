@@ -157,6 +157,7 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     }
     if (color.streamlines) {
         # remark: when coloring streamlines, we currently cannot have any arrows
+        # remark: ..dx.., ..dy.. and ..step.. are calculated by metR::geom_streamline
         p <- p +
             metR::geom_streamline(mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
                                                          y = !!ggplot2::sym("y"),
@@ -164,7 +165,8 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                                          dy = !!ggplot2::sym("dy"),
                                                          size = stream.width * !!ggplot2::sym("..step.."),
                                                          alpha = !!ggplot2::sym("..step.."),
-                                                         color = sqrt(..dx..^2 + ..dy..^2)),
+                                                         color = !!rlang::parse_quo("sqrt(..dx..^2 + ..dy..^2)",
+                                                                                    env=rlang::caller_env())),
                                   arrow = NULL, lineend = "round",
                                   data = plotdat2, size = 0.6, jitter = 2,
                                   L = stream.L, min.L = stream.min.L,

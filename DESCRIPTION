@@ -36,6 +36,7 @@ Suggests:
     Rtsne,
     graphics,
     grDevices,
+    rlang,
     ggplot2,
     patchwork,
     metR
