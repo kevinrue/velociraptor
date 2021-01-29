@@ -197,4 +197,3 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     
     return(p)
 }
-
