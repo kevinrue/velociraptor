@@ -1,3 +1,11 @@
+# 1.1.1
+
+* Refresh cached environments.
+
+# 1.1.0
+
+* Bioconductor release 1.1.0.
+
 # velociraptor 0.99.9
 
 * Converted various functions to S4 generics for easier use with `SingleCellExperiment` objects.
