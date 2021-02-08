@@ -194,6 +194,6 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                            panel.grid.major = ggplot2::element_blank(),
                            panel.grid.minor = ggplot2::element_blank())
     }
-    
+
     return(p)
 }
