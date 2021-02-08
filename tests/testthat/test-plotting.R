@@ -41,6 +41,7 @@ test_that("plotVelocity runs", {
     expect_error(plotVelocity(out1, genes2, 1, "error"))
     expect_error(plotVelocity(out1, genes2, 1, which.plots = "error"))
     expect_error(plotVelocity(out1, genes2, 1, genes.per.row = "error"))
+    expect_error(plotVelocity(out1, genes2, 1, color_by = c("error", "error")))
     expect_error(plotVelocity(out1, genes2, 1, max.abs.velo = "error"))
     expect_error(plotVelocity(out1, genes2, 1, max.abs.velo = -1))
     
@@ -72,6 +73,7 @@ test_that("plotVelocityStream runs", {
     
     expect_error(plotVelocityStream("error", em2))
     expect_error(plotVelocityStream(out2, "error"))
+    expect_error(plotVelocityStream(out2, em2[1:10, ]))
     expect_error(plotVelocityStream(out2, em2, use.dimred = "error"))
     expect_error(plotVelocityStream(out2, em2, use.dimred = FALSE))
     expect_error(plotVelocityStream(out2, em2, color_by = "error"))
