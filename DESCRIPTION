@@ -33,8 +33,12 @@ Suggests:
     scran,
     scater,
     scRNAseq,
+    Rtsne,
+    graphics,
+    grDevices,
     ggplot2,
-    Rtsne
+    patchwork,
+    metR
 StagedInstall: no
 License: MIT + file LICENSE
 Encoding: UTF-8

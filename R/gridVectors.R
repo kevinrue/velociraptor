@@ -11,6 +11,8 @@
 #' @param scale Logical scalar indicating whether the averaged vectors should be scaled by the grid resolution.
 #' @param as.data.frame Logical scalar indicating whether the output should be a data.frame.
 #' If \code{FALSE}, a list of two matrices is returned.
+#' @param return.intermediates Logical scalar indicating whether intermediate objects should also be returned.
+#' This enforces \code{as.data.frame=FALSE} and throws a warning if it is \code{TRUE}.
 #' @param ... For the generic, further arguments to pass to specific methods.
 #'
 #' For the SingleCellExperiment method, further arguments to pass to the ANY method.
@@ -32,6 +34,13 @@
 #'
 #' If \code{as.data.frame=TRUE}, a data.frame is returned with numeric columns of the same contents as the list above.
 #' Column names are prefixed by \code{start.*} and \code{end.*}.
+#' 
+#' If \code{return.intermediates=TRUE}, a list is returned (irrespective of the value of \code{as.data.frame})
+#' that in addition to \code{start} and \code{end} also contains intermediate objects \code{limits}
+#' (the ranges in x and y), \code{delta} (the grid intervals in x and y), \code{categories} (a
+#' DataFrame with integer row and column indices for each cell that specify the grid field that it is
+#' contained in), \code{grp} (numerical index of grid fields for each cell) and \code{vec} (velocity
+#' vectors for non-empty grid fields).
 #'
 #' @author Aaron Lun
 #' @examples
@@ -52,7 +61,7 @@ NULL
 #' @export
 #' @importFrom S4Vectors selfmatch DataFrame
 #' @importFrom stats median
-.grid_vectors <- function(x, embedded, resolution=40, scale=TRUE, as.data.frame=TRUE) {
+.grid_vectors <- function(x, embedded, resolution=40, scale=TRUE, as.data.frame=TRUE, return.intermediates=FALSE) {
     limits <- apply(x, 2, range)
     intercept <- limits[1,]
     delta <- (limits[2,] - intercept)/resolution
@@ -72,8 +81,16 @@ NULL
         vec <- vec * target/median(d)/2 # divide by 2 to avoid running over into another block.
     }
 
-    FUN <- if (as.data.frame) data.frame else list
-    FUN(start=pos, end=pos + vec)
+    if (return.intermediates) {
+        if (as.data.frame) {
+            warning("ignoring 'as.data.frame=TRUE' for 'return.intermediates=TRUE'")
+        }
+        return(list(start=pos, end=pos + vec, limits=limits, delta=delta,
+                    categories=categories, grp=grp, vec=vec))
+    } else {
+        FUN <- if (as.data.frame) data.frame else list
+        return(FUN(start=pos, end=pos + vec))
+    }
 }
 
 #' @export

@@ -29,6 +29,10 @@ test_that("gridVectors works correctly", {
     out <- gridVectors(tsne.results, projected)
     expect_identical(ncol(out), 4L)
 
+    expect_warning(out <- gridVectors(tsne.results, projected, return.intermediates=TRUE))
+    expect_type(out, "list")
+    expect_length(out, 7L)
+    
     out <- gridVectors(tsne.results, projected, as.data.frame=FALSE)
     expect_type(out, "list")
 
