@@ -38,7 +38,6 @@ Suggests:
     graphics,
     grDevices,
     ggplot2,
-    Rtsne,
     cowplot,
     GGally,
     patchwork,
