@@ -143,7 +143,14 @@
     <pre class="usage"><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for ANY</span>
-<span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, resolution <span class='op'>=</span> <span class='fl'>40</span>, scale <span class='op'>=</span> <span class='cn'>TRUE</span>, as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'>gridVectors</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  <span class='va'>embedded</span>,
+  resolution <span class='op'>=</span> <span class='fl'>40</span>,
+  scale <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  as.data.frame <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  return.intermediates <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
 
 <span class='co'># S4 method for SingleCellExperiment</span>
 <span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span>, use.dimred <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
@@ -181,6 +188,11 @@ in terms of the number of grid intervals along each axis.</p></td>
 If <code>FALSE</code>, a list of two matrices is returned.</p></td>
     </tr>
     <tr>
+      <th>return.intermediates</th>
+      <td><p>Logical scalar indicating whether intermediate objects should also be returned.
+This enforces <code>as.data.frame=FALSE</code> and throws a warning if it is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
       <th>use.dimred</th>
       <td><p>String or integer scalar specifying the reduced dimensions to retrieve from <code>x</code>.</p></td>
     </tr>
@@ -194,6 +206,12 @@ two numeric matrices with one row per non-empty block in the grid and one column
 and <code>end</code> contains the endpoint after adding the (scaled) average of the block's cell's velocity vectors.</p>
 <p>If <code>as.data.frame=TRUE</code>, a data.frame is returned with numeric columns of the same contents as the list above.
 Column names are prefixed by <code>start.*</code> and <code>end.*</code>.</p>
+<p>If <code>return.intermediates=TRUE</code>, a list is returned (irrespective of the value of <code>as.data.frame</code>)
+that in addition to <code>start</code> and <code>end</code> also contains intermediate objects <code>limits</code>
+(the ranges in x and y), <code>delta</code> (the grid intervals in x and y), <code>categories</code> (a
+DataFrame with integer row and column indices for each cell that specify the grid field that it is
+contained in), <code>grp</code> (numerical index of grid fields for each cell) and <code>vec</code> (velocity
+vectors for non-empty grid fields).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This partitions the bounding box of <code>x</code> into a grid with <code>resolution</code> units in each dimension.
