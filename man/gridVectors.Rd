@@ -8,7 +8,14 @@
 \usage{
 gridVectors(x, embedded, ...)
 
-\S4method{gridVectors}{ANY}(x, embedded, resolution = 40, scale = TRUE, as.data.frame = TRUE)
+\S4method{gridVectors}{ANY}(
+  x,
+  embedded,
+  resolution = 40,
+  scale = TRUE,
+  as.data.frame = TRUE,
+  return.intermediates = FALSE
+)
 
 \S4method{gridVectors}{SingleCellExperiment}(x, embedded, ..., use.dimred = 1)
 }
@@ -31,6 +38,9 @@ in terms of the number of grid intervals along each axis.}
 \item{as.data.frame}{Logical scalar indicating whether the output should be a data.frame.
 If \code{FALSE}, a list of two matrices is returned.}
 
+\item{return.intermediates}{Logical scalar indicating whether intermediate objects should also be returned.
+This enforces \code{as.data.frame=FALSE} and throws a warning if it is \code{TRUE}.}
+
 \item{use.dimred}{String or integer scalar specifying the reduced dimensions to retrieve from \code{x}.}
 }
 \value{
@@ -41,6 +51,13 @@ and \code{end} contains the endpoint after adding the (scaled) average of the bl
 
 If \code{as.data.frame=TRUE}, a data.frame is returned with numeric columns of the same contents as the list above.
 Column names are prefixed by \code{start.*} and \code{end.*}.
+
+If \code{return.intermediates=TRUE}, a list is returned (irrespective of the value of \code{as.data.frame})
+that in addition to \code{start} and \code{end} also contains intermediate objects \code{limits}
+(the ranges in x and y), \code{delta} (the grid intervals in x and y), \code{categories} (a
+DataFrame with integer row and column indices for each cell that specify the grid field that it is
+contained in), \code{grp} (numerical index of grid fields for each cell) and \code{vec} (velocity
+vectors for non-empty grid fields).
 }
 \description{
 Summarize the velocity vectors into a grid, usually for easy plotting.
