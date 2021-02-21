@@ -89,12 +89,12 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
                                                           "#22A884", "#43BF71", "#7AD151",
                                                           "#BBDF27", "#FDE725"),
                                arrow.angle = 8, arrow.length = 0.8) {
-    if (ncol(sce) != nrow(embedded)) {
+    if (!identical(ncol(sce), nrow(embedded))) {
         stop("'sce' and 'embedded' do not have consistent dimensions.")
     }
     if (is.numeric(use.dimred)) {
         stopifnot(exprs = {
-            length(use.dimred) == 1L
+            identical(length(use.dimred), 1L)
             use.dimred <= length(reducedDims(sce))
         })
         use.dimred <- reducedDimNames(sce)[use.dimred]
