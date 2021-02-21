@@ -30,6 +30,7 @@ Suggests:
     testthat,
     knitr,
     rmarkdown,
+    pkgdown,
     scran,
     scater,
     scRNAseq,
@@ -39,7 +40,7 @@ Suggests:
     ggplot2,
     Rtsne,
     cowplot,
-    GGally
+    GGally,
     patchwork,
     metR
 StagedInstall: no
