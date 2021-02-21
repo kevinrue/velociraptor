@@ -108,7 +108,7 @@ plotVelocityStream <- function(sce, embedded, use.dimred = 1,
     else {
         stop("'use.dimred' is not a valid value for use in reducedDim(sce, use.dimred)")
     }
-    if (!require(ggplot2)) {
+    if (!requireNamespace("ggplot2")) {
         stop("'plotVelocityStream' requires the package 'ggplot2'.")
     }
     
