@@ -1,3 +1,7 @@
+# 1.1.2
+
+* Added functions `plotVelocity` and `plotVelocityStream`.
+
 # 1.1.1
 
 * Refresh cached environments.
