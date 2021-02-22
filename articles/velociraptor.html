@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.3</span>
       </span>
     </div>
 
@@ -51,6 +51,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/velociraptor.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -61,7 +64,11 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/userguide.html">Computing RNA velocity in a Bioconductor framework</a>
+      <a href="../articles/extras/compare_velociraptor_runs.html">velociraptor sanity check</a>
+    </li>
+    <li class="divider">
+    <li>
+      <a href="../articles/index.html">More...</a>
     </li>
   </ul>
 </li>
@@ -86,7 +93,7 @@
 
       
 
-      </header><script src="userguide_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><script src="velociraptor_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Computing RNA velocity in a Bioconductor framework</h1>
@@ -99,8 +106,8 @@
       
                   
       
-      <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/master/vignettes/userguide.Rmd"><code>vignettes/userguide.Rmd</code></a></small>
-      <div class="hidden name"><code>userguide.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/master/vignettes/velociraptor.Rmd"><code>vignettes/velociraptor.Rmd</code></a></small>
+      <div class="hidden name"><code>velociraptor.Rmd</code></div>
 
     </div>
 
@@ -177,17 +184,17 @@
 
 <span class="va">sce</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">&lt;-</span> <span class="va">velo.out</span><span class="op">$</span><span class="va">velocity_pseudotime</span>
 <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span></code></pre></div>
-<p><img src="userguide_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="velociraptor_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>It is also straightforward to embed the velocity vectors into our desired low-dimensional space, as shown below for the <span class="math inline">\(t\)</span>-SNE coordinates. This uses a grid-based approach to summarize the per-cell vectors into local representatives for effective visualization.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span>
-<span class="va">grid.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gridVectors.html">gridVectors</a></span><span class="op">(</span><span class="fu">reducedDim</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">embedded</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span>
+<span class="va">grid.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gridVectors.html">gridVectors</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">embedded</span><span class="op">)</span>
 
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_segment.html">geom_segment</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">grid.df</span>, mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">start.1</span>, y<span class="op">=</span><span class="va">start.2</span>, 
         xend<span class="op">=</span><span class="va">end.1</span>, yend<span class="op">=</span><span class="va">end.2</span><span class="op">)</span>, arrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/arrow.html">arrow</a></span><span class="op">(</span>length<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="st">"inches"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="userguide_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="velociraptor_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>And that’s it, really.</p>
 </div>
 <div id="advanced-options" class="section level1">
@@ -279,7 +286,7 @@
 ## 
 ## other attached packages:
 ##  [1] scater_1.19.10               ggplot2_3.3.3               
-##  [3] velociraptor_1.1.2           scran_1.19.14               
+##  [3] velociraptor_1.1.3           scran_1.19.14               
 ##  [5] scuttle_1.1.16               scRNAseq_2.5.7              
 ##  [7] SingleCellExperiment_1.13.12 SummarizedExperiment_1.21.1 
 ##  [9] Biobase_2.51.0               GenomicRanges_1.43.3        
@@ -341,21 +348,22 @@
 ##  [99] vctrs_0.3.6                   pillar_1.4.7                 
 ## [101] lifecycle_1.0.0               BiocManager_1.30.10          
 ## [103] jquerylib_0.1.3               BiocNeighbors_1.9.4          
-## [105] bitops_1.0-6                  irlba_2.3.3                  
-## [107] httpuv_1.5.5                  rtracklayer_1.51.4           
-## [109] R6_2.5.0                      BiocIO_1.1.2                 
-## [111] bookdown_0.21                 promises_1.2.0.1             
-## [113] gridExtra_2.3                 vipor_0.4.5                  
-## [115] zellkonverter_1.1.4           assertthat_0.2.1             
-## [117] openssl_1.4.3                 rprojroot_2.0.2              
-## [119] rjson_0.2.20                  withr_2.4.1                  
-## [121] GenomicAlignments_1.27.2      Rsamtools_2.7.1              
-## [123] datasets_4.1.0                GenomeInfoDbData_1.2.4       
-## [125] hms_1.0.0                     grid_4.1.0                   
-## [127] beachmat_2.7.6                basilisk_1.3.6               
-## [129] rmarkdown_2.7                 DelayedMatrixStats_1.13.5    
-## [131] Rtsne_0.15                    shiny_1.6.0                  
-## [133] ggbeeswarm_0.6.0              restfulr_0.0.13</code></pre>
+## [105] cowplot_1.1.1                 bitops_1.0-6                 
+## [107] irlba_2.3.3                   httpuv_1.5.5                 
+## [109] rtracklayer_1.51.4            R6_2.5.0                     
+## [111] BiocIO_1.1.2                  bookdown_0.21                
+## [113] promises_1.2.0.1              gridExtra_2.3                
+## [115] vipor_0.4.5                   zellkonverter_1.1.4          
+## [117] assertthat_0.2.1              openssl_1.4.3                
+## [119] rprojroot_2.0.2               rjson_0.2.20                 
+## [121] withr_2.4.1                   GenomicAlignments_1.27.2     
+## [123] Rsamtools_2.7.1               datasets_4.1.0               
+## [125] GenomeInfoDbData_1.2.4        hms_1.0.0                    
+## [127] grid_4.1.0                    beachmat_2.7.6               
+## [129] basilisk_1.3.6                rmarkdown_2.7                
+## [131] DelayedMatrixStats_1.13.5     Rtsne_0.15                   
+## [133] shiny_1.6.0                   ggbeeswarm_0.6.0             
+## [135] restfulr_0.0.13</code></pre>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
