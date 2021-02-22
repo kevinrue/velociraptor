@@ -182,7 +182,7 @@ out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 \references{
 Bergen V. et al. (2019).
 Generalizing RNA velocity to transient cell states through dynamical modeling.
-bioxRiv, \url{https://www.biorxiv.org/content/10.1101/820936v1}
+bioRxiv, \url{https://www.biorxiv.org/content/10.1101/820936v1}
 }
 \author{
 Aaron Lun, Charlotte Soneson
