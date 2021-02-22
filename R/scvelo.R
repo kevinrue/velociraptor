@@ -125,7 +125,7 @@
 #' @references
 #' Bergen V. et al. (2019).
 #' Generalizing RNA velocity to transient cell states through dynamical modeling.
-#' bioRxiv, \url{https://www.biorxiv.org/content/10.1101/820936v1}
+#' bioRxiv, <https://www.nature.com/articles/s41587-020-0591-3>
 #'
 #' @author Aaron Lun, Charlotte Soneson
 #' @name scvelo
