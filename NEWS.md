@@ -1,14 +1,18 @@
+# velociraptor 1.1.5
+
+* Add Michael Stadler to package authors.
+
 # velociraptor 1.1.4
 
 * Fix typo in documentation.
 
 # velociraptor 1.1.3
 
-* Added vignette subdirectory with sanity checks.
+* Add vignette subdirectory with sanity checks.
 
 # velociraptor 1.1.2
 
-* Added functions `plotVelocity` and `plotVelocityStream`.
+* Add functions `plotVelocity` and `plotVelocityStream`.
 
 # velociraptor 1.1.1
 
