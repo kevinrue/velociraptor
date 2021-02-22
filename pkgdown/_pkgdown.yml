@@ -1,0 +1,7 @@
+articles:
+- title: "Getting Started"
+  contents: velociraptor
+- title: "Developers' corner"
+  navbar: ~
+  contents:
+  - starts_with("extras")

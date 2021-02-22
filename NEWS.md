@@ -1,12 +1,16 @@
-# 1.1.2
+# velociraptor 1.1.3
+
+* Added vignette subdirectory with sanity checks.
+
+# velociraptor 1.1.2
 
 * Added functions `plotVelocity` and `plotVelocityStream`.
 
-# 1.1.1
+# velociraptor 1.1.1
 
 * Refresh cached environments.
 
-# 1.1.0
+# velociraptor 1.1.0
 
 * Bioconductor release 1.1.0.
 
