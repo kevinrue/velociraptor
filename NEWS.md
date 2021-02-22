@@ -1,3 +1,7 @@
+# velociraptor 1.1.4
+
+* Fix typo in documentation.
+
 # velociraptor 1.1.3
 
 * Added vignette subdirectory with sanity checks.
