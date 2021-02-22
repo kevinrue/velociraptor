@@ -51,7 +51,7 @@ sce <- sce[, 1:500]
 
 We assume that feature selection has already been performed by the user using any method 
 (see [here](https://osca.bioconductor.org/feature-selection.html) for some suggestions).
-We will use the log-expression method from the `r Biocpkg("scran")` method here.
+In this case, we will use the variance of log-expressions from `r Biocpkg("scran")` to select the top 2000 genes.
 
 ```{r}
 library(scuttle)
@@ -63,18 +63,20 @@ top.hvgs <- getTopHVGs(dec, n=2000)
 ```
 
 We can plug these choices into the `scvelo()` function with our `SingleCellExperiment` object.
-Here, we will use the `"spliced"` count matrix as a proxy for the typical exonic count matrix.
-While this count matrix is not required for the velocity estimation in itself, it is used internally to retrieve the principal component space that is used by `r basilisk::PyPiLink("scvelo")` to find nearest neighbors.
-There are some subtle differences between the spliced count matrix and the typical exonic count matrix - see `?scvelo` for some commentary about this -
-but the spliced counts are generally a satisfactory replacement.
-By default, `scvelo()` uses the steady-state approach to estimate velocities. 
-The stochastic and dynamical models implemented in `r basilisk::PyPiLink("scvelo")` are accessible as well, by modifying the `mode` argument. 
+By default, `scvelo()` uses the steady-state approach to estimate velocities,
+though the stochastic and dynamical models implemented in `r basilisk::PyPiLink("scvelo")` can also be used by modifying the `mode` argument. 
 
 ```{r}
 library(velociraptor)
 velo.out <- scvelo(sce, subset.row=top.hvgs, assay.X="spliced")
 velo.out
 ```
+
+In the above call, we use the `"spliced"` count matrix as a proxy for the typical exonic count matrix.
+Technically, the latter is not required for the velocity estimation, but `r basilisk::PyPiLink("scvelo")` needs to perform a PCA and nearest neighbors search,
+and we want to ensure that the neighbors detected inside the function are consistent with the rest of the analysis workflow (performed on the exonic counts).
+There are some subtle differences between the spliced count matrix and the typical exonic count matrix - see `?scvelo` for some commentary about this -
+but the spliced counts are generally a satisfactory replacement if the latter is not available.
 
 The `scvelo()` function produces a `SingleCellExperiment` containing all of the outputs of the calculation in Python.
 Of particular interest is the `velocity_pseudotime` vector that captures the relative progression of each cell 

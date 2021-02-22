@@ -1,3 +1,19 @@
+# velociraptor 1.1.3
+
+* Added vignette subdirectory with sanity checks.
+
+# velociraptor 1.1.2
+
+* Added functions `plotVelocity` and `plotVelocityStream`.
+
+# velociraptor 1.1.1
+
+* Refresh cached environments.
+
+# velociraptor 1.1.0
+
+* Bioconductor release 1.1.0.
+
 # velociraptor 0.99.9
 
 * Converted various functions to S4 generics for easier use with `SingleCellExperiment` objects.
