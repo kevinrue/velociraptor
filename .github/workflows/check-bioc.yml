@@ -251,11 +251,12 @@ jobs:
         run: R CMD INSTALL .
 
       - name: Deploy package
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
-          Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
+          Rscript -e "pkgdown::deploy_to_branch()"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
         ## at least one locally before this will work. This creates the gh-pages
