@@ -37,6 +37,7 @@ env:
   has_testthat: 'true'
   run_covr: 'true'
   run_pkgdown: 'true'
+  run_docker: 'true'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
 
@@ -267,3 +268,12 @@ jobs:
         with:
           name: ${{ runner.os }}-biocversion-devel-r-devel-results
           path: check
+
+      - name: Push to Docker Hub
+        if: github.ref == 'refs/heads/master' && env.run_docker == 'true' && runner.os == 'Linux'
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: kevinrue/velociraptor
+          tag_with_ref: true
