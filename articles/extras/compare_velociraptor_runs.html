@@ -98,7 +98,7 @@
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>velociraptor sanity check</h1>
             
-            <h4 class="date">2021-02-22</h4>
+            <h4 class="date">2021-02-25</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/master/vignettes/extras/compare_velociraptor_runs.Rmd"><code>vignettes/extras/compare_velociraptor_runs.Rmd</code></a></small>
       <div class="hidden name"><code>compare_velociraptor_runs.Rmd</code></div>
@@ -132,7 +132,7 @@
 <code class="sourceCode R"><span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reticulate/man/use_python.html">use_virtualenv</a></span><span class="op">(</span><span class="fu">basilisk</span><span class="fu">:::</span><span class="fu">.obtainEnvironmentPath</span><span class="op">(</span><span class="fu">velociraptor</span><span class="fu">:::</span><span class="va">velo.env</span><span class="op">)</span><span class="op">)</span>
 <span class="va">sys</span> <span class="op">&lt;-</span> <span class="fu">reticulate</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reticulate/man/import.html">import</a></span><span class="op">(</span><span class="st">"sys"</span><span class="op">)</span>
 <span class="va">sys</span><span class="op">$</span><span class="va">version</span></code></pre></div>
-<pre><code>## [1] "3.7.7 (default, May  7 2020, 21:31:28) \n[GCC 7.3.0]"</code></pre>
+<pre><code>## [1] "3.7.7 (default, May  6 2020, 05:01:30) \n[Clang 4.0.1 (tags/RELEASE_401/final)]"</code></pre>
 </div>
 <div id="set-temporary-directory" class="section level1">
 <h1 class="hasAnchor">
@@ -148,21 +148,14 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Load and subset data</span>
 <span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scRNAseq</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scRNAseq/man/HermannSpermatogenesisData.html">HermannSpermatogenesisData</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></code></pre></div>
-<pre><code>## using temporary cache /tmp/RtmpClkDvF/BiocFileCache</code></pre>
 <pre><code>## snapshotDate(): 2021-02-19</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes('scRNAseq') for documentation</code></pre>
-<pre><code>## downloading 1 resources</code></pre>
-<pre><code>## retrieving 1 resource</code></pre>
 <pre><code>## loading from cache</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes('scRNAseq') for documentation</code></pre>
-<pre><code>## downloading 1 resources</code></pre>
-<pre><code>## retrieving 1 resource</code></pre>
 <pre><code>## loading from cache</code></pre>
 <pre><code>## see ?scRNAseq and browseVignettes('scRNAseq') for documentation</code></pre>
-<pre><code>## downloading 1 resources</code></pre>
-<pre><code>## retrieving 1 resource</code></pre>
 <pre><code>## loading from cache</code></pre>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## Add 'counts' assay</span>
 <span class="fu">assay</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"counts"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu">assay</span><span class="op">(</span><span class="va">sce</span>, <span class="st">"spliced"</span><span class="op">)</span>
 
@@ -177,151 +170,151 @@
 <div id="steady-state-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#steady-state-model" class="anchor"></a>Steady-state model</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> anndata</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scvelo <span class="im">as</span> scv</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os <span class="im">import</span> path</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>adata<span class="op">=</span>anndata.read(r.tmpdir <span class="op">+</span> <span class="st">"/anndata.h5ad"</span>)</span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>scv.pp.filter_and_normalize(adata, enforce<span class="op">=</span><span class="va">True</span>, n_top_genes<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> anndata</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scvelo <span class="im">as</span> scv</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> os <span class="im">import</span> path</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>adata<span class="op">=</span>anndata.read(r.tmpdir <span class="op">+</span> <span class="st">"/anndata.h5ad"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>scv.pp.filter_and_normalize(adata, enforce<span class="op">=</span><span class="va">True</span>, n_top_genes<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div>
 <pre><code>## Normalized count data: X, spliced, unspliced.
 ## Exctracted 2000 highly variable genes.
 ## Logarithmized X.</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>scv.pp.moments(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>scv.pp.moments(adata)</span></code></pre></div>
 <pre><code>## computing neighbors
-##     finished (0:00:04) --&gt; added 
+##     finished (0:00:03) --&gt; added 
 ##     'distances' and 'connectivities', weighted adjacency matrices (adata.obsp)
 ## computing moments based on connectivities
 ##     finished (0:00:00) --&gt; added 
 ##     'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)</code></pre>
-<div class="sourceCode" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity(adata, mode<span class="op">=</span><span class="st">"steady_state"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity(adata, mode<span class="op">=</span><span class="st">"steady_state"</span>)</span></code></pre></div>
 <pre><code>## computing velocities
 ##     finished (0:00:00) --&gt; added 
 ##     'velocity', velocity vectors for each individual cell (adata.layers)</code></pre>
-<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_graph(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_graph(adata)</span></code></pre></div>
 <pre><code>## computing velocity graph
 ## 
 ... 100%
     finished (0:00:00) --&gt; added 
 ##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_pseudotime(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_pseudotime(adata)</span></code></pre></div>
 <pre><code>## computing terminal states
 ## WARNING: Uncertain or fuzzy root cell identification. Please verify.
 ##     identified 1 region of root cells and 1 region of end points .
 ##     finished (0:00:00) --&gt; added
 ##     'root_cells', root cells of Markov diffusion process (adata.obs)
 ##     'end_points', end points of Markov diffusion process (adata.obs)</code></pre>
-<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_confidence(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_confidence(adata)</span></code></pre></div>
 <pre><code>## --&gt; added 'velocity_length' (adata.obs)
 ## --&gt; added 'velocity_confidence' (adata.obs)
 ## --&gt; added 'velocity_confidence_transition' (adata.obs)</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>adata.write(r.tmpdir <span class="op">+</span> <span class="st">"/anndata_withvelo_steadystate.h5ad"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>adata.write(r.tmpdir <span class="op">+</span> <span class="st">"/anndata_withvelo_steadystate.h5ad"</span>)</span></code></pre></div>
 </div>
 <div id="dynamical-model" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dynamical-model" class="anchor"></a>Dynamical model</h2>
-<div class="sourceCode" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> anndata</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scvelo <span class="im">as</span> scv</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>adata<span class="op">=</span>anndata.read(r.tmpdir <span class="op">+</span> <span class="st">"/anndata.h5ad"</span>)</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>scv.pp.filter_and_normalize(adata, enforce<span class="op">=</span><span class="va">True</span>, n_top_genes<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scanpy <span class="im">as</span> sc</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> anndata</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scvelo <span class="im">as</span> scv</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>adata<span class="op">=</span>anndata.read(r.tmpdir <span class="op">+</span> <span class="st">"/anndata.h5ad"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>scv.pp.filter_and_normalize(adata, enforce<span class="op">=</span><span class="va">True</span>, n_top_genes<span class="op">=</span><span class="dv">2000</span>)</span></code></pre></div>
 <pre><code>## Normalized count data: X, spliced, unspliced.
 ## Exctracted 2000 highly variable genes.
 ## Logarithmized X.</code></pre>
-<div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>scv.pp.moments(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>scv.pp.moments(adata)</span></code></pre></div>
 <pre><code>## computing neighbors
 ##     finished (0:00:00) --&gt; added 
 ##     'distances' and 'connectivities', weighted adjacency matrices (adata.obsp)
 ## computing moments based on connectivities
 ##     finished (0:00:00) --&gt; added 
 ##     'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>scv.tl.recover_dynamics(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>scv.tl.recover_dynamics(adata)</span></code></pre></div>
 <pre><code>## recovering dynamics
 ## 
 ... 2%
 ... 4%
-... 6%
-... 8%
-... 10%
-... 12%
-... 15%
-... 17%
-... 20%
-... 22%
-... 24%
-... 26%
-... 29%
-... 31%
-... 33%
-... 36%
-... 38%
-... 40%
-... 42%
-... 44%
-... 47%
-... 49%
-... 52%
-... 54%
-... 56%
-... 58%
+... 7%
+... 9%
+... 11%
+... 13%
+... 16%
+... 18%
+... 21%
+... 23%
+... 25%
+... 27%
+... 30%
+... 32%
+... 35%
+... 37%
+... 39%
+... 41%
+... 43%
+... 46%
+... 48%
+... 51%
+... 53%
+... 55%
+... 57%
+... 60%
 ... 61%
-... 62%
-... 65%
-... 67%
-... 70%
-... 72%
-... 75%
-... 77%
-... 79%
-... 81%
+... 63%
+... 66%
+... 68%
+... 71%
+... 73%
+... 76%
+... 78%
+... 80%
+... 82%
 ... 84%
-... 86%
-... 88%
-... 91%
-... 93%
+... 87%
+... 89%
+... 92%
+... 94%
 ... 96%
-... 98%
+... 99%
 ... 100%
-    finished (0:02:15) --&gt; added 
+    finished (0:02:14) --&gt; added 
 ##     'fit_pars', fitted parameters for splicing dynamics (adata.var)</code></pre>
-<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity(adata, mode<span class="op">=</span><span class="st">"dynamical"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity(adata, mode<span class="op">=</span><span class="st">"dynamical"</span>)</span></code></pre></div>
 <pre><code>## computing velocities
 ##     finished (0:00:00) --&gt; added 
 ##     'velocity', velocity vectors for each individual cell (adata.layers)</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_graph(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_graph(adata)</span></code></pre></div>
 <pre><code>## computing velocity graph
 ## 
 ... 100%
     finished (0:00:00) --&gt; added 
 ##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_pseudotime(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_pseudotime(adata)</span></code></pre></div>
 <pre><code>## computing terminal states
 ##     identified 1 region of root cells and 1 region of end points .
 ##     finished (0:00:00) --&gt; added
 ##     'root_cells', root cells of Markov diffusion process (adata.obs)
 ##     'end_points', end points of Markov diffusion process (adata.obs)</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>scv.tl.latent_time(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>scv.tl.latent_time(adata)</span></code></pre></div>
 <pre><code>## computing latent time using root_cells as prior
 ##     finished (0:00:00) --&gt; added 
 ##     'latent_time', shared time (adata.obs)</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_confidence(adata)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>scv.tl.velocity_confidence(adata)</span></code></pre></div>
 <pre><code>## --&gt; added 'velocity_length' (adata.obs)
 ## --&gt; added 'velocity_confidence' (adata.obs)
 ## --&gt; added 'velocity_confidence_transition' (adata.obs)</code></pre>
-<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>adata.write(r.tmpdir <span class="op">+</span> <span class="st">"/anndata_withvelo_dynamical.h5ad"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>adata.write(r.tmpdir <span class="op">+</span> <span class="st">"/anndata_withvelo_dynamical.h5ad"</span>)</span></code></pre></div>
 </div>
 <div id="read-back-objects-in-r-for-later-comparison" class="section level2">
 <h2 class="hasAnchor">
 <a href="#read-back-objects-in-r-for-later-comparison" class="anchor"></a>Read back objects in R for later comparison</h2>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sceps</span> <span class="op">&lt;-</span> <span class="fu">zellkonverter</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zellkonverter/man/readH5AD.html">readH5AD</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"anndata_withvelo_steadystate.h5ad"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">scepd</span> <span class="op">&lt;-</span> <span class="fu">zellkonverter</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/zellkonverter/man/readH5AD.html">readH5AD</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"anndata_withvelo_dynamical.h5ad"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
@@ -329,7 +322,7 @@
 <div id="process-the-data-set" class="section level1">
 <h1 class="hasAnchor">
 <a href="#process-the-data-set" class="anchor"></a>Process the data set</h1>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu">scuttle</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span>, assay.type<span class="op">=</span><span class="fl">1</span><span class="op">)</span>
 
 <span class="co">## To use the HVGs determined by scVelo</span>
@@ -339,7 +332,7 @@
 <span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html">modelGeneVar</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in regularize.values(x, y, ties, missing(ties), na.rm = na.rm):
 ## collapsing to unique 'x' values</code></pre>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu">scran</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n<span class="op">=</span><span class="fl">2000</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>
@@ -350,7 +343,7 @@
 <h1 class="hasAnchor">
 <a href="#helper-function" class="anchor"></a>Helper function</h1>
 <p>The function below runs scVelo via the R wrapper, first using the pre-normalized data and PCA from the SingleCellExperiment object, and then with <code>use_theirs=TRUE</code>. It also performs some comparisons between the two results.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">run_scv</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">sce</span>, <span class="va">top.hvgs</span>, <span class="va">mode</span><span class="op">)</span> <span class="op">{</span>
     <span class="co">## precomputed PCs and normalized values</span>
     <span class="va">velo.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/scvelo.html">scvelo</a></span><span class="op">(</span>
@@ -422,7 +415,7 @@
 <div id="dynamical-model-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dynamical-model-1" class="anchor"></a>Dynamical model</h2>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sced</span> <span class="op">&lt;-</span> <span class="fu">run_scv</span><span class="op">(</span><span class="va">sce</span>, top.hvgs<span class="op">=</span><span class="va">top.hvgs</span>, mode<span class="op">=</span><span class="st">"dynamical"</span><span class="op">)</span></code></pre></div>
 <p><img src="compare_velociraptor_runs_files/figure-html/unnamed-chunk-10-1.png" width="768"></p>
 <pre><code>## Number of shared genes:</code></pre>
@@ -447,7 +440,7 @@
 <div id="compare-our-run-with-use_theirstrue-to-direct-python-calls" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compare-our-run-with-use_theirstrue-to-direct-python-calls" class="anchor"></a>Compare our run with ‘use_theirs=TRUE’ to direct python calls</h3>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sced</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">scepd</span><span class="op">)</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sced</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">scepd</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Correlations of velocities</span>
@@ -457,21 +450,21 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">velo_corrs</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       1       1       1       1       1       1</code></pre>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sced</span><span class="op">$</span><span class="va">velocity_pseudotime</span>, <span class="va">scepd</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span></code></pre></div>
 <p><img src="compare_velociraptor_runs_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">sced</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">-</span> <span class="va">scepd</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.000e+00 1.788e-07 5.774e-07 6.633e-07 9.835e-07 2.444e-06</code></pre>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+## 0.000e+00 1.192e-07 4.172e-07 6.697e-07 1.082e-06 2.325e-06</code></pre>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">sced</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">-</span> <span class="va">scepd</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">1e-3</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="steady-state-model-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#steady-state-model-1" class="anchor"></a>Steady-state model</h2>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sces</span> <span class="op">&lt;-</span> <span class="fu">run_scv</span><span class="op">(</span><span class="va">sce</span>, top.hvgs<span class="op">=</span><span class="va">top.hvgs</span>, mode<span class="op">=</span><span class="st">"steady_state"</span><span class="op">)</span></code></pre></div>
 <p><img src="compare_velociraptor_runs_files/figure-html/unnamed-chunk-12-1.png" width="768"></p>
 <pre><code>## Number of shared genes:</code></pre>
@@ -496,7 +489,7 @@
 <div id="compare-our-run-with-use_theirstrue-to-direct-python-calls-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#compare-our-run-with-use_theirstrue-to-direct-python-calls-1" class="anchor"></a>Compare our run with ‘use_theirs=TRUE’ to direct python calls</h3>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sces</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sceps</span><span class="op">)</span><span class="op">)</span>,
           <span class="fu"><a href="https://rdrr.io/r/base/all.html">all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sces</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sceps</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">## Correlations of velocities</span>
@@ -506,14 +499,14 @@
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">velo_corrs</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##       1       1       1       1       1       1</code></pre>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">sces</span><span class="op">$</span><span class="va">velocity_pseudotime</span>, <span class="va">sceps</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span></code></pre></div>
 <p><img src="compare_velociraptor_runs_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">sces</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">-</span> <span class="va">sceps</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##      Min.   1st Qu.    Median      Mean   3rd Qu.      Max. 
-## 0.000e+00 7.153e-07 2.012e-06 2.216e-06 3.695e-06 4.947e-06</code></pre>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+## 0.000e+00 7.674e-07 2.086e-06 2.360e-06 4.053e-06 4.888e-06</code></pre>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">sces</span><span class="op">$</span><span class="va">velocity_pseudotime</span> <span class="op">-</span> <span class="va">sceps</span><span class="op">$</span><span class="va">velocity_pseudotime</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">1e-3</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
@@ -521,25 +514,21 @@
 <div id="session-info" class="section level1">
 <h1 class="hasAnchor">
 <a href="#session-info" class="anchor"></a>Session info</h1>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## R Under development (unstable) (2021-02-18 r80027)
-## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04.1 LTS
+<pre><code>## R Under development (unstable) (2021-01-13 r79819)
+## Platform: x86_64-apple-darwin17.0 (64-bit)
+## Running under: macOS Catalina 10.15.7
 ## 
 ## Matrix products: default
-## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
+## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
-##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
-##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
-##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=C             
-##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
-##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
-## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## [1] en_GB.UTF-8/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
-## [1] parallel stats    graphics utils    stats4   methods  base    
+## [1] parallel stats    graphics stats4   methods  utils    base    
 ## 
 ## other attached packages:
 ##  [1] basilisk_1.3.6               reticulate_1.18             
@@ -559,69 +548,70 @@
 ##   [5] igraph_1.2.6                  lazyeval_0.2.2               
 ##   [7] BiocParallel_1.25.4           digest_0.6.27                
 ##   [9] ensembldb_2.15.2              htmltools_0.5.1.1            
-##  [11] viridis_0.5.1                 magrittr_2.0.1               
-##  [13] memoise_2.0.0                 ScaledMatrix_0.99.2          
-##  [15] limma_3.47.8                  Biostrings_2.59.2            
-##  [17] askpass_1.1                   pkgdown_1.6.1                
-##  [19] prettyunits_1.1.1             colorspace_2.0-0             
-##  [21] blob_1.2.1                    rappdirs_0.3.3               
-##  [23] textshaping_0.3.0             xfun_0.21                    
-##  [25] dplyr_1.0.4                   crayon_1.4.1                 
-##  [27] RCurl_1.98-1.2                jsonlite_1.7.2               
-##  [29] glue_1.4.2                    gtable_0.3.0                 
-##  [31] zlibbioc_1.37.0               XVector_0.31.1               
-##  [33] DelayedArray_0.17.8           BiocSingular_1.7.2           
-##  [35] scales_1.1.1                  DBI_1.1.1                    
-##  [37] edgeR_3.33.2                  Rcpp_1.0.6                   
-##  [39] viridisLite_0.3.0             xtable_1.8-4                 
-##  [41] progress_1.2.2                dqrng_0.2.1                  
-##  [43] bit_4.0.4                     rsvd_1.0.3                   
-##  [45] metapod_0.99.5                httr_1.4.2                   
-##  [47] RColorBrewer_1.1-2            ellipsis_0.3.1               
-##  [49] farver_2.0.3                  reshape_0.8.8                
-##  [51] pkgconfig_2.0.3               XML_3.99-0.5                 
-##  [53] sass_0.3.1                    dbplyr_2.1.0                 
-##  [55] locfit_1.5-9.4                labeling_0.4.2               
-##  [57] tidyselect_1.1.0              rlang_0.4.10                 
-##  [59] later_1.1.0.1                 AnnotationDbi_1.53.1         
-##  [61] munsell_0.5.0                 BiocVersion_3.13.1           
-##  [63] tools_4.1.0                   cachem_1.0.4                 
-##  [65] generics_0.1.0                RSQLite_2.2.3                
-##  [67] ExperimentHub_1.17.1          evaluate_0.14                
-##  [69] stringr_1.4.0                 fastmap_1.1.0                
-##  [71] yaml_2.2.1                    ragg_1.1.0                   
-##  [73] grDevices_4.1.0               knitr_1.31                   
-##  [75] bit64_4.0.5                   fs_1.5.0                     
-##  [77] purrr_0.3.4                   KEGGREST_1.31.1              
-##  [79] AnnotationFilter_1.15.0       sparseMatrixStats_1.3.6      
-##  [81] mime_0.10                     xml2_1.3.2                   
-##  [83] biomaRt_2.47.4                compiler_4.1.0               
-##  [85] beeswarm_0.2.3                filelock_1.0.2               
-##  [87] curl_4.3                      png_0.1-7                    
-##  [89] interactiveDisplayBase_1.29.0 tibble_3.0.6                 
-##  [91] statmod_1.4.35                bslib_0.2.4                  
-##  [93] stringi_1.5.3                 highr_0.8                    
-##  [95] basilisk.utils_1.3.7          GenomicFeatures_1.43.3       
-##  [97] desc_1.2.0                    lattice_0.20-41              
-##  [99] bluster_1.1.5                 ProtGenerics_1.23.7          
-## [101] Matrix_1.3-2                  vctrs_0.3.6                  
-## [103] pillar_1.4.7                  lifecycle_1.0.0              
-## [105] BiocManager_1.30.10           jquerylib_0.1.3              
-## [107] BiocNeighbors_1.9.4           bitops_1.0-6                 
-## [109] irlba_2.3.3                   httpuv_1.5.5                 
-## [111] rtracklayer_1.51.4            R6_2.5.0                     
-## [113] BiocIO_1.1.2                  promises_1.2.0.1             
-## [115] gridExtra_2.3                 vipor_0.4.5                  
-## [117] zellkonverter_1.1.4           assertthat_0.2.1             
-## [119] openssl_1.4.3                 rprojroot_2.0.2              
-## [121] rjson_0.2.20                  withr_2.4.1                  
-## [123] GenomicAlignments_1.27.2      Rsamtools_2.7.1              
-## [125] datasets_4.1.0                GenomeInfoDbData_1.2.4       
-## [127] hms_1.0.0                     grid_4.1.0                   
-## [129] beachmat_2.7.6                rmarkdown_2.7                
-## [131] DelayedMatrixStats_1.13.5     Rtsne_0.15                   
-## [133] shiny_1.6.0                   ggbeeswarm_0.6.0             
-## [135] restfulr_0.0.13</code></pre>
+##  [11] viridis_0.5.1                 fansi_0.4.2                  
+##  [13] magrittr_2.0.1                memoise_2.0.0                
+##  [15] ScaledMatrix_0.99.2           limma_3.47.8                 
+##  [17] Biostrings_2.59.2             askpass_1.1                  
+##  [19] pkgdown_1.6.1                 prettyunits_1.1.1            
+##  [21] colorspace_2.0-0              blob_1.2.1                   
+##  [23] rappdirs_0.3.3                textshaping_0.3.1            
+##  [25] xfun_0.21                     dplyr_1.0.4                  
+##  [27] crayon_1.4.1                  RCurl_1.98-1.2               
+##  [29] jsonlite_1.7.2                glue_1.4.2                   
+##  [31] gtable_0.3.0                  zlibbioc_1.37.0              
+##  [33] XVector_0.31.1                DelayedArray_0.17.9          
+##  [35] BiocSingular_1.7.2            scales_1.1.1                 
+##  [37] DBI_1.1.1                     edgeR_3.33.2                 
+##  [39] Rcpp_1.0.6                    viridisLite_0.3.0            
+##  [41] xtable_1.8-4                  progress_1.2.2               
+##  [43] dqrng_0.2.1                   bit_4.0.4                    
+##  [45] rsvd_1.0.3                    metapod_0.99.5               
+##  [47] httr_1.4.2                    RColorBrewer_1.1-2           
+##  [49] ellipsis_0.3.1                farver_2.0.3                 
+##  [51] reshape_0.8.8                 pkgconfig_2.0.3              
+##  [53] XML_3.99-0.5                  sass_0.3.1                   
+##  [55] dbplyr_2.1.0                  locfit_1.5-9.4               
+##  [57] utf8_1.1.4                    labeling_0.4.2               
+##  [59] tidyselect_1.1.0              rlang_0.4.10                 
+##  [61] later_1.1.0.1                 AnnotationDbi_1.53.1         
+##  [63] munsell_0.5.0                 BiocVersion_3.13.1           
+##  [65] tools_4.1.0                   cachem_1.0.4                 
+##  [67] generics_0.1.0                RSQLite_2.2.3                
+##  [69] ExperimentHub_1.17.1          evaluate_0.14                
+##  [71] stringr_1.4.0                 fastmap_1.1.0                
+##  [73] yaml_2.2.1                    ragg_1.1.0                   
+##  [75] grDevices_4.1.0               knitr_1.31                   
+##  [77] bit64_4.0.5                   fs_1.5.0                     
+##  [79] purrr_0.3.4                   KEGGREST_1.31.1              
+##  [81] AnnotationFilter_1.15.0       sparseMatrixStats_1.3.6      
+##  [83] mime_0.10                     xml2_1.3.2                   
+##  [85] biomaRt_2.47.4                compiler_4.1.0               
+##  [87] beeswarm_0.2.3                filelock_1.0.2               
+##  [89] curl_4.3                      png_0.1-7                    
+##  [91] interactiveDisplayBase_1.29.0 tibble_3.0.6                 
+##  [93] statmod_1.4.35                bslib_0.2.4                  
+##  [95] stringi_1.5.3                 highr_0.8                    
+##  [97] basilisk.utils_1.3.7          GenomicFeatures_1.43.3       
+##  [99] desc_1.2.0                    lattice_0.20-41              
+## [101] bluster_1.1.5                 ProtGenerics_1.23.7          
+## [103] Matrix_1.3-2                  vctrs_0.3.6                  
+## [105] pillar_1.5.0                  lifecycle_1.0.0              
+## [107] BiocManager_1.30.10           jquerylib_0.1.3              
+## [109] BiocNeighbors_1.9.4           bitops_1.0-6                 
+## [111] irlba_2.3.3                   httpuv_1.5.5                 
+## [113] rtracklayer_1.51.4            R6_2.5.0                     
+## [115] BiocIO_1.1.2                  promises_1.2.0.1             
+## [117] renv_0.13.0                   gridExtra_2.3                
+## [119] vipor_0.4.5                   zellkonverter_1.1.4          
+## [121] assertthat_0.2.1              openssl_1.4.3                
+## [123] rprojroot_2.0.2               rjson_0.2.20                 
+## [125] withr_2.4.1                   GenomicAlignments_1.27.2     
+## [127] Rsamtools_2.7.1               datasets_4.1.0               
+## [129] GenomeInfoDbData_1.2.4        hms_1.0.0                    
+## [131] grid_4.1.0                    beachmat_2.7.7               
+## [133] rmarkdown_2.7                 DelayedMatrixStats_1.13.5    
+## [135] Rtsne_0.15                    shiny_1.6.0                  
+## [137] ggbeeswarm_0.6.0              restfulr_0.0.13</code></pre>
 </div>
   </div>
 
