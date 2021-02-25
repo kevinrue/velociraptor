@@ -249,6 +249,10 @@ jobs:
       - name: Install package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: R CMD INSTALL .
+        
+      - name: Build pkgdown
+        run: |	
+           PATH=$PATH:$HOME/bin/ Rscript -e 'pkgdown::build_site(".")'
 
       - name: Deploy package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
