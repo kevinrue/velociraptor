@@ -26,7 +26,6 @@ suppressPackageStartupMessages({
     library(reticulate)
     library(SingleCellExperiment)
     library(basilisk)
-    library(basilisk.utils)
 })
 ```
 
