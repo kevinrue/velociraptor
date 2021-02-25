@@ -206,6 +206,10 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
+      
+      - name: Find libinfo
+        run: |
+          find / -name "libtinfo.so*" -ls
 
       - name: Run CMD check
         env:
