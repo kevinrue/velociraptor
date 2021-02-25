@@ -120,6 +120,11 @@ jobs:
           echo $sysreqs
           sudo -s eval "$sysreqs"
 
+      - name: Install Linux system dependency libncurses6
+        if: runner.os == 'Linux'
+        run: |
+          sudo -s eval apt-get update -y && apt-get install -y libncurses6
+
       - name: Install macOS system dependencies
         if: matrix.config.os == 'macOS-latest'
         run: |
