@@ -207,7 +207,8 @@ jobs:
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
       
-      - name: Find libinfo
+      - name: Find libinfo before creating basilisk environments
+        if: runner.os == 'Linux'
         run: |
           find / -name "libtinfo.so*" -ls
 
@@ -253,6 +254,11 @@ jobs:
       - name: Install package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: R CMD INSTALL .
+      
+      - name: Find libinfo before pkgdown
+        if: runner.os == 'Linux'
+        run: |
+          find / -name "libtinfo.so*" -ls
         
       - name: Build pkgdown
         run: |	
