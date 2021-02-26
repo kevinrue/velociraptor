@@ -195,7 +195,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Install pkgdown
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
           remotes::install_github("r-lib/pkgdown")
         shell: Rscript {0}
@@ -252,7 +253,8 @@ jobs:
         shell: Rscript {0}
 
       - name: Install package
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: R CMD INSTALL .
       
       - name: Find libinfo before pkgdown
@@ -261,7 +263,8 @@ jobs:
           find / -name "libtinfo.so*" -ls
 
       - name: Deploy package
-        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -280,7 +283,8 @@ jobs:
           path: check
 
       - name: Push to Docker Hub
-        if: github.ref == 'refs/heads/master' && env.run_docker == 'true' && runner.os == 'Linux'
+        #if: github.ref == 'refs/heads/master' && env.run_docker == 'true' && runner.os == 'Linux'
+        if: env.run_docker == 'true' && runner.os == 'Linux'
         uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
