@@ -1,8 +1,7 @@
 pandoc: 2.11.2
-pkgdown: 1.6.1
-pkgdown_sha: ~
+pkgdown: 1.6.1.9000
+pkgdown_sha: 1c43945798aa2f1000ad3aa16235f78720fa2247
 articles:
-  extras/compare_velociraptor_runs: compare_velociraptor_runs.html
   velociraptor: velociraptor.html
-last_built: 2021-02-25T10:46Z
+last_built: 2021-02-26T09:37Z
 
