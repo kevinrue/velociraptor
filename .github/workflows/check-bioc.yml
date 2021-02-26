@@ -36,8 +36,8 @@ name: R-CMD-check-bioc
 env:
   has_testthat: 'true'
   run_covr: 'true'
-  run_pkgdown: 'false'
-  run_docker: 'false'
+  run_pkgdown: 'true'
+  run_docker: 'true'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
 
@@ -259,10 +259,6 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           find / -name "libtinfo.so*" -ls
-        
-      - name: Build pkgdown
-        run: |	
-           PATH=$PATH:$HOME/bin/ Rscript -e 'pkgdown::build_site(".")'
 
       - name: Deploy package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
