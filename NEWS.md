@@ -1,3 +1,7 @@
+# velociraptor 1.1.6
+
+* Move sanity check vignette to `inst/`.
+
 # velociraptor 1.1.5
 
 * Add Michael Stadler to package authors.

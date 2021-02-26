@@ -253,7 +253,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Install package
-        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: R CMD INSTALL .
       
@@ -263,7 +263,7 @@ jobs:
           find / -name "libtinfo.so*" -ls
 
       - name: Deploy package
-        #if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         if: env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: |
           git config --local user.email "actions@github.com"
@@ -283,7 +283,7 @@ jobs:
           path: check
 
       - name: Push to Docker Hub
-        #if: github.ref == 'refs/heads/master' && env.run_docker == 'true' && runner.os == 'Linux'
+        if: github.ref == 'refs/heads/master' && env.run_docker == 'true' && runner.os == 'Linux'
         if: env.run_docker == 'true' && runner.os == 'Linux'
         uses: docker/build-push-action@v1
         with:
