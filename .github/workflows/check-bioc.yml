@@ -36,8 +36,8 @@ name: R-CMD-check-bioc
 env:
   has_testthat: 'true'
   run_covr: 'true'
-  run_pkgdown: 'false'
-  run_docker: 'false'
+  run_pkgdown: 'true'
+  run_docker: 'true'
   has_RUnit: 'false'
   cache-version: 'cache-v1'
 
@@ -206,6 +206,11 @@ jobs:
           pkgs <- installed.packages()[, "Package"]
           sessioninfo::session_info(pkgs, include_base = TRUE)
         shell: Rscript {0}
+      
+      - name: Find libinfo before creating basilisk environments
+        if: runner.os == 'Linux'
+        run: |
+          find / -name "libtinfo.so*" -ls
 
       - name: Run CMD check
         env:
@@ -249,6 +254,11 @@ jobs:
       - name: Install package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
         run: R CMD INSTALL .
+      
+      - name: Find libinfo before pkgdown
+        if: runner.os == 'Linux'
+        run: |
+          find / -name "libtinfo.so*" -ls
 
       - name: Deploy package
         if: github.ref == 'refs/heads/master' && env.run_pkgdown == 'true' && runner.os == 'Linux'
