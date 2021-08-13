@@ -88,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
       </span>
     </div>
 
@@ -109,7 +109,7 @@
   <ul class="dropdown-menu" role="menu">
     <li class="divider"></li>
     <li>
-      <a href="../articles/index.html">More...</a>
+      <a href="../articles/index.html">More articles...</a>
     </li>
   </ul>
 </li>
@@ -146,7 +146,7 @@
     <p>Summarize the velocity vectors into a grid, usually for easy plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span><span class='op'>)</span>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S4 method for ANY</span>
 <span class='fu'>gridVectors</span><span class='op'>(</span>
@@ -159,7 +159,7 @@
 <span class='op'>)</span>
 
 <span class='co'># S4 method for SingleCellExperiment</span>
-<span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span>, use.dimred <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></pre>
+<span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>embedded</span>, <span class='va'>...</span>, use.dimred <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,16 +233,17 @@ This improves visualization when the scales of <code>x</code> and <code>embedded
     <p>Aaron Lun</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='va'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-<span class='va'>tsne.vectors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span>
-
-<span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>tsne.results</span>, <span class='va'>tsne.vectors</span><span class='op'>)</span>
-
-<span class='co'># Demonstration for plotting.</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, <span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'grey'</span><span class='op'>)</span>
-</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>$</span><span class='va'>start.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>start.2</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.2</span>, length<span class='op'>=</span><span class='fl'>0.05</span><span class='op'>)</span>
-</div><div class='img'><img src='gridVectors-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>tsne.results</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tsne.vectors</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>10000</span><span class='op'>)</span>, ncol<span class='op'>=</span><span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='va'>out</span> <span class='op'>&lt;-</span> <span class='fu'>gridVectors</span><span class='op'>(</span><span class='va'>tsne.results</span>, <span class='va'>tsne.vectors</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Demonstration for plotting.</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>, <span class='va'>tsne.results</span><span class='op'>[</span>,<span class='fl'>2</span><span class='op'>]</span>, col<span class='op'>=</span><span class='st'>'grey'</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/arrows.html'>arrows</a></span><span class='op'>(</span><span class='va'>out</span><span class='op'>$</span><span class='va'>start.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>start.2</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.1</span>, <span class='va'>out</span><span class='op'>$</span><span class='va'>end.2</span>, length<span class='op'>=</span><span class='fl'>0.05</span><span class='op'>)</span></span>
+<span class='r-plt'><img src='gridVectors-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -258,7 +259,7 @@ This improves visualization when the scales of <code>x</code> and <code>embedded
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9000.</p></p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
