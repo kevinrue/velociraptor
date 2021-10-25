@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
       </span>
     </div>
 
@@ -60,7 +60,8 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
-    <li>
+    </li>
+<li>
       <a href="../articles/index.html">More articles...</a>
     </li>
   </ul>
@@ -86,7 +87,7 @@
 
       
 
-      </header><script src="velociraptor_files/header-attrs-2.10/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Computing RNA velocity in a Bioconductor framework</h1>
@@ -106,9 +107,9 @@
 
     
     
-<div id="overview" class="section level1">
-<h1 class="hasAnchor">
-<a href="#overview" class="anchor" aria-hidden="true"></a>Overview</h1>
+<div class="section level1">
+<h1 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h1>
 <p>This package provides a lightweight interface between the Bioconductor <code>SingleCellExperiment</code> data structure and the <a href="https://pypi.org/project/scvelo" class="external-link">scvelo</a> Python package for RNA velocity calculations. The interface is comparable to that of many other <code>SingleCellExperiment</code>-compatible functions, allowing users to plug in RNA velocity calculations into the existing Bioconductor analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.14/scRNAseq" class="external-link">scRNAseq</a></em> package. This data set contains gene-wise estimates of spliced and unspliced UMI counts for 2,325 mouse spermatogenic cells.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scRNAseq</span><span class="op">)</span>
@@ -128,16 +129,16 @@
 ## mainExpName: NULL
 ## altExpNames(0):</code></pre>
 </div>
-<div id="downsampling-for-demonstration" class="section level1">
-<h1 class="hasAnchor">
-<a href="#downsampling-for-demonstration" class="anchor" aria-hidden="true"></a>Downsampling for demonstration</h1>
+<div class="section level1">
+<h1 id="downsampling-for-demonstration">Downsampling for demonstration<a class="anchor" aria-label="anchor" href="#downsampling-for-demonstration"></a>
+</h1>
 <p>The full data set requires up to 12 GB of memory for the example usage presented in this vignette. For demonstration purposes, we downsample the data set to the first 500 cells. Feel free to skip this downsampling step if you have access to sufficient memory.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sce</span> <span class="op">&lt;-</span> <span class="va">sce</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">500</span><span class="op">]</span></code></pre></div>
 </div>
-<div id="basic-workflow" class="section level1">
-<h1 class="hasAnchor">
-<a href="#basic-workflow" class="anchor" aria-hidden="true"></a>Basic workflow</h1>
+<div class="section level1">
+<h1 id="basic-workflow">Basic workflow<a class="anchor" aria-label="anchor" href="#basic-workflow"></a>
+</h1>
 <p>We assume that feature selection has already been performed by the user using any method (see <a href="https://osca.bioconductor.org/feature-selection.html" class="external-link">here</a> for some suggestions). In this case, we will use the variance of log-expressions from <em><a href="https://bioconductor.org/packages/3.14/scran" class="external-link">scran</a></em> to select the top 2000 genes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span>
@@ -190,9 +191,9 @@
 <p><img src="velociraptor_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>And that’s it, really.</p>
 </div>
-<div id="advanced-options" class="section level1">
-<h1 class="hasAnchor">
-<a href="#advanced-options" class="anchor" aria-hidden="true"></a>Advanced options</h1>
+<div class="section level1">
+<h1 id="advanced-options">Advanced options<a class="anchor" aria-label="anchor" href="#advanced-options"></a>
+</h1>
 <p><code><a href="../reference/scvelo.html">scvelo()</a></code> interally performs a PCA step that we can bypass by supplying our own PC coordinates. Indeed, it is often the case that we have already performed PCA in the earlier analysis steps, so we can just re-use those results to (i) save time and (ii) improve consistency with the other steps. Here, we computed the PCA coordinates in <code><a href="https://rdrr.io/pkg/scater/man/runPCA.html" class="external-link">runPCA()</a></code> above, so let’s just recycle that:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Only setting assay.X= for the initial AnnData creation,</span>
@@ -254,14 +255,14 @@
 ## mainExpName: NULL
 ## altExpNames(0):</code></pre>
 </div>
-<div id="session-information" class="section level1">
-<h1 class="hasAnchor">
-<a href="#session-information" class="anchor" aria-hidden="true"></a>Session information</h1>
+<div class="section level1">
+<h1 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+</h1>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## R version 4.1.0 (2021-05-18)
+<pre><code>## R version 4.1.1 (2021-08-10)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
-## Running under: Ubuntu 20.04.2 LTS
+## Running under: Ubuntu 20.04.3 LTS
 ## 
 ## Matrix products: default
 ## BLAS/LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.8.so
@@ -278,91 +279,92 @@
 ## [1] stats    graphics utils    stats4   methods  base    
 ## 
 ## other attached packages:
-##  [1] scater_1.21.3               ggplot2_3.3.5              
-##  [3] velociraptor_1.3.0          scran_1.21.3               
+##  [1] scater_1.21.8               ggplot2_3.3.5              
+##  [3] velociraptor_1.3.1          scran_1.21.3               
 ##  [5] scuttle_1.3.1               scRNAseq_2.7.2             
-##  [7] SingleCellExperiment_1.15.1 SummarizedExperiment_1.23.1
+##  [7] SingleCellExperiment_1.15.2 SummarizedExperiment_1.23.5
 ##  [9] Biobase_2.53.0              GenomicRanges_1.45.0       
-## [11] GenomeInfoDb_1.29.3         IRanges_2.27.0             
-## [13] S4Vectors_0.31.0            BiocGenerics_0.39.1        
-## [15] MatrixGenerics_1.5.3        matrixStats_0.60.0         
-## [17] knitr_1.33                  BiocStyle_2.21.3           
+## [11] GenomeInfoDb_1.29.10        IRanges_2.27.2             
+## [13] S4Vectors_0.31.5            BiocGenerics_0.39.2        
+## [15] MatrixGenerics_1.5.4        matrixStats_0.61.0         
+## [17] knitr_1.36                  BiocStyle_2.21.4           
 ## 
 ## loaded via a namespace (and not attached):
-##   [1] AnnotationHub_3.1.4           BiocFileCache_2.1.1          
-##   [3] systemfonts_1.0.2             igraph_1.2.6                 
-##   [5] lazyeval_0.2.2                BiocParallel_1.27.3          
-##   [7] digest_0.6.27                 ensembldb_2.17.4             
-##   [9] htmltools_0.5.1.1             viridis_0.6.1                
+##   [1] AnnotationHub_3.1.7           BiocFileCache_2.1.1          
+##   [3] systemfonts_1.0.3             igraph_1.2.7                 
+##   [5] lazyeval_0.2.2                BiocParallel_1.27.17         
+##   [7] digest_0.6.28                 ensembldb_2.17.4             
+##   [9] htmltools_0.5.2               viridis_0.6.2                
 ##  [11] fansi_0.5.0                   magrittr_2.0.1               
 ##  [13] memoise_2.0.0                 ScaledMatrix_1.1.0           
 ##  [15] cluster_2.1.2                 limma_3.49.4                 
-##  [17] Biostrings_2.61.2             pkgdown_1.6.1.9001           
+##  [17] Biostrings_2.61.2             pkgdown_1.9000.9000.9000     
 ##  [19] prettyunits_1.1.1             colorspace_2.0-2             
 ##  [21] ggrepel_0.9.1                 blob_1.2.2                   
-##  [23] rappdirs_0.3.3                textshaping_0.3.5            
-##  [25] xfun_0.25                     dplyr_1.0.7                  
-##  [27] crayon_1.4.1                  RCurl_1.98-1.3               
+##  [23] rappdirs_0.3.3                textshaping_0.3.6            
+##  [25] xfun_0.27                     dplyr_1.0.7                  
+##  [27] crayon_1.4.1                  RCurl_1.98-1.5               
 ##  [29] jsonlite_1.7.2                glue_1.4.2                   
 ##  [31] gtable_0.3.0                  zlibbioc_1.39.0              
-##  [33] XVector_0.33.0                DelayedArray_0.19.1          
+##  [33] XVector_0.33.0                DelayedArray_0.19.4          
 ##  [35] BiocSingular_1.9.1            scales_1.1.1                 
-##  [37] DBI_1.1.1                     edgeR_3.35.0                 
+##  [37] DBI_1.1.1                     edgeR_3.35.3                 
 ##  [39] Rcpp_1.0.7                    viridisLite_0.4.0            
 ##  [41] xtable_1.8-4                  progress_1.2.2               
-##  [43] reticulate_1.20               dqrng_0.3.0                  
+##  [43] reticulate_1.22               dqrng_0.3.0                  
 ##  [45] bit_4.0.4                     rsvd_1.0.5                   
 ##  [47] metapod_1.1.0                 httr_1.4.2                   
 ##  [49] dir.expiry_1.1.0              ellipsis_0.3.2               
 ##  [51] farver_2.1.0                  pkgconfig_2.0.3              
-##  [53] XML_3.99-0.6                  sass_0.4.0                   
-##  [55] dbplyr_2.1.1                  locfit_1.5-9.4               
-##  [57] utf8_1.2.2                    labeling_0.4.2               
-##  [59] tidyselect_1.1.1              rlang_0.4.11                 
-##  [61] later_1.2.0                   AnnotationDbi_1.55.1         
-##  [63] munsell_0.5.0                 BiocVersion_3.14.0           
-##  [65] tools_4.1.0                   cachem_1.0.5                 
-##  [67] generics_0.1.0                RSQLite_2.2.7                
-##  [69] ExperimentHub_2.1.4           evaluate_0.14                
-##  [71] stringr_1.4.0                 fastmap_1.1.0                
-##  [73] yaml_2.2.1                    ragg_1.1.3                   
-##  [75] grDevices_4.1.0               bit64_4.0.5                  
-##  [77] fs_1.5.0                      purrr_0.3.4                  
-##  [79] KEGGREST_1.33.0               AnnotationFilter_1.17.1      
-##  [81] sparseMatrixStats_1.5.2       mime_0.11                    
-##  [83] xml2_1.3.2                    biomaRt_2.49.2               
-##  [85] compiler_4.1.0                beeswarm_0.4.0               
-##  [87] filelock_1.0.2                curl_4.3.2                   
-##  [89] png_0.1-7                     interactiveDisplayBase_1.31.2
-##  [91] tibble_3.1.3                  statmod_1.4.36               
-##  [93] bslib_0.2.5.1                 stringi_1.7.3                
-##  [95] highr_0.9                     basilisk.utils_1.5.0         
-##  [97] GenomicFeatures_1.45.0        desc_1.3.0                   
-##  [99] lattice_0.20-44               bluster_1.3.0                
-## [101] ProtGenerics_1.25.1           Matrix_1.3-4                 
-## [103] vctrs_0.3.8                   pillar_1.6.2                 
-## [105] lifecycle_1.0.0               BiocManager_1.30.16          
-## [107] jquerylib_0.1.4               BiocNeighbors_1.11.0         
-## [109] cowplot_1.1.1                 bitops_1.0-7                 
-## [111] irlba_2.3.3                   httpuv_1.6.1                 
-## [113] rtracklayer_1.53.0            R6_2.5.0                     
-## [115] BiocIO_1.3.0                  bookdown_0.22                
-## [117] promises_1.2.0.1              gridExtra_2.3                
-## [119] vipor_0.4.5                   zellkonverter_1.3.1          
-## [121] assertthat_0.2.1              rprojroot_2.0.2              
-## [123] rjson_0.2.20                  withr_2.4.2                  
-## [125] GenomicAlignments_1.29.0      Rsamtools_2.9.1              
-## [127] datasets_4.1.0                GenomeInfoDbData_1.2.6       
-## [129] parallel_4.1.0                hms_1.1.0                    
-## [131] grid_4.1.0                    beachmat_2.9.1               
-## [133] basilisk_1.5.0                rmarkdown_2.10               
-## [135] DelayedMatrixStats_1.15.2     Rtsne_0.15                   
-## [137] shiny_1.6.0                   ggbeeswarm_0.6.0             
-## [139] restfulr_0.0.13</code></pre>
+##  [53] XML_3.99-0.8                  sass_0.4.0                   
+##  [55] dbplyr_2.1.1                  here_1.0.1                   
+##  [57] locfit_1.5-9.4                utf8_1.2.2                   
+##  [59] labeling_0.4.2                tidyselect_1.1.1             
+##  [61] rlang_0.99.0.9000             later_1.3.0                  
+##  [63] AnnotationDbi_1.55.2          munsell_0.5.0                
+##  [65] BiocVersion_3.14.0            tools_4.1.1                  
+##  [67] cachem_1.0.6                  cli_3.0.1                    
+##  [69] generics_0.1.0                RSQLite_2.2.8                
+##  [71] ExperimentHub_2.1.4           evaluate_0.14                
+##  [73] stringr_1.4.0                 fastmap_1.1.0                
+##  [75] yaml_2.2.1                    ragg_1.1.3                   
+##  [77] grDevices_4.1.1               bit64_4.0.5                  
+##  [79] fs_1.5.0                      purrr_0.3.4                  
+##  [81] KEGGREST_1.33.0               AnnotationFilter_1.17.1      
+##  [83] sparseMatrixStats_1.5.3       mime_0.12                    
+##  [85] xml2_1.3.2                    biomaRt_2.49.7               
+##  [87] compiler_4.1.1                beeswarm_0.4.0               
+##  [89] filelock_1.0.2                curl_4.3.2                   
+##  [91] png_0.1-7                     interactiveDisplayBase_1.31.2
+##  [93] tibble_3.1.5                  statmod_1.4.36               
+##  [95] bslib_0.3.1                   stringi_1.7.5                
+##  [97] highr_0.9                     basilisk.utils_1.5.0         
+##  [99] GenomicFeatures_1.45.2        desc_1.4.0                   
+## [101] lattice_0.20-45               bluster_1.3.2                
+## [103] ProtGenerics_1.25.1           Matrix_1.3-4                 
+## [105] vctrs_0.3.8                   pillar_1.6.4                 
+## [107] lifecycle_1.0.1               BiocManager_1.30.16          
+## [109] jquerylib_0.1.4               BiocNeighbors_1.11.0         
+## [111] cowplot_1.1.1                 bitops_1.0-7                 
+## [113] irlba_2.3.3                   httpuv_1.6.3                 
+## [115] rtracklayer_1.53.1            R6_2.5.1                     
+## [117] BiocIO_1.3.0                  bookdown_0.24                
+## [119] promises_1.2.0.1              gridExtra_2.3                
+## [121] vipor_0.4.5                   zellkonverter_1.3.3          
+## [123] assertthat_0.2.1              rprojroot_2.0.2              
+## [125] rjson_0.2.20                  withr_2.4.2                  
+## [127] GenomicAlignments_1.29.0      Rsamtools_2.9.1              
+## [129] datasets_4.1.1                GenomeInfoDbData_1.2.7       
+## [131] parallel_4.1.1                hms_1.1.1                    
+## [133] grid_4.1.1                    beachmat_2.9.1               
+## [135] basilisk_1.5.0                rmarkdown_2.11               
+## [137] DelayedMatrixStats_1.15.4     Rtsne_0.15                   
+## [139] shiny_1.7.1                   ggbeeswarm_0.6.0             
+## [141] restfulr_0.0.13</code></pre>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References</h1>
+<div class="section level1 unnumbered">
+<h1 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h1>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Hermann2018-spermatogenesis" class="csl-entry">
 Hermann, Brian P, Keren Cheng, Anukriti Singh, Lorena Roa-De La Cruz, Kazadi N Mutoji, I-Chung Chen, Heidi Gildersleeve, et al. 2018. <span>“The Mammalian Spermatogenesis <span>Single-Cell</span> Transcriptome, from Spermatogonial Stem Cells to Spermatids.”</span> <em>Cell Rep.</em> 25: 1650–1667.e8.
@@ -388,7 +390,7 @@ Hermann, Brian P, Keren Cheng, Anukriti Singh, Lorena Roa-De La Cruz, Kazadi N M
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.6.1.9001.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
