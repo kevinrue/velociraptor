@@ -1,3 +1,7 @@
+# velociraptor 1.3.1
+
+* Add typing_extensions to environment
+
 # velociraptor 1.1.6
 
 * Move sanity check vignette to `inst/`.

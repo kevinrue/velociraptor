@@ -64,6 +64,7 @@
     "toml==0.10.1",
     "tornado==6.0.4",
     "tqdm==4.49.0",
+    "typing_extensions==3.10.0.0",
     "umap-learn==0.4.6",
     "urllib3==1.25.10",
     "wheel==0.35.1",

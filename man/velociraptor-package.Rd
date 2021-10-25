@@ -8,10 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
-This package provides Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data.
-    We use the basilisk package to manage Conda environments,
-    and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python).
-    The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.
+This package provides Bioconductor-friendly wrappers for RNA velocity calculations in single-cell RNA-seq data. We use the basilisk package to manage Conda environments, and the zellkonverter package to convert data structures between SingleCellExperiment (R) and AnnData (Python). The information produced by the velocity methods is stored in the various components of the SingleCellExperiment class.
 }
 \seealso{
 Useful links:
@@ -28,6 +25,7 @@ Authors:
 \itemize{
   \item Aaron Lun \email{infinite.monkeys.with.keyboards@gmail.com} (\href{https://orcid.org/0000-0002-3564-4813}{ORCID})
   \item Charlotte Soneson \email{charlottesoneson@gmail.com} (\href{https://orcid.org/0000-0003-3833-2169}{ORCID})
+  \item Michael Stadler \email{michael.stadler@fmi.ch} (\href{https://orcid.org/0000-0002-2269-4934}{ORCID})
 }
 
 }
