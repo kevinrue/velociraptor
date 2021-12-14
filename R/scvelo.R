@@ -96,7 +96,7 @@
 #' \item \code{"latent_time"}
 #' \item \code{"velocity_confidence"}
 #' }
-#' See the \pkg{scVelo} documentation for more details about the available arguments.
+#' See the \pkg{scVelo} documentation for more details about the available arguments and the examples below for a syntax example.
 #'
 #' @return
 #' A \linkS4class{SingleCellExperiment} is returned containing the output of the velocity calculations.
@@ -121,6 +121,10 @@
 #' unspliced <- counts(sce2)
 #'
 #' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
+#'
+#' # make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:
+#' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), 
+#'               scvelo.params=list(moments=list(n_neighbors=10L))) 
 #'
 #' @references
 #' Bergen, V., Lange, M., Peidli, S. et al. Generalizing RNA velocity to transient cell states through dynamical modeling. Nat Biotechnol 38, 1408–1414 (2020). \url{https://doi.org/10.1038/s41587-020-0591-3}

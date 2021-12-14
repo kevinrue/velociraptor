@@ -1,6 +1,10 @@
+# velociraptor 1.5.1
+
+* Add example for `scvelo.params` argument.
+
 # velociraptor 1.3.1
 
-* Add typing_extensions to environment
+* Add typing_extensions to environment.
 
 # velociraptor 1.1.6
 
