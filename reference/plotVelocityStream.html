@@ -19,7 +19,7 @@ paths that cells could follow based on observed RNA velocities."><meta property=
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.1</span>
       </span>
     </div>
 
@@ -60,7 +60,7 @@ paths that cells could follow based on observed RNA velocities."><meta property=
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Velocity stream plot in low-dimensional space</h1>
-    <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/master/R/plotVelocityStream.R" class="external-link"><code>R/plotVelocityStream.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/HEAD/R/plotVelocityStream.R" class="external-link"><code>R/plotVelocityStream.R</code></a></small>
     <div class="hidden name"><code>plotVelocityStream.Rd</code></div>
     </div>
 
@@ -70,7 +70,8 @@ lines are lines that follow the gradient in the velocity field and illustrate
 paths that cells could follow based on observed RNA velocities.</p>
     </div>
 
-    <div class="ref-usage sourceCode"><pre class="sourceCode r"><code><span class="fu">plotVelocityStream</span><span class="op">(</span>
+    <div id="ref-usage">
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotVelocityStream</span><span class="op">(</span>
   <span class="va">sce</span>,
   <span class="va">embedded</span>,
   use.dimred <span class="op">=</span> <span class="fl">1</span>,
@@ -88,42 +89,54 @@ paths that cells could follow based on observed RNA velocities.</p>
   arrow.angle <span class="op">=</span> <span class="fl">8</span>,
   arrow.length <span class="op">=</span> <span class="fl">0.8</span>
 <span class="op">)</span></code></pre></div>
+    </div>
 
-    <div id="ref-sections">
     <div id="arguments">
     <h2>Arguments</h2>
-    
-
-<dl><dt>sce</dt><dd><p>A <a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> object containing
+    <dl><dt>sce</dt>
+<dd><p>A <a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> object containing
 low-dimensional coordinates, e.g., after t-SNE, in its
 <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDims</a></code>.</p></dd>
-</dl><dl><dt>embedded</dt><dd><p>A low-dimensional projection of the velocity vectors into the
+<dt>embedded</dt>
+<dd><p>A low-dimensional projection of the velocity vectors into the
 embedding of <code>sce</code>. This should be of the same dimensions as <code>sce</code>
 and is typically produced by <code><a href="embedVelocity.html">embedVelocity</a></code>.</p></dd>
-</dl><dl><dt>use.dimred</dt><dd><p>String or integer scalar specifying the reduced dimensions
+<dt>use.dimred</dt>
+<dd><p>String or integer scalar specifying the reduced dimensions
 to retrieve from <code>sce</code>.</p></dd>
-</dl><dl><dt>color_by</dt><dd><p>A character scalar specifying a column in <code>colData(sce)</code>
+<dt>color_by</dt>
+<dd><p>A character scalar specifying a column in <code>colData(sce)</code>
 to color cells in the phase graph. Alternatively, <code>color_by</code> can be
 set to a valid R color to be used to color cells.</p></dd>
-</dl><dl><dt>color.alpha</dt><dd><p>An integer scalar giving the transparency of colored
+<dt>color.alpha</dt>
+<dd><p>An integer scalar giving the transparency of colored
 cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).</p></dd>
-</dl><dl><dt>grid.resolution</dt><dd><p>Integer scalar specifying the resolution of the grid,
+<dt>grid.resolution</dt>
+<dd><p>Integer scalar specifying the resolution of the grid,
 in terms of the number of grid intervals along each axis.</p></dd>
-</dl><dl><dt>scale</dt><dd><p>Logical scalar indicating whether the averaged vectors should be
+<dt>scale</dt>
+<dd><p>Logical scalar indicating whether the averaged vectors should be
 scaled by the grid resolution.</p></dd>
-</dl><dl><dt>stream.L</dt><dd><p>Integer scalar giving the typical length of a streamline
+<dt>stream.L</dt>
+<dd><p>Integer scalar giving the typical length of a streamline
 low-dimensional space units.</p></dd>
-</dl><dl><dt>stream.min.L</dt><dd><p>A numeric scalar with the minimum length of segments to be shown.</p></dd>
-</dl><dl><dt>stream.res</dt><dd><p>Numeric scalar specifying the resolution of estimated
+<dt>stream.min.L</dt>
+<dd><p>A numeric scalar with the minimum length of segments to be shown.</p></dd>
+<dt>stream.res</dt>
+<dd><p>Numeric scalar specifying the resolution of estimated
 streamlines (higher numbers increase smoothness of lines but also the time
 for computation).</p></dd>
-</dl><dl><dt>stream.width</dt><dd><p>A numeric scalar controlling the width of streamlines.</p></dd>
-</dl><dl><dt>color.streamlines</dt><dd><p>Logical scalar. If <code>TRUE</code> streamlines will
+<dt>stream.width</dt>
+<dd><p>A numeric scalar controlling the width of streamlines.</p></dd>
+<dt>color.streamlines</dt>
+<dd><p>Logical scalar. If <code>TRUE</code> streamlines will
 be colored by local velocity. Arrows cannot be shown in that case.</p></dd>
-</dl><dl><dt>color.streamlines.map</dt><dd><p>A character vector specifying the
+<dt>color.streamlines.map</dt>
+<dd><p>A character vector specifying the
 color range used for mapping local velocities to streamline colors. The
 default is <code>viridisLite::viridis(11)</code>.</p></dd>
-</dl><dl><dt>arrow.angle, arrow.length</dt><dd><p>Numeric scalars giving the <code>angle</code> and
+<dt>arrow.angle, arrow.length</dt>
+<dd><p>Numeric scalars giving the <code>angle</code> and
 <code>length</code> of arrowheads.</p></dd>
 </dl></div>
     <div id="value">
@@ -159,11 +172,10 @@ default is <code>viridisLite::viridis(11)</code>.</p></dd>
     <h2>Author</h2>
     <p>Michael Stadler</p>
     </div>
-    </div>
 
-    <div id="examples">
+    <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="ref-examples sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sce1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">sce2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
@@ -176,9 +188,9 @@ default is <code>viridisLite::viridis(11)</code>.</p></dd>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Using the <span style="color: #00BB00;">'X'</span> assay as the <span style="color: #00BB00;">X matrix</span></span>
 <span class="r-in"></span>
 <span class="r-in"><span class="fu">plotVelocityStream</span><span class="op">(</span><span class="va">out</span>, <span class="va">em</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plotVelocityStream-1.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plotVelocityStream-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span class="fu">plotVelocityStream</span><span class="op">(</span><span class="va">out</span>, <span class="va">em</span>, color.streamlines <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-plt"><img src="plotVelocityStream-2.png" alt="" width="700" height="433"></span>
+<span class="r-plt img"><img src="plotVelocityStream-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>
@@ -194,7 +206,7 @@ default is <code>viridisLite::viridis(11)</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.9000.</p>
 </div>
 
       </footer></div>
