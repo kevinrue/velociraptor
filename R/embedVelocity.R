@@ -40,6 +40,7 @@ NULL
 #' @importFrom SingleCellExperiment reducedDim<-
 .embed_velocity <- function(x, vobj, ...) {
     reducedDim(vobj, "X_target") <- as.matrix(x)
+    colnames(reducedDim(vobj, "X_target")) <- NULL
     basiliskRun(env=velo.env, fun=.run_embedder, vobj=vobj, ...)
 }
 
