@@ -1,7 +1,7 @@
 pandoc: 2.14.0.3
-pkgdown: 2.0.1.9000
-pkgdown_sha: bbefae3575a7c2484810f9b3b60af4b1faf0d2f4
+pkgdown: 2.0.2.9000
+pkgdown_sha: ae7363faac9040a473a54fb3d770decdfb8dfec1
 articles:
   velociraptor: velociraptor.html
-last_built: 2021-12-14T11:32Z
+last_built: 2022-02-04T10:41Z
 
