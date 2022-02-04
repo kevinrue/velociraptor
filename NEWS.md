@@ -1,3 +1,7 @@
+# velociraptor 1.5.2
+
+* Remove column names of reduced dimension representation before velocity embedding.
+
 # velociraptor 1.5.1
 
 * Add example for `scvelo.params` argument.
