@@ -1,4 +1,4 @@
-# scvelo 0.2.2 and latest version of dependencies in zellkonverter::.AnnDataDependencies succesfully tested.
+# scvelo 0.2.2 and latest version of dependencies in zellkonverter::AnnDataDependencies() succesfully tested.
 .scvelo_dependencies <- c("alabaster==0.7.12",
     "anndata==0.7.4",
     "Babel==2.8.0",
@@ -71,6 +71,6 @@
     "zipp==3.1.0")
 
 #' @importFrom basilisk BasiliskEnvironment
-#' @importFrom zellkonverter .AnnDataDependencies
+#' @importFrom zellkonverter AnnDataDependencies
 velo.env <- BasiliskEnvironment("env", "velociraptor",
     packages=.scvelo_dependencies, channels = c("bioconda", "conda-forge"))
