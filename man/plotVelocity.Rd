@@ -16,8 +16,8 @@ plotVelocity(
   color.alpha = 0.4,
   colors.velocity = c("#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF",
     "#D9EF8B", "#A6D96A", "#66BD63", "#1A9850", "#006837"),
-  colors.expression = c("#440154", "#482576", "#414487", "#35608D", "#2A788E",
-    "#21908C", "#22A884", "#43BF71", "#7AD151", "#BBDF27", "#FDE725"),
+  colors.expression = c("#440154", "#482576", "#414487", "#35608D", "#2A788E", "#21908C",
+    "#22A884", "#43BF71", "#7AD151", "#BBDF27", "#FDE725"),
   max.abs.velo = 0.001
 )
 }
