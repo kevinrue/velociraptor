@@ -105,7 +105,7 @@ grid.df <- gridVectors(reducedDim(sce, "TSNE"), embedded)
 library(ggplot2)
 plotTSNE(sce, colour_by="velocity_pseudotime") +
     geom_segment(data=grid.df, mapping=aes(x=start.1, y=start.2, 
-        xend=end.1, yend=end.2), arrow=arrow(length=unit(0.05, "inches")))
+        xend=end.1, yend=end.2, colour=NULL), arrow=arrow(length=unit(0.05, "inches")))
 ```
 
 And that's it, really.
