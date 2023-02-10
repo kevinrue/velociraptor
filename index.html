@@ -43,7 +43,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1</span>
       </span>
     </div>
 
@@ -99,8 +99,7 @@
 </h1></div>
 <!-- badges: start -->
 
-<p><em>velociraptor</em> provides an R toolkit for single-cell velocity
-computation.</p>
+<p><em>velociraptor</em> provides an R toolkit for single-cell velocity computation.</p>
 <div class="section level2">
 <h2 id="bioconductor-release-status">Bioconductor release status<a class="anchor" aria-label="anchor" href="#bioconductor-release-status"></a>
 </h2>
@@ -132,18 +131,14 @@ computation.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p><em>velociraptor</em> can be easily installed from <a href="https://bioconductor.org/packages/velociraptor/" class="external-link">Bioconductor</a>
-using <code><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">BiocManager::install()</a></code>:</p>
+<p><em>velociraptor</em> can be easily installed from <a href="https://bioconductor.org/packages/velociraptor/" class="external-link">Bioconductor</a> using <code><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">BiocManager::install()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span>
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span><span class="op">)</span>
-<span class="co"># or also...</span>
-<span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>Setting <code>dependencies = TRUE</code> should ensure that all
-packages, including the ones in the <code>Suggests:</code> field of the
-<code>DESCRIPTION</code> file, are installed - this can be essential if
-you want to reproduce the code in the vignette, for example.</p>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span><span class="op">)</span></span>
+<span><span class="co"># or also...</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BiocManager/man/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"velociraptor"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>Setting <code>dependencies = TRUE</code> should ensure that all packages, including the ones in the <code>Suggests:</code> field of the <code>DESCRIPTION</code> file, are installed - this can be essential if you want to reproduce the code in the vignette, for example.</p>
 </div>
 </div>
 
@@ -200,14 +195,12 @@ you want to reproduce the code in the vignette, for example.</p>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson,
-Michael Stadler.</p>
+<p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson, Michael Stadler.</p>
 </div>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

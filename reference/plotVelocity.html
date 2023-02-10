@@ -19,7 +19,7 @@ cell colored by velocity and (spliced) expression."><meta property="og:image" co
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1</span>
       </span>
     </div>
 
@@ -71,22 +71,22 @@ cell colored by velocity and (spliced) expression.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">plotVelocity</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">genes</span>,
-  use.dimred <span class="op">=</span> <span class="fl">1</span>,
-  assay.splicedM <span class="op">=</span> <span class="st">"Ms"</span>,
-  assay.unsplicedM <span class="op">=</span> <span class="st">"Mu"</span>,
-  which.plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phase"</span>, <span class="st">"velocity"</span>, <span class="st">"expression"</span><span class="op">)</span>,
-  genes.per.row <span class="op">=</span> <span class="fl">1</span>,
-  color_by <span class="op">=</span> <span class="st">"#222222"</span>,
-  color.alpha <span class="op">=</span> <span class="fl">0.4</span>,
-  colors.velocity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#A50026"</span>, <span class="st">"#D73027"</span>, <span class="st">"#F46D43"</span>, <span class="st">"#FDAE61"</span>, <span class="st">"#FEE08B"</span>, <span class="st">"#FFFFBF"</span>,
-    <span class="st">"#D9EF8B"</span>, <span class="st">"#A6D96A"</span>, <span class="st">"#66BD63"</span>, <span class="st">"#1A9850"</span>, <span class="st">"#006837"</span><span class="op">)</span>,
-  colors.expression <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#440154"</span>, <span class="st">"#482576"</span>, <span class="st">"#414487"</span>, <span class="st">"#35608D"</span>, <span class="st">"#2A788E"</span>,
-    <span class="st">"#21908C"</span>, <span class="st">"#22A884"</span>, <span class="st">"#43BF71"</span>, <span class="st">"#7AD151"</span>, <span class="st">"#BBDF27"</span>, <span class="st">"#FDE725"</span><span class="op">)</span>,
-  max.abs.velo <span class="op">=</span> <span class="fl">0.001</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotVelocity</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">genes</span>,</span>
+<span>  use.dimred <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  assay.splicedM <span class="op">=</span> <span class="st">"Ms"</span>,</span>
+<span>  assay.unsplicedM <span class="op">=</span> <span class="st">"Mu"</span>,</span>
+<span>  which.plots <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"phase"</span>, <span class="st">"velocity"</span>, <span class="st">"expression"</span><span class="op">)</span>,</span>
+<span>  genes.per.row <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  color_by <span class="op">=</span> <span class="st">"#222222"</span>,</span>
+<span>  color.alpha <span class="op">=</span> <span class="fl">0.4</span>,</span>
+<span>  colors.velocity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#A50026"</span>, <span class="st">"#D73027"</span>, <span class="st">"#F46D43"</span>, <span class="st">"#FDAE61"</span>, <span class="st">"#FEE08B"</span>, <span class="st">"#FFFFBF"</span>,</span>
+<span>    <span class="st">"#D9EF8B"</span>, <span class="st">"#A6D96A"</span>, <span class="st">"#66BD63"</span>, <span class="st">"#1A9850"</span>, <span class="st">"#006837"</span><span class="op">)</span>,</span>
+<span>  colors.expression <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#440154"</span>, <span class="st">"#482576"</span>, <span class="st">"#414487"</span>, <span class="st">"#35608D"</span>, <span class="st">"#2A788E"</span>, <span class="st">"#21908C"</span>,</span>
+<span>    <span class="st">"#22A884"</span>, <span class="st">"#43BF71"</span>, <span class="st">"#7AD151"</span>, <span class="st">"#BBDF27"</span>, <span class="st">"#FDE725"</span><span class="op">)</span>,</span>
+<span>  max.abs.velo <span class="op">=</span> <span class="fl">0.001</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -95,49 +95,72 @@ cell colored by velocity and (spliced) expression.</p>
 <dd><p>A <a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> object with RNA velocity results
 as returned by <code><a href="scvelo.html">scvelo</a></code>, and low-dimensional coordinates, e.g.,
 after t-SNE, in its <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDims</a></code>.</p></dd>
+
+
 <dt>genes</dt>
 <dd><p>A character vector with one or several genes for which to plot
 phase and velocity graphs. <code>genes</code> have to be in <code>rownames(x)</code>.</p></dd>
+
+
 <dt>use.dimred</dt>
 <dd><p>String or integer scalar specifying the reduced dimensions
 to retrieve from <code>x</code>.</p></dd>
+
+
 <dt>assay.splicedM</dt>
 <dd><p>An integer scalar or string specifying the assay of
 <code>x</code> containing the moments of spliced abundances.</p></dd>
+
+
 <dt>assay.unsplicedM</dt>
 <dd><p>An integer scalar or string specifying the assay of
 <code>x</code> containing the moments unspliced abundances.</p></dd>
+
+
 <dt>which.plots</dt>
 <dd><p>A character vector specifying which plots to create for
 each gene. Possible values are <code>"phase", "velocity", "expression"</code> and
 correspond to the phase graph or reduced dimension graphs with cells
 colored by velocity or (spliced) expression.</p></dd>
+
+
 <dt>genes.per.row</dt>
 <dd><p>An integer scalar with the numbers of genes to visualize
 per row of plots. For example, if <code>which.plots =  c("phase","expression")</code>
 and <code>genes.per.row = 2</code>, the resulting figure will have four plot
 panels per row.</p></dd>
+
+
 <dt>color_by</dt>
 <dd><p>A character scalar specifying a column in <code>colData(x)</code>
 to color cells in the phase graph. Alternatively, <code>color_by</code> can be
 set to vector of valid R colors, either of length one (recycled for all
 cells) or of length <code>ncol(x)</code>, which will then be used to color cells
 in the phase graph.</p></dd>
+
+
 <dt>color.alpha</dt>
 <dd><p>An integer scalar giving the transparency of colored
 cells. Possible values are between 0 (fully transparent) and 1.0 (opaque).</p></dd>
+
+
 <dt>colors.velocity, colors.expression</dt>
 <dd><p>Character vectors specifying the
 color ranges used for mapping velocities and expression values. The
 defaults are <code>RColorBrewer::brewer.pal(11, "RdYlGn")</code> for the
 velocities and <code>viridisLite::viridis(11)</code> for the expression values.</p></dd>
+
+
 <dt>max.abs.velo</dt>
 <dd><p>A numeric scalar greater than zero giving the maximum
 absolute velocity to limit the color scale for the <code>"velocity"</code> graph.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A patchwork object with the plots selected by <code>which.plot</code> for
+    
+
+<p>A patchwork object with the plots selected by <code>which.plot</code> for
   the genes in <code>genes</code>, arranged in a grid according to <code>genes.per.row</code>.</p>
     </div>
     <div id="details">
@@ -160,21 +183,21 @@ used to generate and arrange the plots.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sce1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sce2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">datlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span>, spliced<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span>, unspliced<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">datlist</span>, mode <span class="op">=</span> <span class="st">"steady_state"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">datlist</span>, mode <span class="op">=</span> <span class="st">"dynamical"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">plotVelocity</span><span class="op">(</span><span class="va">out1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gene_0031"</span>,<span class="st">"Gene_0268"</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">42</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span>ncells <span class="op">=</span> <span class="fl">100</span>, ngenes <span class="op">=</span> <span class="fl">500</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">datlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span>, spliced<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span>, unspliced<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">out1</span> <span class="op">&lt;-</span> <span class="fu"><a href="scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">datlist</span>, mode <span class="op">=</span> <span class="st">"steady_state"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">out2</span> <span class="op">&lt;-</span> <span class="fu"><a href="scvelo.html">scvelo</a></span><span class="op">(</span><span class="va">datlist</span>, mode <span class="op">=</span> <span class="st">"dynamical"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">plotVelocity</span><span class="op">(</span><span class="va">out1</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gene_0031"</span>,<span class="st">"Gene_0268"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotVelocity-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">plotVelocity</span><span class="op">(</span><span class="va">out2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gene_0031"</span>,<span class="st">"Gene_0268"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">plotVelocity</span><span class="op">(</span><span class="va">out2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gene_0031"</span>,<span class="st">"Gene_0268"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotVelocity-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -185,13 +208,11 @@ used to generate and arrange the plots.</p></div>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson,
-Michael Stadler.</p>
+  <p></p><p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson, Michael Stadler.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

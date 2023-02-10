@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.9.1</span>
       </span>
     </div>
 
@@ -67,35 +67,35 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">scvelo</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S4 method for ANY</span>
-<span class="fu">scvelo</span><span class="op">(</span>
-  <span class="va">x</span>,
-  subset.row <span class="op">=</span> <span class="cn">NULL</span>,
-  sf.X <span class="op">=</span> <span class="cn">NULL</span>,
-  sf.spliced <span class="op">=</span> <span class="cn">NULL</span>,
-  sf.unspliced <span class="op">=</span> <span class="cn">NULL</span>,
-  use.theirs <span class="op">=</span> <span class="cn">FALSE</span>,
-  mode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"steady_state"</span>, <span class="st">"deterministic"</span>, <span class="st">"stochastic"</span>, <span class="st">"dynamical"</span><span class="op">)</span>,
-  scvelo.params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,
-  dimred <span class="op">=</span> <span class="cn">NULL</span>,
-  ncomponents <span class="op">=</span> <span class="fl">30</span>,
-  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>,
-  BSPARAM <span class="op">=</span> <span class="fu">bsparam</span><span class="op">(</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># S4 method for SummarizedExperiment</span>
-<span class="fu">scvelo</span><span class="op">(</span>
-  <span class="va">x</span>,
-  <span class="va">...</span>,
-  assay.X <span class="op">=</span> <span class="st">"counts"</span>,
-  assay.spliced <span class="op">=</span> <span class="st">"spliced"</span>,
-  assay.unspliced <span class="op">=</span> <span class="st">"unspliced"</span>
-<span class="op">)</span>
-
-<span class="co"># S4 method for SingleCellExperiment</span>
-<span class="fu">scvelo</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, sf.X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/sizeFactors.html" class="external-link">sizeFactors</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, dimred <span class="op">=</span> <span class="cn">NULL</span>, use.dimred <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">scvelo</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for ANY</span></span>
+<span><span class="fu">scvelo</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  subset.row <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sf.X <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sf.spliced <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  sf.unspliced <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  use.theirs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  mode <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"steady_state"</span>, <span class="st">"deterministic"</span>, <span class="st">"stochastic"</span>, <span class="st">"dynamical"</span><span class="op">)</span>,</span>
+<span>  scvelo.params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  dimred <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ncomponents <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  BSPARAM <span class="op">=</span> <span class="fu">bsparam</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for SummarizedExperiment</span></span>
+<span><span class="fu">scvelo</span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  assay.X <span class="op">=</span> <span class="st">"counts"</span>,</span>
+<span>  assay.spliced <span class="op">=</span> <span class="st">"spliced"</span>,</span>
+<span>  assay.unspliced <span class="op">=</span> <span class="st">"unspliced"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S4 method for SingleCellExperiment</span></span>
+<span><span class="fu">scvelo</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span>, sf.X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">sizeFactors</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, dimred <span class="op">=</span> <span class="cn">NULL</span>, use.dimred <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -105,52 +105,87 @@
 The list should contain <code>"spliced"</code> and <code>"unspliced"</code> entries containing spliced and unspliced counts, respectively.
 It should also contain an <code>"X"</code> entry containing the “usual” count matrix, see details below.</p>
 <p>Alternatively, a SummarizedExperiment object containing three such matrices among its assays.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>For the generic, further arguments to pass to specific methods.
 For the SummarizedExperiment and SingleCellExperiment methods, further arguments to pass to the ANY method.</p></dd>
+
+
 <dt>subset.row</dt>
 <dd><p>A character, integer or logical vector specifying the genes to use for the velocity calculations.
 Defaults to all genes.</p></dd>
+
+
 <dt>sf.X</dt>
 <dd><p>A numeric vector containing size factors for usual count matrix.
 Defaults to <code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">librarySizeFactors</a></code> on the <code>"X"</code> matrix in <code>x</code>.</p></dd>
+
+
 <dt>sf.spliced</dt>
 <dd><p>A numeric vector containing size factors for the spliced counts for each cell.
 Defaults to <code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">librarySizeFactors</a></code> on the <code>"spliced"</code> matrix in <code>x</code>.</p></dd>
+
+
 <dt>sf.unspliced</dt>
 <dd><p>A numeric vector containing size factors for the unspliced counts for each cell.
 Defaults to <code><a href="https://rdrr.io/pkg/scuttle/man/librarySizeFactors.html" class="external-link">librarySizeFactors</a></code> on the <code>"unspliced"</code> matrix in <code>x</code>.</p></dd>
+
+
 <dt>use.theirs</dt>
 <dd><p>Logical scalar indicating whether <span class="pkg">scVelo</span>'s gene filtering and normalization should be used.</p></dd>
+
+
 <dt>mode</dt>
 <dd><p>String specifying the method to use to estimate the transcriptional dynamics.</p></dd>
+
+
 <dt>scvelo.params</dt>
 <dd><p>List of lists containing arguments for individual <span class="pkg">scVelo</span> functions, see details below.</p></dd>
+
+
 <dt>dimred</dt>
 <dd><p>A low-dimensional representation of the cells with number of rows equal to the number of cells in <code>x</code>,
 used to find the nearest neighbors.</p></dd>
+
+
 <dt>ncomponents</dt>
 <dd><p>Numeric scalar indicating the number of principal components to obtain.
 Only used if <code>use.theirs=FALSE</code> and <code>dimred=NULL</code>.</p></dd>
+
+
 <dt>BPPARAM</dt>
 <dd><p>A BiocParallelParam object specifying whether the PCA calculations should be parallelized.
 Only used if <code>use.theirs=FALSE</code> and <code>dimred=NULL</code>.</p></dd>
+
+
 <dt>BSPARAM</dt>
 <dd><p>A BiocSingularParam object specifying which algorithm should be used to perform the PCA.
 Only used if <code>use.theirs=FALSE</code> and <code>dimred=NULL</code>.</p></dd>
+
+
 <dt>assay.X</dt>
 <dd><p>An integer scalar or string specifying the assay of <code>x</code> containing the usual count matrix.</p></dd>
+
+
 <dt>assay.spliced</dt>
 <dd><p>An integer scalar or string specifying the assay of <code>x</code> containing the spliced counts.</p></dd>
+
+
 <dt>assay.unspliced</dt>
 <dd><p>An integer scalar or string specifying the assay of <code>x</code> containing the unspliced counts.</p></dd>
+
+
 <dt>use.dimred</dt>
 <dd><p>String naming the entry of <code><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDims</a>(x)</code> to use for nearest neighbor calculations.
 Ignored if <code>dimred</code> is supplied.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> is returned containing the output of the velocity calculations.
+    
+
+<p>A <a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a> is returned containing the output of the velocity calculations.
 Of particular interest are:</p><ul><li><p>the <code>velocity_pseudotime</code> field in the <code>colData</code>,
 containing the velocity pseudotime for each cell.</p></li>
 <li><p>the <code>velocity</code> entry of the <code>assays</code>,
@@ -230,20 +265,20 @@ The PCA is not performed if <code>dimred</code> or <code>use.dimred</code> is al
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Using mock data to demonstrate the process:</span></span>
-<span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sce1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">sce2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">spliced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">unspliced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce2</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:</span></span>
-<span class="r-in"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span>, </span>
-<span class="r-in">              scvelo.params<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>moments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_neighbors<span class="op">=</span><span class="fl">10L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Using mock data to demonstrate the process:</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">sce2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/mockSCE.html" class="external-link">mockSCE</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">spliced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">unspliced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce2</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:</span></span></span>
+<span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>              scvelo.params<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>moments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_neighbors<span class="op">=</span><span class="fl">10L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -254,13 +289,11 @@ The PCA is not performed if <code>dimred</code> or <code>use.dimred</code> is al
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson,
-Michael Stadler.</p>
+  <p></p><p>Developed by Kevin Rue-Albrecht, Aaron Lun, Charlotte Soneson, Michael Stadler.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.2.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
