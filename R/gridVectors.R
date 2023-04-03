@@ -104,5 +104,7 @@ setMethod("gridVectors", "ANY", .grid_vectors)
 #' @export
 #' @rdname gridVectors
 setMethod("gridVectors", "SingleCellExperiment", function(x, embedded, ..., use.dimred=1) {
-    .grid_vectors(reducedDim(x, use.dimred), embedded, ...)
+    dimred <- reducedDim(x, use.dimred)
+    colnames(dimred) <- NULL
+    .grid_vectors(dimred, embedded, ...)
 })

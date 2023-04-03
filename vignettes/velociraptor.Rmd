@@ -100,7 +100,7 @@ This uses a grid-based approach to summarize the per-cell vectors into local rep
 
 ```{r}
 embedded <- embedVelocity(reducedDim(sce, "TSNE"), velo.out)
-grid.df <- gridVectors(reducedDim(sce, "TSNE"), embedded)
+grid.df <- gridVectors(sce, embedded, use.dimred = "TSNE")
 
 library(ggplot2)
 plotTSNE(sce, colour_by="velocity_pseudotime") +

@@ -1,3 +1,7 @@
+# velociraptor 1.9.2
+
+* Remove column names from reduced dimension matrix in `gridVectors()`.
+
 # velociraptor 1.5.2
 
 * Remove column names of reduced dimension representation before velocity embedding.
