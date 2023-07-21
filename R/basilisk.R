@@ -39,6 +39,7 @@
     "pyOpenSSL==19.1.0",
     "pyparsing==2.4.7",
     "PySocks==1.7.1",
+    "python==3.8",
     "python-dateutil==2.8.1",
     "pytz==2020.1",
     "requests==2.24.0",

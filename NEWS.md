@@ -1,3 +1,7 @@
+# velociraptor 1.9.3
+
+* Pin python version in conda environment.
+
 # velociraptor 1.9.2
 
 * Remove column names from reduced dimension matrix in `gridVectors()`.
