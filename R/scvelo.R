@@ -180,23 +180,20 @@ NULL
     output
 }
 
-#' @importFrom reticulate import
-#' @importFrom DelayedArray is_sparse t
-#' @importFrom zellkonverter AnnData2SCE
 .run_scvelo <- function(X, spliced, unspliced, use.theirs=FALSE, mode='dynamical', scvelo.params=list(), dimred=NULL) {
-    X <- t(.make_np_friendly(X))
-    spliced <- t(.make_np_friendly(spliced))
-    unspliced <- t(.make_np_friendly(unspliced))
+    X <- t(velociraptor:::.make_np_friendly(X))
+    spliced <- t(velociraptor:::.make_np_friendly(spliced))
+    unspliced <- t(velociraptor:::.make_np_friendly(unspliced))
 
-    and <- import("anndata")
-    scv <- import("scvelo")
+    and <- reticulate::import("anndata")
+    scv <- reticulate::import("scvelo")
     adata <- and$AnnData(X, layers=list(spliced=spliced, unspliced=unspliced))
     adata$obs_names <- rownames(spliced)
     adata$var_names <- colnames(spliced)
 
     ## A supplied dimred will be used even if use.theirs=TRUE
     if (!is.null(dimred)) {
-        dimred <- .make_np_friendly(dimred)
+        dimred <- velociraptor:::.make_np_friendly(dimred)
         adata$obsm <- list(X_pca = dimred)
     }
 
@@ -223,7 +220,7 @@ NULL
 
     do.call(scv$tl$velocity_confidence, c(list(data=adata), scvelo.params$velocity_confidence))
 
-    AnnData2SCE(adata)
+    zellkonverter::AnnData2SCE(adata)
 }
 
 #' @export
