@@ -9,7 +9,10 @@
     "packaging==23.2",
     "pandas==2.1.1",
     "python==3.11.5",
-    "scipy==1.11.3"
+    "scipy==1.11.3",
+    ##
+    "matplotlib==3.6.3", # https://github.com/scverse/scanpy/issues/2411
+    "pandas==2.0.0" # https://stackoverflow.com/questions/76234312/importerror-cannot-import-name-is-categorical-from-pandas-api-types
 )
 
 #' @importFrom basilisk BasiliskEnvironment
