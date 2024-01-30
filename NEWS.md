@@ -1,3 +1,7 @@
+# velociraptor 1.13.1
+
+* Robust fallback mechanism using `basiliskRun` option `testload=`.
+
 # velociraptor 1.9.3
 
 * Pin python version in conda environment.
