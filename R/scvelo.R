@@ -206,13 +206,14 @@ NULL
     
     if (!is.null(scvelo.params$moments)) {
         if (!is.null(scvelo.params$moments$n_neighbors)) {
-            scvelo.params$moments$n_neighbors <- NULL
+            stop("scvelo.params$moments$n_neighbors is deprecated; use scvelo.params$neighbors$n_neighbors instead")
         }
         if (!is.null(scvelo.params$moments$n_pcs)) {
-            scvelo.params$moments$n_pcs <- NULL
+            stop("scvelo.params$moments$n_pcs is deprecated; use scvelo.params$neighbors$n_pcs instead")
         }
     } else {
-        warning("setting moments")
+        # if unspecified, set to NULL (= None)
+        # see https://github.com/theislab/scvelo/issues/1212
         scvelo.params$moments <- list(
             n_neighbors = NULL,
             n_pcs = NULL
