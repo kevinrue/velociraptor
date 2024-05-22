@@ -1,4 +1,5 @@
-# scvelo 0.2.5 and latest version of dependencies in zellkonverter::AnnDataDependencies() succesfully tested.
+# scvelo 0.2.5
+# and dependencies pinned to fix various issues linked below
 .scvelo_dependencies <- c(
     "scvelo=0.2.5",
     "matplotlib=3.7.3", # https://stackoverflow.com/questions/77128061/ydata-profiling-profilereport-attributeerror-module-matplotlib-cbook-has-no
