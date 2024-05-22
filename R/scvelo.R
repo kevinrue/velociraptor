@@ -187,6 +187,7 @@ NULL
 
     and <- reticulate::import("anndata")
     scv <- reticulate::import("scvelo")
+    sc <- reticulate::import("scanpy")
     adata <- and$AnnData(X, layers=list(spliced=spliced, unspliced=unspliced))
     adata$obs_names <- rownames(spliced)
     adata$var_names <- colnames(spliced)
@@ -201,6 +202,23 @@ NULL
         do.call(scv$pp$filter_and_normalize, c(list(data=adata), scvelo.params$filter_and_normalize))
     }
 
+    do.call(sc$pp$neighbors, c(list(adata), scvelo.params$neighbors))
+    
+    if (!is.null(scvelo.params$moments)) {
+        if (!is.null(scvelo.params$moments$n_neighbors)) {
+            scvelo.params$moments$n_neighbors <- NULL
+        }
+        if (!is.null(scvelo.params$moments$n_pcs)) {
+            scvelo.params$moments$n_pcs <- NULL
+        }
+    } else {
+        warning("setting moments")
+        scvelo.params$moments <- list(
+            n_neighbors = NULL,
+            n_pcs = NULL
+        )
+    }
+    
     do.call(scv$pp$moments, c(list(data=adata), scvelo.params$moments))
 
     if (mode=="dynamical") {
