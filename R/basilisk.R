@@ -1,6 +1,10 @@
 # scvelo 0.2.5
 # and dependencies pinned to fix various issues linked below
-.scvelo_dependencies <- c(
+.scvelo_dependencies <- list(
+  "x86_64" = c(
+    "scvelo==0.2.5"
+  ),
+  "aarch64" = c(
     'absl-py==2.1.0',
     'anndata==0.10.7',
     'annotated-types==0.7.0',
@@ -340,6 +344,7 @@
     'zeromq==4.3.5',
     'zipp==3.17.0',
     'zstd==1.5.6'
+  )
 )
 
 # Note:
@@ -353,4 +358,4 @@
 #' @importFrom basilisk BasiliskEnvironment
 #' @importFrom zellkonverter AnnDataDependencies
 velo.env <- BasiliskEnvironment("env", "velociraptor",
-    packages=.scvelo_dependencies, channels = c("conda-forge", "bioconda"))
+    packages=.scvelo_dependencies[[R.version$arch]], channels = c("conda-forge", "bioconda"))
