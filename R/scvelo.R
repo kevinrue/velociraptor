@@ -138,6 +138,7 @@ NULL
 #' @importFrom BiocSingular bsparam runPCA
 #' @importFrom BiocParallel SerialParam
 #' @importFrom Matrix t
+#' @importFrom zellkonverter AnnData2SCE
 .scvelo <- function(x, subset.row=NULL,
     sf.X=NULL, sf.spliced=NULL, sf.unspliced=NULL,
     use.theirs=FALSE,

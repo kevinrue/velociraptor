@@ -93,7 +93,7 @@ containing the velocity pseudotime for each cell.
 containing the velocity vectors for each cell.
 }
 The output will always have number of columns equal to the number of cells supplied in \code{x},
-though the number of rows will depend on whether any subsetting (if \code{subset.row} is supplied) 
+though the number of rows will depend on whether any subsetting (if \code{subset.row} is supplied)
 or feature selection (if \code{use.theirs=TRUE}) was performed.
 }
 \description{
@@ -179,8 +179,8 @@ unspliced <- counts(sce2)
 out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 
 # make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:
-out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), 
-              scvelo.params=list(moments=list(n_neighbors=10L))) 
+out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced),
+              scvelo.params=list(neighbors=list(n_neighbors=10L)))
 
 }
 \references{
