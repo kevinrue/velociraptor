@@ -1,0 +1,10 @@
+name: velociraptor
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - r-base==4.3.2
+  - bioconductor-velociraptor==1.12.0
+  - r-knitr
+  - r-rmarkdown
+  - bioconductor-BiocStyle
