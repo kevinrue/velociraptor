@@ -1,7 +1,7 @@
 library(dplyr)
 library(tidyr)
 
-pkg_info <- read.table("M1_20240522.txt")
+pkg_info <- read.table("Linux_20240523.txt")
 pkg_specs <- pkg_info %>%
     as_tibble() %>%
     unite("spec", V1, V2, sep = "==") %>%
