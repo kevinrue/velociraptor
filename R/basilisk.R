@@ -418,7 +418,7 @@
   )
 )
 
-.scvelo.dependencies.LinuxAarch64 <- list(
+.scvelo.dependencies.Linux <- list(
   channels = c("conda-forge", "bioconda"),
   packages = c(
     c(
@@ -710,7 +710,7 @@
 
 if (basilisk.utils::isWindows()) {
   .scvelo_dependencies <- .scvelo.dependencies.Windows
-} else if (basilisk.utils::isLinuxAarch64()) {
+} else if (basilisk.utils::isLinux()) {
   .scvelo_dependencies <- .scvelo.dependencies.Linux
 } else if (basilisk.utils::isMacOSXArm()) {
   .scvelo_dependencies <- .scvelo.dependencies.MacOSXArm
