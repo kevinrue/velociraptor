@@ -1,0 +1,6 @@
+name: velociraptor
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - scvelo==0.2.5
