@@ -1,6 +1,3 @@
-# scvelo 0.2.5
-# and dependencies pinned to fix various issues linked below
-
 .scvelo.dependencies.Windows <- list(
   channels = c("bioconda", "conda-forge"),
   packages = c(
