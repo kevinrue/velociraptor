@@ -712,23 +712,8 @@ if (basilisk.utils::isWindows()) {
 } else if (basilisk.utils::isMacOSXArm()) {
   .scvelo_dependencies <- .scvelo.dependencies.MacOSXArm
 } else {
-  stop("Unsupported OS type: ", .Platform$OS.type)
+  stop("Unsupported operating system or architecture.\n  Please open an issue at <https://github.com/kevinrue/velociraptor/issues> to request support.")
 }
-
-# Note:
-
-# macOS
-# "matplotlib==3.7.3", # https://stackoverflow.com/questions/77128061/ydata-profiling-profilereport-attributeerror-module-matplotlib-cbook-has-no
-# "numpy==1.23.1" # https://github.com/OpenTalker/video-retalking/issues/35
-# "tqdm==4.66.4", # required for progress bar, optional
-# "ipywidgets==8.1.2", # required for progress bar, optional
-# "jupyterlab==4.2.0", # required for progress bar, optional
-
-# Windows:
-# 'scvelo==0.2.5', # last version compatible with Windows before move to bioconda and dependency on jaxlib unsupported on windows
-# 'matplotlib==3.6.3',
-# 'pandas==1.5.2', # https://stackoverflow.com/questions/76234312/importerror-cannot-import-name-is-categorical-from-pandas-api-types
-# 'numpy==1.21.1' # https://github.com/theislab/scvelo/issues/1109
 
 #' @importFrom basilisk BasiliskEnvironment
 #' @importFrom zellkonverter AnnDataDependencies

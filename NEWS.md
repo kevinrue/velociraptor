@@ -1,3 +1,10 @@
+# velociraptor 1.15.1
+
+* Fix issue #63.
+* Update `scvelo` to 0.3.2 (conda-forge) for macOS (M1) and Linux.
+* Update `scvelo` to 0.2.5 (bioconda) for Windows.
+* Add mechanism to switch Conda environment (and scvelo version) based on operating system and architecture.
+
 # velociraptor 1.13.1
 
 * Robust fallback mechanism using `basiliskRun` option `testload=`.
