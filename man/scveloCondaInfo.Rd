@@ -13,5 +13,5 @@ The data.frame returned by \code{basilisk::listPackages()}.
 List package names and versions in the \pkg{scVelo} Conda environment.
 }
 \examples{
-scveloCondaInfo
+scveloCondaInfo()
 }
