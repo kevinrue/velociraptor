@@ -64,11 +64,20 @@ top.hvgs <- getTopHVGs(dec, n=2000)
 
 We can plug these choices into the `scvelo()` function with our `SingleCellExperiment` object.
 By default, `scvelo()` uses the steady-state approach to estimate velocities,
-though the stochastic and dynamical models implemented in `r basilisk::PyPiLink("scvelo")` can also be used by modifying the `mode` argument. 
+though the stochastic and dynamical models implemented in `r basilisk::PyPiLink("scvelo")` can also be used by modifying the `mode` argument.
+
+Note that automatic neighbor calculation is deprecated since scvelo==0.4.0 and will be removed in a future version.
+Instead, `r BiocStyle::Biocpkg("velociraptor")` computes neighbors with Scanpy (as per [scVelo recommendations](https://github.com/theislab/scvelo/blob/f21651c3b122860d8ae6b5a5173f242ba91c8761/scvelo/preprocessing/moments.py#L66)), and the number of neighbors should be supplied to [scanpy.pp.neighbors](https://scanpy.readthedocs.io/en/stable/api/generated/scanpy.pp.neighbors.html) as demonstrated below.
+
+In particular, the default number of neighbors was 30 for [scvelo.pp.moments](https://scvelo.readthedocs.io/en/stable/scvelo.pp.moments.html) while it is 15 for [scanpy.pp.neighbors](https://scanpy.readthedocs.io/en/stable/api/generated/scanpy.pp.neighbors.html).
+Users should use `scvelo.params=list(neighbors=list(n_neighbors=30L)` to reproduce earlier results.
 
 ```{r}
 library(velociraptor)
-velo.out <- scvelo(sce, subset.row=top.hvgs, assay.X="spliced")
+velo.out <- scvelo(
+  sce, subset.row=top.hvgs, assay.X="spliced",
+  scvelo.params=list(neighbors=list(n_neighbors=30L))
+)
 velo.out
 ```
 
@@ -88,7 +97,7 @@ library(scater)
 
 set.seed(100)
 sce <- runPCA(sce, subset_row=top.hvgs)
-sce <- runTSNE(sce, dimred="PCA")
+sce <- runTSNE(sce, dimred="PCA", perplexity = 30)
 
 sce$velocity_pseudotime <- velo.out$velocity_pseudotime
 plotTSNE(sce, colour_by="velocity_pseudotime")
