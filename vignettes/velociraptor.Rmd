@@ -159,4 +159,8 @@ velo.out4
 sessionInfo()
 ```
 
+```{r}
+scveloCondaInfo()
+```
+
 # References

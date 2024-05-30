@@ -719,3 +719,17 @@ if (basilisk.utils::isWindows()) {
 #' @importFrom zellkonverter AnnDataDependencies
 velo.env <- BasiliskEnvironment("env", "velociraptor",
     packages=.scvelo_dependencies$packages, channels = .scvelo_dependencies$channels)
+
+#' List Conda Packages Information
+#' 
+#' List package names and versions in the \pkg{scVelo} Conda environment.
+#'
+#' @return The data.frame returned by \code{basilisk::listPackages()}.
+#' @export
+#' @importFrom basilisk listPackages
+#'
+#' @examples
+#' scveloCondaInfo
+scveloCondaInfo <- function() {
+  basilisk::listPackages(velo.env)
+}
