@@ -729,7 +729,7 @@ velo.env <- BasiliskEnvironment("env", "velociraptor",
 #' @importFrom basilisk listPackages
 #'
 #' @examples
-#' scveloCondaInfo
+#' scveloCondaInfo()
 scveloCondaInfo <- function() {
   basilisk::listPackages(velo.env)
 }
