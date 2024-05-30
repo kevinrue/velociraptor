@@ -4,6 +4,8 @@
 * Update `scvelo` to 0.3.2 (conda-forge) for macOS (M1) and Linux.
 * Update `scvelo` to 0.2.5 (bioconda) for Windows.
 * Add mechanism to switch Conda environment (and scvelo version) based on operating system and architecture.
+* Use `scanpy.pp.neighbors` to calculate neighbors due to deprecation of automatic neighbor calculation in `scvelo.pp.moments`.
+* Update vignette to document the change of default value for `n_neighbors` from scvelo (30) to scanpy (15).
 
 # velociraptor 1.13.1
 
