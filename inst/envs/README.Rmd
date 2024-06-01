@@ -1,0 +1,18 @@
+# Designing new environments
+
+## Approach
+
+In `basilisk.R`, start with the latest version of `scvelo`, e.g.
+
+```{r}
+.scvelo.dependencies.Windows <- list(
+  channels = c("bioconda", "conda-forge"),
+  packages = c(
+    'scvelo==0.3.2'
+  )
+)
+```
+
+Install `velociraptor` and try running the examples in `?scvelo`.
+
+Debug from there :)
