@@ -1,3 +1,7 @@
+# velociraptor 1.15.2
+
+* Add environment for macOS (Intel); same environment as macos (M1).
+
 # velociraptor 1.15.1
 
 * Fix issue #63.
