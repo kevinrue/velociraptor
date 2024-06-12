@@ -1,3 +1,10 @@
+# velociraptor 1.14.1
+
+* Update scvelo environment to version `0.3.2` on Linux/Mac.
+* Update scvelo environment to version `0.2.5` on Windows.
+* Use `scanpy.pp.neighbors` to calculate neighbors due to deprecation of automatic neighbor calculation in `scvelo.pp.moments`.
+* Update vignette to document the change of default value for n_neighbors from scvelo (30) to scanpy (15).
+
 # velociraptor 1.13.1
 
 * Robust fallback mechanism using `basiliskRun` option `testload=`.
