@@ -1,3 +1,5 @@
+## Windows ----
+
 .scvelo.dependencies.Windows <- list(
   channels = c("bioconda", "conda-forge"),
   packages = c(
@@ -140,6 +142,8 @@
     'zstd==1.5.6'
   )
 )
+
+## MacOSXArm ----
 
 .scvelo.dependencies.MacOSXArm <- list(
   channels = c("conda-forge", "bioconda"),
@@ -415,6 +419,8 @@
   )
 )
 
+## MacOSX ----
+
 .scvelo.dependencies.MacOSX <- list(
   channels = c("conda-forge", "bioconda"),
   packages = c(
@@ -689,6 +695,8 @@
   )
 )
 
+## Linux ----
+
 .scvelo.dependencies.Linux <- list(
   channels = c("bioconda", "conda-forge"),
   packages = c(
@@ -822,6 +830,8 @@
     )
   )
 )
+
+# Switch environment ----
 
 if (basilisk.utils::isWindows()) {
   .scvelo_dependencies <- .scvelo.dependencies.Windows

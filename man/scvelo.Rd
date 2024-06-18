@@ -177,11 +177,11 @@ Differences in packages and versions available from Conda require different envi
 As of the latest \pkg{velociraptor} update (24 May 2024):
 
 \describe{
-\item{Linux}{\pkg{scVelo} v0.3.2 from conda-forge is used.
-This is the latest version available to date.
-Note that
-\pkg{matplotlib} is pinned to v3.7.3 (\url{https://stackoverflow.com/questions/77128061/ydata-profiling-profilereport-attributeerror-module-matplotlib-cbook-has-no})
-and \pkg{numpy} is pinned to v1.23.1 (\url{https://github.com/OpenTalker/video-retalking/issues/35})}
+\item{Linux}{\pkg{scVelo} v0.2.2 from bioconda is used.
+This is NOT the latest version available to date.
+Instead, it is the latest version successfully tested in a complete Conda environment.
+Note that pinned dependencies were obtained from \code{zellkonverter::AnnDataDependencies()}.
+}
 \item{MacOS Arm}{\pkg{scVelo} v0.3.2 from conda-forge is used.
 This is the latest version available to date.
 Tested on M1.}
