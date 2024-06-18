@@ -1,3 +1,7 @@
+# velociraptor 1.15.3
+
+* Revert environment for Linux to the one of Bioconductor release 3.18.
+
 # velociraptor 1.15.2
 
 * Add environment for macOS (Intel); same environment as macos (M1).
