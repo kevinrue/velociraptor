@@ -1,3 +1,7 @@
+# velociraptor 1.14.2
+
+* Revert environment for Linux to the one of Bioconductor release 3.18.
+
 # velociraptor 1.14.1
 
 * Update scvelo environment to version `0.3.2` on Linux/Mac.
