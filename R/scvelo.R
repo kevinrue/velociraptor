@@ -211,8 +211,11 @@ NULL
     # Check scvelo version
     # Less elegant but faster than `listPackages(velo.env)`
     scvelo_version <- package_version(gsub("scvelo==", "", grep("scvelo==", velo.env@packages, value = TRUE)))
-    
-    if (scvelo_version >= package_version("0.4.0")) {
+    # NOTE: yes, the code below looks inconsistent
+    # - test for version >= 0.3.2
+    # - throw an error about version 0.4.0
+    # TODO: include link <https://github.com/theislab/scvelo/issues/1212#issuecomment-1979120563> in error message
+    if (scvelo_version >= package_version("0.3.2")) {
       if (!is.null(scvelo.params$moments)) {
         if (!is.null(scvelo.params$moments$n_neighbors)) {
           stop("scvelo.params$moments$n_neighbors is deprecated since scvelo==0.4.0; use scvelo.params$neighbors$n_neighbors instead")
@@ -251,7 +254,10 @@ NULL
         do.call(scv$pp$filter_and_normalize, c(list(data=adata), scvelo.params$filter_and_normalize))
     }
 
-    do.call(sc$pp$neighbors, c(list(adata), scvelo.params$neighbors))
+    # see above and <https://github.com/theislab/scvelo/issues/1212#issuecomment-1979120563>
+    if (scvelo_version >= package_version("0.3.2")) {
+      do.call(sc$pp$neighbors, c(list(adata), scvelo.params$neighbors))
+    }
     
     do.call(scv$pp$moments, c(list(data=adata), scvelo.params$moments))
 

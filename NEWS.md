@@ -1,3 +1,7 @@
+# velociraptor 1.15.4
+
+* Update `scvelo` to 0.3.2 (conda-forge) for Linux.
+
 # velociraptor 1.15.3
 
 * Revert environment for Linux to the one of Bioconductor release 3.18.
