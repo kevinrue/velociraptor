@@ -206,8 +206,18 @@ jobs:
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = FALSE, upgrade = TRUE, force = TRUE)
         shell: Rscript {0}
 
-      #- name: R CMD INSTALL
-      #  run: |
-      #    ## Mimic the RStudio installation command
-      #  continue-on-error: true
-      #  shell: Rscript {0}
+      - name: Test PIL.Image.new()
+        run: |
+          ## As requested in <https://github.com/python-pillow/Pillow/issues/8148#issuecomment-2178233186>
+          .test_fun <- function() { 
+            X <- reticulate::import("PIL")
+            im <- X$Image$new("RGB", c(1L, 1L))
+            im$save("out.tif", compression="jpeg")
+          }
+          basilisk::basiliskRun(env=velociraptor:::velo.env, fun=.test_fun)
+        continue-on-error: true
+        shell: Rscript {0}
+
+      - name: R CMD INSTALL
+        run: |
+          ls -lh
