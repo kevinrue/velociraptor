@@ -212,13 +212,19 @@ NULL
     # Less elegant but faster than `listPackages(velo.env)`
     scvelo_version <- package_version(gsub("scvelo==", "", grep("scvelo==", velo.env@packages, value = TRUE)))
     
-    if (scvelo_version >= package_version("0.4.0")) {
+    if (scvelo_version >= package_version("0.3.1")) {
       if (!is.null(scvelo.params$moments)) {
         if (!is.null(scvelo.params$moments$n_neighbors)) {
-          stop("scvelo.params$moments$n_neighbors is deprecated since scvelo==0.4.0; use scvelo.params$neighbors$n_neighbors instead")
+          stop(paste0(
+            "scvelo.params$moments$n_neighbors is deprecated; use scvelo.params$neighbors$n_neighbors instead.","\n",
+            "  See <https://github.com/theislab/scvelo/issues/1212#issuecomment-1979120563> for details."
+          ))
         }
         if (!is.null(scvelo.params$moments$n_pcs)) {
-          stop("scvelo.params$moments$n_pcs is deprecated since scvelo==0.4.0; use scvelo.params$neighbors$n_pcs instead")
+          stop(paste0(
+            "scvelo.params$moments$n_pcs is deprecated since scvelo==0.4.0; use scvelo.params$neighbors$n_pcs instead.","\n",
+            "  See <https://github.com/theislab/scvelo/issues/1212#issuecomment-1979120563> for details."
+          ))
         }
       } else {
         # if unspecified, set to NULL (= None)
