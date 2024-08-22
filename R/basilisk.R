@@ -698,7 +698,7 @@
 ## Linux ----
 
 .scvelo.dependencies.Linux <- list(
-  channels = c("conda-forge", "bioconda"),
+  channels = c("bioconda", "conda-forge"),
   packages = c(
     c(
       'scvelo==0.2.5'
