@@ -701,7 +701,7 @@
   channels = c("bioconda", "conda-forge"),
   packages = c(
     c(
-      'scvelo==0.2.5'
+      'scvelo==0.2.4'
     )
   )
 )
