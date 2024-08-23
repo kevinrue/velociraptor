@@ -698,7 +698,7 @@
 ## Linux ----
 
 .scvelo.dependencies.Linux <- list(
-  channels = c("bioconda", "conda-forge"),
+  channels = c("conda-forge", "bioconda"),
   packages = c(
     c(
       '_libgcc_mutex==0.1',
