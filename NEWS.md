@@ -1,3 +1,7 @@
+# velociraptor 1.15.5
+
+* Update Conda environment to `svelo==0.3.2` on Linux. 
+
 # velociraptor 1.15.4
 
 * Set scvelo version triggering deprecation error to `0.3.1`.
