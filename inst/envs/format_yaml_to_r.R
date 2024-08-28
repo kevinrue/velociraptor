@@ -1,0 +1,11 @@
+library(yaml)
+yaml_data <- yaml::read_yaml("Linux_x86_64.yaml")
+r_data <- gsub("([[:alnum:]_]+)=([[:alnum:].]+)=.+", "\\1==\\2" , yaml_data$dependencies)
+cat(paste0(
+  "c(",
+  "\n",
+  paste0("  ", "'", r_data, "'", collapse = ",\n"),
+  "\n",
+  ")",
+  "\n"
+))
