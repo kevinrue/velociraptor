@@ -18,15 +18,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Computing RNA velocity in a Bioconductor framework">
-<meta property="og:description" content="velociraptor">
-<meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
+
 
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -40,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.6</span>
       </span>
     </div>
 
@@ -55,7 +53,7 @@
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
-     
+
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
@@ -74,7 +72,7 @@
 <li>
   <a href="https://github.com/kevinrue/velociraptor/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -85,7 +83,7 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="col-md-9 contents">
@@ -104,7 +102,7 @@ Soneson</h4>
       
                   
       
-      <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/HEAD/vignettes/velociraptor.Rmd" class="external-link"><code>vignettes/velociraptor.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/kevinrue/velociraptor/blob/devel/vignettes/velociraptor.Rmd" class="external-link"><code>vignettes/velociraptor.Rmd</code></a></small>
       <div class="hidden name"><code>velociraptor.Rmd</code></div>
 
     </div>
@@ -119,7 +117,7 @@ Bioconductor <code>SingleCellExperiment</code> data structure and the <a href="h
 velocity calculations. The interface is comparable to that of many other
 <code>SingleCellExperiment</code>-compatible functions, allowing users
 to plug in RNA velocity calculations into the existing Bioconductor
-analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.18/scRNAseq" class="external-link">scRNAseq</a></em>
+analysis framework. To demonstrate, we will use a data set from <span class="citation">Hermann et al. (2018)</span>, provided via the <em><a href="https://bioconductor.org/packages/3.20/scRNAseq" class="external-link">scRNAseq</a></em>
 package. This data set contains gene-wise estimates of spliced and
 unspliced UMI counts for 2,325 mouse spermatogenic cells.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -156,13 +154,13 @@ downsampling step if you have access to sufficient memory.</p>
 <p>We assume that feature selection has already been performed by the
 user using any method (see <a href="https://osca.bioconductor.org/feature-selection.html" class="external-link">here</a> for
 some suggestions). In this case, we will use the variance of
-log-expressions from <em><a href="https://bioconductor.org/packages/3.18/scran" class="external-link">scran</a></em> to
+log-expressions from <em><a href="https://bioconductor.org/packages/3.20/scran" class="external-link">scran</a></em> to
 select the top 2000 genes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scuttle</span><span class="op">)</span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scuttle/man/logNormCounts.html" class="external-link">logNormCounts</a></span><span class="op">(</span><span class="va">sce</span>, assay.type<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scran</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/MarioniLab/scran/" class="external-link">scran</a></span><span class="op">)</span></span>
 <span><span class="va">dec</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span></span>
 <span><span class="va">top.hvgs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html" class="external-link">getTopHVGs</a></span><span class="op">(</span><span class="va">dec</span>, n<span class="op">=</span><span class="fl">2000</span><span class="op">)</span></span></code></pre></div>
 <p>We can plug these choices into the <code><a href="../reference/scvelo.html">scvelo()</a></code> function
@@ -171,7 +169,7 @@ with our <code>SingleCellExperiment</code> object. By default,
 velocities, though the stochastic and dynamical models implemented in <a href="https://pypi.org/project/scvelo" class="external-link">scvelo</a> can also be used by
 modifying the <code>mode</code> argument.</p>
 <p>Note that automatic neighbor calculation is deprecated since
-scvelo==0.4.0 and will be removed in a future version. Instead, <em><a href="https://bioconductor.org/packages/3.18/velociraptor" class="external-link">velociraptor</a></em>
+scvelo==0.4.0 and will be removed in a future version. Instead, <em><a href="https://bioconductor.org/packages/3.20/velociraptor" class="external-link">velociraptor</a></em>
 computes neighbors with Scanpy (as per <a href="https://github.com/theislab/scvelo/blob/f21651c3b122860d8ae6b5a5173f242ba91c8761/scvelo/preprocessing/moments.py#L66" class="external-link">scVelo
 recommendations</a>), and the number of neighbors should be supplied to
 <a href="https://scanpy.readthedocs.io/en/stable/api/generated/scanpy.pp.neighbors.html" class="external-link">scanpy.pp.neighbors</a>
@@ -193,7 +191,7 @@ reproduce earlier results.</p>
 <span><span class="co">## computing velocities</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
-<span><span class="co">## computing velocity graph (using 1/10 cores)</span></span>
+<span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
 <span><span class="co">## WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,</span></span>
 <span><span class="co">## or disable the progress bar using `show_progress_bar=False`.</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
@@ -239,7 +237,9 @@ if the latter is not available.</p>
 calculation in Python. Of particular interest is the
 <code>velocity_pseudotime</code> vector that captures the relative
 progression of each cell along the biological process driving the
-velocity vectors. We can visualize this effect below in a <span class="math inline">\(t\)</span>-SNE plot generated by <em><a href="https://bioconductor.org/packages/3.18/scater" class="external-link">scater</a></em> on
+velocity vectors. We can visualize this effect below in a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-SNE
+plot generated by <em><a href="https://bioconductor.org/packages/3.20/scater" class="external-link">scater</a></em> on
 the top HVGs.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://bioconductor.org/packages/scater/" class="external-link">scater</a></span><span class="op">)</span></span>
@@ -252,9 +252,10 @@ the top HVGs.</p>
 <span><span class="fu"><a href="https://rdrr.io/pkg/scater/man/plot_reddim.html" class="external-link">plotTSNE</a></span><span class="op">(</span><span class="va">sce</span>, colour_by<span class="op">=</span><span class="st">"velocity_pseudotime"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="velociraptor_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>It is also straightforward to embed the velocity vectors into our
-desired low-dimensional space, as shown below for the <span class="math inline">\(t\)</span>-SNE coordinates. This uses a grid-based
-approach to summarize the per-cell vectors into local representatives
-for effective visualization.</p>
+desired low-dimensional space, as shown below for the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-SNE
+coordinates. This uses a grid-based approach to summarize the per-cell
+vectors into local representatives for effective visualization.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">embedded</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/embedVelocity.html">embedVelocity</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">sce</span>, <span class="st">"TSNE"</span><span class="op">)</span>, <span class="va">velo.out</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## computing velocity embedding</span></span>
@@ -289,7 +290,7 @@ in <code><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="exter
 <span><span class="co">## computing velocities</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
-<span><span class="co">## computing velocity graph (using 1/10 cores)</span></span>
+<span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -330,12 +331,12 @@ case, arguments like <code>subset.row=</code> are simply ignored.</p>
 <span><span class="co">## WARNING: Did not normalize unspliced as it looks processed already. To enforce normalization, set `enforce=True`.</span></span>
 <span><span class="co">## Logarithmized X.</span></span>
 <span><span class="co">## computing moments based on connectivities</span></span>
-<span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
+<span><span class="co">##     finished (0:00:01) --&gt; added </span></span>
 <span><span class="co">##     'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)</span></span>
 <span><span class="co">## computing velocities</span></span>
-<span><span class="co">##     finished (0:00:01) --&gt; added </span></span>
+<span><span class="co">##     finished (0:00:02) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
-<span><span class="co">## computing velocity graph (using 1/10 cores)</span></span>
+<span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -350,13 +351,12 @@ case, arguments like <code>subset.row=</code> are simply ignored.</p>
 <code class="sourceCode R"><span><span class="va">velo.out3</span></span></code></pre></div>
 <pre><code><span><span class="co">## class: SingleCellExperiment </span></span>
 <span><span class="co">## dim: 54448 500 </span></span>
-<span><span class="co">## metadata(5): log1p neighbors velocity_params velocity_graph</span></span>
-<span><span class="co">##   velocity_graph_neg</span></span>
+<span><span class="co">## metadata(6): log1p pca ... velocity_graph velocity_graph_neg</span></span>
 <span><span class="co">## assays(6): X spliced ... Mu velocity</span></span>
 <span><span class="co">## rownames(54448): ENSMUSG00000102693.1 ENSMUSG00000064842.1 ...</span></span>
 <span><span class="co">##   ENSMUSG00000064369.1 ENSMUSG00000064372.1</span></span>
-<span><span class="co">## rowData names(4): velocity_gamma velocity_qreg_ratio velocity_r2</span></span>
-<span><span class="co">##   velocity_genes</span></span>
+<span><span class="co">## rowData names(5): velocity_gamma velocity_qreg_ratio velocity_r2</span></span>
+<span><span class="co">##   velocity_genes varm</span></span>
 <span><span class="co">## colnames(500): CCCATACTCCGAAGAG AATCCAGTCATCTGCC ... CACCTTGTCGTAGGAG</span></span>
 <span><span class="co">##   TTCCCAGAGACTAAGT</span></span>
 <span><span class="co">## colData names(11): initial_size_unspliced initial_size_spliced ...</span></span>
@@ -377,7 +377,7 @@ example, to tinker with the behavior of the
 <span><span class="co">## computing velocities</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
-<span><span class="co">## computing velocity graph (using 1/10 cores)</span></span>
+<span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -412,107 +412,87 @@ example, to tinker with the behavior of the
 </h2>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.3.2 (2023-10-31)</span></span>
-<span><span class="co">## Platform: aarch64-apple-darwin20 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS Sonoma 14.5</span></span>
+<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
+<span><span class="co">## Running under: Ubuntu 22.04.4 LTS</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRblas.0.dylib </span></span>
-<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.3-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
+<span><span class="co">## BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">## LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.20.so;  LAPACK version 3.10.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
-<span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## time zone: Europe/London</span></span>
-<span><span class="co">## tzcode source: internal</span></span>
+<span><span class="co">## time zone: UTC</span></span>
+<span><span class="co">## tzcode source: system (glibc)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
-<span><span class="co">## [1] stats4    stats     graphics  grDevices datasets  utils     methods  </span></span>
+<span><span class="co">## [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] scater_1.30.1               ggplot2_3.5.1              </span></span>
-<span><span class="co">##  [3] velociraptor_1.15.1         scran_1.30.2               </span></span>
-<span><span class="co">##  [5] scuttle_1.12.0              scRNAseq_2.16.0            </span></span>
-<span><span class="co">##  [7] SingleCellExperiment_1.24.0 SummarizedExperiment_1.32.0</span></span>
-<span><span class="co">##  [9] Biobase_2.62.0              GenomicRanges_1.54.1       </span></span>
-<span><span class="co">## [11] GenomeInfoDb_1.38.8         IRanges_2.36.0             </span></span>
-<span><span class="co">## [13] S4Vectors_0.40.2            BiocGenerics_0.48.1        </span></span>
-<span><span class="co">## [15] MatrixGenerics_1.14.0       matrixStats_1.3.0          </span></span>
-<span><span class="co">## [17] knitr_1.47                  BiocStyle_2.30.0           </span></span>
+<span><span class="co">##  [1] scater_1.33.4               ggplot2_3.5.1              </span></span>
+<span><span class="co">##  [3] velociraptor_1.15.6         scran_1.33.1               </span></span>
+<span><span class="co">##  [5] scuttle_1.15.4              scRNAseq_2.19.1            </span></span>
+<span><span class="co">##  [7] SingleCellExperiment_1.27.2 SummarizedExperiment_1.35.1</span></span>
+<span><span class="co">##  [9] Biobase_2.65.0              GenomicRanges_1.57.1       </span></span>
+<span><span class="co">## [11] GenomeInfoDb_1.41.1         IRanges_2.39.2             </span></span>
+<span><span class="co">## [13] S4Vectors_0.43.2            BiocGenerics_0.51.0        </span></span>
+<span><span class="co">## [15] MatrixGenerics_1.17.0       matrixStats_1.3.0          </span></span>
+<span><span class="co">## [17] knitr_1.48                  BiocStyle_2.33.1           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] rstudioapi_0.16.0             jsonlite_1.8.8               </span></span>
-<span><span class="co">##   [3] magrittr_2.0.3                ggbeeswarm_0.7.2             </span></span>
-<span><span class="co">##   [5] GenomicFeatures_1.54.4        farver_2.1.2                 </span></span>
-<span><span class="co">##   [7] rmarkdown_2.27                fs_1.6.4                     </span></span>
-<span><span class="co">##   [9] BiocIO_1.12.0                 zlibbioc_1.48.2              </span></span>
-<span><span class="co">##  [11] ragg_1.3.2                    vctrs_0.6.5                  </span></span>
-<span><span class="co">##  [13] memoise_2.0.1                 Rsamtools_2.18.0             </span></span>
-<span><span class="co">##  [15] DelayedMatrixStats_1.24.0     RCurl_1.98-1.14              </span></span>
-<span><span class="co">##  [17] htmltools_0.5.8.1             S4Arrays_1.2.1               </span></span>
-<span><span class="co">##  [19] progress_1.2.3                AnnotationHub_3.10.1         </span></span>
-<span><span class="co">##  [21] curl_5.2.1                    BiocNeighbors_1.20.2         </span></span>
-<span><span class="co">##  [23] SparseArray_1.2.4             sass_0.4.9                   </span></span>
-<span><span class="co">##  [25] bslib_0.7.0                   htmlwidgets_1.6.4            </span></span>
-<span><span class="co">##  [27] basilisk_1.14.3               desc_1.4.3                   </span></span>
-<span><span class="co">##  [29] cachem_1.1.0                  GenomicAlignments_1.38.2     </span></span>
-<span><span class="co">##  [31] igraph_2.0.3                  mime_0.12                    </span></span>
-<span><span class="co">##  [33] lifecycle_1.0.4               pkgconfig_2.0.3              </span></span>
-<span><span class="co">##  [35] rsvd_1.0.5                    Matrix_1.6-1.1               </span></span>
-<span><span class="co">##  [37] R6_2.5.1                      fastmap_1.2.0                </span></span>
-<span><span class="co">##  [39] GenomeInfoDbData_1.2.11       shiny_1.8.1.1                </span></span>
-<span><span class="co">##  [41] digest_0.6.35                 colorspace_2.1-0             </span></span>
-<span><span class="co">##  [43] AnnotationDbi_1.64.1          dqrng_0.4.1                  </span></span>
-<span><span class="co">##  [45] irlba_2.3.5.1                 ExperimentHub_2.10.0         </span></span>
-<span><span class="co">##  [47] textshaping_0.4.0             RSQLite_2.3.7                </span></span>
-<span><span class="co">##  [49] beachmat_2.18.1               labeling_0.4.3               </span></span>
-<span><span class="co">##  [51] filelock_1.0.3                fansi_1.0.6                  </span></span>
-<span><span class="co">##  [53] httr_1.4.7                    abind_1.4-5                  </span></span>
-<span><span class="co">##  [55] compiler_4.3.2                bit64_4.0.5                  </span></span>
-<span><span class="co">##  [57] withr_3.0.0                   BiocParallel_1.36.0          </span></span>
-<span><span class="co">##  [59] viridis_0.6.5                 DBI_1.2.2                    </span></span>
-<span><span class="co">##  [61] highr_0.11                    biomaRt_2.58.2               </span></span>
-<span><span class="co">##  [63] rappdirs_0.3.3                DelayedArray_0.28.0          </span></span>
-<span><span class="co">##  [65] rjson_0.2.21                  bluster_1.12.0               </span></span>
-<span><span class="co">##  [67] tools_4.3.2                   vipor_0.4.7                  </span></span>
-<span><span class="co">##  [69] beeswarm_0.4.0                interactiveDisplayBase_1.40.0</span></span>
-<span><span class="co">##  [71] httpuv_1.6.15                 glue_1.7.0                   </span></span>
-<span><span class="co">##  [73] restfulr_0.0.15               promises_1.3.0               </span></span>
-<span><span class="co">##  [75] grid_4.3.2                    Rtsne_0.17                   </span></span>
-<span><span class="co">##  [77] cluster_2.1.6                 generics_0.1.3               </span></span>
-<span><span class="co">##  [79] gtable_0.3.5                  ensembldb_2.26.1             </span></span>
-<span><span class="co">##  [81] hms_1.1.3                     metapod_1.10.1               </span></span>
-<span><span class="co">##  [83] BiocSingular_1.18.0           ScaledMatrix_1.10.0          </span></span>
-<span><span class="co">##  [85] xml2_1.3.6                    utf8_1.2.4                   </span></span>
-<span><span class="co">##  [87] XVector_0.42.0                ggrepel_0.9.5                </span></span>
-<span><span class="co">##  [89] BiocVersion_3.18.1            pillar_1.9.0                 </span></span>
-<span><span class="co">##  [91] stringr_1.5.1                 limma_3.58.1                 </span></span>
-<span><span class="co">##  [93] later_1.3.2                   dplyr_1.1.4                  </span></span>
-<span><span class="co">##  [95] BiocFileCache_2.10.2          lattice_0.22-6               </span></span>
-<span><span class="co">##  [97] renv_1.0.7                    rtracklayer_1.62.0           </span></span>
-<span><span class="co">##  [99] bit_4.0.5                     tidyselect_1.2.1             </span></span>
-<span><span class="co">## [101] locfit_1.5-9.9                Biostrings_2.70.3            </span></span>
-<span><span class="co">## [103] gridExtra_2.3                 bookdown_0.39                </span></span>
-<span><span class="co">## [105] ProtGenerics_1.34.0           edgeR_4.0.16                 </span></span>
-<span><span class="co">## [107] xfun_0.44                     statmod_1.5.0                </span></span>
-<span><span class="co">## [109] stringi_1.8.4                 lazyeval_0.2.2               </span></span>
-<span><span class="co">## [111] yaml_2.3.8                    evaluate_0.23                </span></span>
-<span><span class="co">## [113] codetools_0.2-19              tibble_3.2.1                 </span></span>
-<span><span class="co">## [115] BiocManager_1.30.23           cli_3.6.2                    </span></span>
-<span><span class="co">## [117] xtable_1.8-4                  reticulate_1.37.0            </span></span>
-<span><span class="co">## [119] systemfonts_1.1.0             munsell_0.5.1                </span></span>
-<span><span class="co">## [121] jquerylib_0.1.4               zellkonverter_1.12.1         </span></span>
-<span><span class="co">## [123] Rcpp_1.0.12                   dir.expiry_1.10.0            </span></span>
-<span><span class="co">## [125] dbplyr_2.5.0                  png_0.1-8                    </span></span>
-<span><span class="co">## [127] XML_3.99-0.16.1               parallel_4.3.2               </span></span>
-<span><span class="co">## [129] pkgdown_2.0.9                 blob_1.2.4                   </span></span>
-<span><span class="co">## [131] basilisk.utils_1.14.1         prettyunits_1.2.0            </span></span>
-<span><span class="co">## [133] AnnotationFilter_1.26.0       sparseMatrixStats_1.14.0     </span></span>
-<span><span class="co">## [135] bitops_1.0-7                  viridisLite_0.4.2            </span></span>
-<span><span class="co">## [137] scales_1.3.0                  purrr_1.0.2                  </span></span>
-<span><span class="co">## [139] crayon_1.5.2                  rlang_1.1.3                  </span></span>
-<span><span class="co">## [141] cowplot_1.1.3                 KEGGREST_1.42.0</span></span></code></pre>
+<span><span class="co">##   [1] jsonlite_1.8.8           magrittr_2.0.3           ggbeeswarm_0.7.2        </span></span>
+<span><span class="co">##   [4] GenomicFeatures_1.57.0   gypsum_1.1.6             farver_2.1.2            </span></span>
+<span><span class="co">##   [7] rmarkdown_2.28           fs_1.6.4                 BiocIO_1.15.2           </span></span>
+<span><span class="co">##  [10] zlibbioc_1.51.1          ragg_1.3.2               vctrs_0.6.5             </span></span>
+<span><span class="co">##  [13] memoise_2.0.1            Rsamtools_2.21.1         RCurl_1.98-1.16         </span></span>
+<span><span class="co">##  [16] htmltools_0.5.8.1        S4Arrays_1.5.7           AnnotationHub_3.13.3    </span></span>
+<span><span class="co">##  [19] curl_5.2.2               BiocNeighbors_1.23.0     Rhdf5lib_1.27.0         </span></span>
+<span><span class="co">##  [22] SparseArray_1.5.31       rhdf5_2.49.0             sass_0.4.9              </span></span>
+<span><span class="co">##  [25] alabaster.base_1.5.5     bslib_0.8.0              htmlwidgets_1.6.4       </span></span>
+<span><span class="co">##  [28] basilisk_1.17.2          desc_1.4.3               alabaster.sce_1.5.1     </span></span>
+<span><span class="co">##  [31] httr2_1.0.3              cachem_1.1.0             GenomicAlignments_1.41.0</span></span>
+<span><span class="co">##  [34] igraph_2.0.3             lifecycle_1.0.4          pkgconfig_2.0.3         </span></span>
+<span><span class="co">##  [37] rsvd_1.0.5               Matrix_1.7-0             R6_2.5.1                </span></span>
+<span><span class="co">##  [40] fastmap_1.2.0            GenomeInfoDbData_1.2.12  digest_0.6.37           </span></span>
+<span><span class="co">##  [43] colorspace_2.1-1         AnnotationDbi_1.67.0     dqrng_0.4.1             </span></span>
+<span><span class="co">##  [46] irlba_2.3.5.1            ExperimentHub_2.13.1     textshaping_0.4.0       </span></span>
+<span><span class="co">##  [49] RSQLite_2.3.7            beachmat_2.21.5          labeling_0.4.3          </span></span>
+<span><span class="co">##  [52] filelock_1.0.3           fansi_1.0.6              httr_1.4.7              </span></span>
+<span><span class="co">##  [55] abind_1.4-5              compiler_4.4.1           withr_3.0.1             </span></span>
+<span><span class="co">##  [58] bit64_4.0.5              BiocParallel_1.39.0      viridis_0.6.5           </span></span>
+<span><span class="co">##  [61] DBI_1.2.3                highr_0.11               HDF5Array_1.33.6        </span></span>
+<span><span class="co">##  [64] alabaster.ranges_1.5.2   alabaster.schemas_1.5.0  rappdirs_0.3.3          </span></span>
+<span><span class="co">##  [67] DelayedArray_0.31.11     rjson_0.2.22             bluster_1.15.0          </span></span>
+<span><span class="co">##  [70] tools_4.4.1              vipor_0.4.7              beeswarm_0.4.0          </span></span>
+<span><span class="co">##  [73] glue_1.7.0               restfulr_0.0.15          rhdf5filters_1.17.0     </span></span>
+<span><span class="co">##  [76] grid_4.4.1               Rtsne_0.17               cluster_2.1.6           </span></span>
+<span><span class="co">##  [79] generics_0.1.3           gtable_0.3.5             ensembldb_2.29.1        </span></span>
+<span><span class="co">##  [82] metapod_1.13.0           BiocSingular_1.21.2      ScaledMatrix_1.13.0     </span></span>
+<span><span class="co">##  [85] utf8_1.2.4               XVector_0.45.0           ggrepel_0.9.5           </span></span>
+<span><span class="co">##  [88] BiocVersion_3.20.0       pillar_1.9.0             limma_3.61.9            </span></span>
+<span><span class="co">##  [91] dplyr_1.1.4              BiocFileCache_2.13.0     lattice_0.22-6          </span></span>
+<span><span class="co">##  [94] rtracklayer_1.65.0       bit_4.0.5                tidyselect_1.2.1        </span></span>
+<span><span class="co">##  [97] locfit_1.5-9.10          Biostrings_2.73.1        gridExtra_2.3           </span></span>
+<span><span class="co">## [100] bookdown_0.40            ProtGenerics_1.37.1      edgeR_4.3.11            </span></span>
+<span><span class="co">## [103] xfun_0.47                statmod_1.5.0            UCSC.utils_1.1.0        </span></span>
+<span><span class="co">## [106] lazyeval_0.2.2           yaml_2.3.10              evaluate_0.24.0         </span></span>
+<span><span class="co">## [109] codetools_0.2-20         tibble_3.2.1             alabaster.matrix_1.5.5  </span></span>
+<span><span class="co">## [112] BiocManager_1.30.24      cli_3.6.3                reticulate_1.38.0       </span></span>
+<span><span class="co">## [115] systemfonts_1.1.0        munsell_0.5.1            jquerylib_0.1.4         </span></span>
+<span><span class="co">## [118] zellkonverter_1.15.1     Rcpp_1.0.13              dir.expiry_1.13.0       </span></span>
+<span><span class="co">## [121] dbplyr_2.5.0             png_0.1-8                XML_3.99-0.17           </span></span>
+<span><span class="co">## [124] parallel_4.4.1           pkgdown_2.1.0            blob_1.2.4              </span></span>
+<span><span class="co">## [127] basilisk.utils_1.17.2    AnnotationFilter_1.29.0  bitops_1.0-8            </span></span>
+<span><span class="co">## [130] viridisLite_0.4.2        alabaster.se_1.5.3       scales_1.3.0            </span></span>
+<span><span class="co">## [133] crayon_1.5.3             rlang_1.1.4              cowplot_1.1.3           </span></span>
+<span><span class="co">## [136] KEGGREST_1.45.1</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
@@ -531,9 +511,7 @@ Transcriptome, from Spermatogonial Stem Cells to Spermatids.”</span>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
@@ -546,16 +524,16 @@ Transcriptome, from Spermatogonial Stem Cells to Spermatids.”</span>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
       </footer>
 </div>
 
-  
 
 
-  
+
+
 
   </body>
 </html>
