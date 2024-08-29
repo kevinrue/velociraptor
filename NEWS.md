@@ -1,3 +1,8 @@
+# velociraptor 1.15.6
+
+* Update Conda environment to use `anaconda` channel on Linux.
+  Passed GitHub Action <https://github.com/kevinrue/velociraptor/actions/runs/10612115572/job/29413105915>.
+
 # velociraptor 1.15.5
 
 * Update Conda environment to `svelo==0.3.2` on Linux. 
