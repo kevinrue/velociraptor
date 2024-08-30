@@ -160,7 +160,6 @@
 
 .scvelo.dependencies.MacOSXArm <- list(
   channels = c("conda-forge", "bioconda"),
-  pip = character(0),
   packages = c(
     'absl-py==2.1.0',
     'anndata==0.10.7',
