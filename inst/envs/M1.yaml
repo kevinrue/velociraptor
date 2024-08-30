@@ -159,7 +159,7 @@ dependencies:
 - rich=13.7.1=pyhd8ed1ab_0
 - scanpy=1.10.2=pyhd8ed1ab_0
 - scikit-learn=1.1.3=py311hba7d9bc_1
-- scipy=1.14.1=py311h2929bc6_0
+- scipy=1.13.1=py311hceeca8c_0
 - scvelo=0.3.2=pyhd8ed1ab_1
 - scvi-tools=1.1.6=pyhd8ed1ab_1
 - seaborn=0.13.2=hd8ed1ab_2

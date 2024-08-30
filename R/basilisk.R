@@ -159,7 +159,7 @@
 ## MacOSXArm ----
 
 .scvelo.dependencies.MacOSXArm <- list(
-  channels = c("conda-forge", "bioconda"),
+  channels = c("conda-forge"),
   packages = c(
     'absl-py==2.1.0',
     'anndata==0.10.9',
@@ -318,7 +318,7 @@
     'rich==13.7.1',
     'scanpy==1.10.2',
     'scikit-learn==1.1.3',
-    'scipy==1.14.1',
+    'scipy==1.13.1',
     'scvelo==0.3.2',
     'scvi-tools==1.1.6',
     'seaborn==0.13.2',
