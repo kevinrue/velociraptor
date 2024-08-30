@@ -9,7 +9,12 @@ dependencies:
   - ca-certificates=2024.7.4=h56e8100_0
   - cached_property=1.5.2=pyha770c72_1
   - freetype=2.12.1=hdaf720e_2
+  - glib=2.80.3=h7025463_2
+  - glib-tools=2.80.3=h4394cf3_2
+  - gst-plugins-base=1.24.6=hb0a98b8_0
+  - gstreamer=1.24.6=h5006eae_0
   - hdf5=1.14.3=nompi_h2b43c12_105
+  - icu=73.2=h63175ca_0
   - intel-openmp=2024.2.1=h57928b3_1083
   - krb5=1.21.3=hdf4eb48_0
   - lcms2=2.16=h67d730c_0
@@ -20,18 +25,24 @@ dependencies:
   - libbrotlidec=1.1.0=hcfcfb64_1
   - libbrotlienc=1.1.0=hcfcfb64_1
   - libcblas=3.9.0=23_win64_mkl
+  - libclang13=18.1.8=default_ha5278ca_3
   - libcurl=8.9.1=h18fefc2_0
   - libdeflate=1.21=h2466b09_0
   - libexpat=2.6.2=h63175ca_0
   - libffi=3.4.2=h8ffe710_5
+  - libglib=2.80.3=h7025463_2
   - libhwloc=2.11.1=default_h8125262_1000
   - libiconv=1.17=hcfcfb64_2
+  - libintl=0.22.5=h5728263_3
+  - libintl-devel=0.22.5=h5728263_3
   - libjpeg-turbo=3.0.0=hcfcfb64_1
   - liblapack=3.9.0=23_win64_mkl
+  - libogg=1.3.5=h2466b09_0
   - libpng=1.6.43=h19919ed_0
   - libsqlite=3.46.0=h2466b09_0
   - libssh2=1.11.0=h7dfc565_0
   - libtiff=4.6.0=hb151862_4
+  - libvorbis=1.3.7=h0e60522_0
   - libwebp-base=1.4.0=hcfcfb64_0
   - libxcb=1.16=h013a479_1
   - libxml2=2.12.7=h0f24e4e_4
@@ -41,18 +52,20 @@ dependencies:
   - m2w64-gcc-libs-core=5.3.0=7
   - m2w64-gmp=6.1.0=2
   - m2w64-libwinpthread-git=5.0.0.4634.697f757=2
-  - matplotlib-base=3.9.2=py312h90004f6_0
+  - matplotlib-base=3.7.3=py311h6e989c2_0
   - mkl=2024.1.0=h66d3029_694
   - msys2-conda-epoch=20160418=1
   - numpy_groupies=0.11.2=pyhd8ed1ab_0
   - openjpeg=2.5.2=h3d672ee_0
   - openssl=3.3.1=h2466b09_3
+  - pcre2=10.44=h3d7b363_2
   - pthread-stubs=0.4=hcd874cb_1001
   - pthreads-win32=2.9.1=hfa6e2cd_3
-  - python=3.12.5=h889d299_0_cpython
+  - pyqt=5.15.9=py311h125bc19_5
+  - python=3.11.9=h631f459_0_cpython
   - python-tzdata=2024.1=pyhd8ed1ab_0
-  - python_abi=3.12=5_cp312
-  - qhull=2020.2=hc790b64_5
+  - python_abi=3.11=5_cp311
+  - qt-main=5.15.8=h06adc49_23
   - seaborn-base=0.13.2=pyhd8ed1ab_2
   - tbb=2021.12.0=hc790b64_4
   - tk=8.6.13=h5226925_1
@@ -83,7 +96,7 @@ dependencies:
     - legacy-api-wrap==1.4
     - llvmlite==0.43.0
     - loompy==3.0.6
-    - matplotlib==3.9.2
+    - matplotlib==3.7.3
     - munkres==1.1.4
     - natsort==8.4.0
     - networkx==3.3
@@ -95,8 +108,11 @@ dependencies:
     - patsy==0.5.6
     - pillow==10.4.0
     - pip==24.2
+    - ply==3.11
     - pynndescent==0.5.13
     - pyparsing==3.1.4
+    - pyqt5==5.15.9
+    - pyqt5-sip==12.12.2
     - python-dateutil==2.9.0
     - pytz==2024.1
     - scanpy==1.10.2
@@ -106,10 +122,14 @@ dependencies:
     - seaborn==0.13.2
     - session-info==1.0.0
     - setuptools==72.2.0
+    - sip==6.7.12
     - six==1.16.0
     - statsmodels==0.14.2
     - stdlib-list==0.10.0
     - threadpoolctl==3.5.0
+    - toml==0.10.2
+    - tomli==2.0.1
+    - tornado==6.4.1
     - tqdm==4.66.5
     - typing-extensions==4.12.2
     - tzdata==2024.1
