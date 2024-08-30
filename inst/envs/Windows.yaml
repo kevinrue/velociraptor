@@ -9,7 +9,6 @@ dependencies:
 - brotli-bin=1.1.0=hcfcfb64_1
 - brotli-python=1.1.0=py38hd3f51b4_1
 - bzip2=1.0.8=h2466b09_7
-- c-blosc2=2.12.0=h183a6f4_0
 - ca-certificates=2024.7.4=h56e8100_0
 - cached-property=1.5.2=hd8ed1ab_1
 - cached_property=1.5.2=pyha770c72_1
@@ -26,8 +25,8 @@ dependencies:
 - gst-plugins-base=1.24.6=hb0a98b8_0
 - gstreamer=1.24.6=h5006eae_0
 - h2=4.1.0=pyhd8ed1ab_0
-- h5py=3.11.0=nompi_py38hd93224d_102
-- hdf5=1.14.3=nompi_h2b43c12_105
+- h5py=3.8.0=nompi_py38h442309b_101
+- hdf5=1.14.0=nompi_h918d9b7_103
 - hpack=4.0.0=pyh9f0ad1d_0
 - hyperframe=6.0.1=pyhd8ed1ab_0
 - icu=73.2=h63175ca_0
@@ -69,7 +68,7 @@ dependencies:
 - libxcb=1.16=h013a479_1
 - libxml2=2.12.7=h0f24e4e_4
 - libzlib=1.3.1=h2466b09_1
-- llvmlite=0.41.1=py38h19421c1_0
+- llvmlite=0.39.1=py38h19421c1_1
 - loompy=2.0.16=py_0
 - lz4-c=1.9.4=hcfcfb64_0
 - m2w64-gcc-libgfortran=5.3.0=6
@@ -85,9 +84,9 @@ dependencies:
 - munkres=1.0.7=py_1
 - natsort=8.4.0=pyhd8ed1ab_0
 - networkx=3.1=pyhd8ed1ab_0
-- numba=0.58.1=py38h4a59444_0
+- numba=0.56.4=py38h3873db4_0
 - numexpr=2.7.3=py38h5d928e2_2
-- numpy=1.24.4=py38h1d91fd2_0
+- numpy=1.21.1=py38h09042cb_0
 - openjpeg=2.5.2=h3d672ee_0
 - openssl=3.3.1=h2466b09_3
 - packaging=24.1=pyhd8ed1ab_0
@@ -101,14 +100,13 @@ dependencies:
 - pooch=1.8.2=pyhd8ed1ab_0
 - pthread-stubs=0.4=hcd874cb_1001
 - pthreads-win32=2.9.1=hfa6e2cd_3
-- py-cpuinfo=9.0.0=pyhd8ed1ab_0
 - pycparser=2.22=pyhd8ed1ab_0
 - pynndescent=0.5.13=pyhff2d567_0
 - pyparsing=3.1.4=pyhd8ed1ab_0
 - pyqt=5.15.9=py38hd6c051e_5
 - pyqt5-sip=12.12.2=py38hd3f51b4_5
 - pysocks=1.7.1=pyh0701188_6
-- pytables=3.8.0=py38h4c0c689_4
+- pytables=3.7.0=py38hdec0819_4
 - python=3.8.19=h4de0772_0_cpython
 - python-dateutil=2.9.0=pyhd8ed1ab_0
 - python_abi=3.8=5_cp38
@@ -116,8 +114,8 @@ dependencies:
 - qt-main=5.15.8=h06adc49_23
 - requests=2.32.3=pyhd8ed1ab_0
 - scanpy=1.7.2=pyhdfd78af_0
-- scikit-learn=1.3.2=py38h4f736e5_2
-- scipy=1.10.1=py38h1aea9ed_3
+- scikit-learn=1.2.2=py38h42e183d_1
+- scipy=1.10.1=py38h0f6ee2a_0
 - scvelo=0.2.5=pyhdfd78af_0
 - seaborn=0.13.2=hd8ed1ab_2
 - seaborn-base=0.13.2=pyhd8ed1ab_2
@@ -128,7 +126,7 @@ dependencies:
 - sip=6.7.12=py38hd3f51b4_0
 - six=1.16.0=pyh6c4a22f_0
 - snappy=1.2.1=h23299a8_0
-- statsmodels=0.14.1=py38he7056a7_0
+- statsmodels=0.13.5=py38hbaf524b_2
 - stdlib-list=0.10.0=pyhd8ed1ab_0
 - tbb=2021.12.0=hc790b64_4
 - threadpoolctl=3.5.0=pyhc1e730c_0
@@ -153,6 +151,5 @@ dependencies:
 - xorg-libxdmcp=1.1.3=hcd874cb_0
 - xz=5.2.6=h8d14728_0
 - zipp=3.20.1=pyhd8ed1ab_0
-- zlib-ng=2.0.7=hcfcfb64_0
 - zstandard=0.23.0=py38hf92978b_0
 - zstd=1.5.6=h0ea2cb4_0
