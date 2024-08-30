@@ -91,7 +91,7 @@ dependencies:
 - openjpeg=2.5.2=h3d672ee_0
 - openssl=3.3.1=h2466b09_3
 - packaging=24.1=pyhd8ed1ab_0
-- pandas=2.0.3=py38hf08cf0d_1
+- pandas=1.5.2=py38h5846ac1_2
 - patsy=0.5.6=pyhd8ed1ab_0
 - pcre2=10.44=h3d7b363_2
 - pillow=10.4.0=py38h8d10685_0
@@ -111,7 +111,6 @@ dependencies:
 - pytables=3.8.0=py38h4c0c689_4
 - python=3.8.19=h4de0772_0_cpython
 - python-dateutil=2.9.0=pyhd8ed1ab_0
-- python-tzdata=2024.1=pyhd8ed1ab_0
 - python_abi=3.8=5_cp38
 - pytz=2024.1=pyhd8ed1ab_0
 - qt-main=5.15.8=h06adc49_23
