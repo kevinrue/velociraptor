@@ -147,7 +147,7 @@ jobs:
           brew install gdal
           
           ## Temporary fix for freetype (https://github.com/r-lib/ragg/issues/170)
-          brew upgrade freetype
+          curl -L https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb > freetype.rb && brew install freetype.rb && rm freetype.rb
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
