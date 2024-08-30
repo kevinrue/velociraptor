@@ -1,6 +1,10 @@
+# velociraptor 1.15.8
+
+* Update Conda environment using micromamba for MacOSX Arm.
+
 # velociraptor 1.15.7
 
-* Update Conda environment using micromamba for Windows. 
+* Update Conda environment using micromamba for Windows.
 
 # velociraptor 1.15.6
 
