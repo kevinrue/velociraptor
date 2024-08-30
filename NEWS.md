@@ -1,3 +1,7 @@
+# velociraptor 1.15.7
+
+* Update Conda environment using micromamba for Windows. 
+
 # velociraptor 1.15.6
 
 * Update Conda environment to use `anaconda` channel on Linux.
