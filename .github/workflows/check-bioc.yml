@@ -145,6 +145,9 @@ jobs:
 
           ## Required for terra
           brew install gdal
+          
+          ## Temporary fix for freetype (https://github.com/r-lib/ragg/issues/170)
+          brew upgrade freetype
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
