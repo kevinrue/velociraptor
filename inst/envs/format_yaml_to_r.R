@@ -1,5 +1,5 @@
 library(yaml)
-yaml_data <- yaml::read_yaml("Windows.yaml")
+yaml_data <- yaml::read_yaml("inst/envs/M1.yaml")
 r_data <- gsub("([[:alnum:]_]+)=([[:alnum:].]+)=.+", "\\1==\\2" , yaml_data$dependencies)
 cat(paste0(
   "c(",
