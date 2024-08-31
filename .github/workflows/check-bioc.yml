@@ -187,13 +187,16 @@ jobs:
           gha_repos <- if(
               .Platform$OS.type == "unix" && Sys.info()["sysname"] != "Darwin"
           ) c(
-              "AnVIL" = "https://bioconductordocker.blob.core.windows.net/packages/3.17/bioc",
+              "AnVIL" = "https://bioconductordocker.blob.core.windows.net/packages/3.20/bioc",
               BiocManager::repositories()
               ) else BiocManager::repositories()
 
           ## For running the checks
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
           install.packages(c("rcmdcheck", "BiocCheck"), repos = gha_repos)
+          
+          ## For udunits bindings
+          install.packages(c("udunits2"), repos = gha_repos)
 
           ## Pass #1 at installing dependencies
           ## This pass uses AnVIL-powered fast binaries
