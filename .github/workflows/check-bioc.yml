@@ -140,6 +140,15 @@ jobs:
           then
             cat ~/.R/Makevars
           fi
+      
+      - name: Install and run tree
+        run: |
+          if [ ! -d ~/.R ]
+          then
+            mkdir ~/.R
+          fi
+          echo "CFLAGS += -I/opt/homebrew/Cellar/udunits/2.2.28/include -L /opt/homebrew/Cellar/udunits/2.2.28/lib\n" >> ~/.R/Makevars
+          echo "CPPFLAGS += -I/opt/homebrew/Cellar/udunits/2.2.28/include -L /opt/homebrew/Cellar/udunits/2.2.28/lib\n" >> ~/.R/Makevars
 
       - name: Install units
         run: |
