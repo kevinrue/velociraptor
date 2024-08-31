@@ -129,12 +129,14 @@ jobs:
       
       - name: Install and run tree
         run: |
-          brew install tree
-          tree ~
+          if [ -d ~/.R ]
+          then
+            ls -a ~/.R
+          fi
       
       - name: Install and run tree
         run: |
-          if [ ! -f ~/.R/Makevars ]
+          if [ -f ~/.R/Makevars ]
           then
             cat ~/.R/Makevars
           fi
