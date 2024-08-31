@@ -150,6 +150,9 @@ jobs:
           #brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb
           brew unlink freetype
           curl -L https://raw.githubusercontent.com/Homebrew/homebrew-core/3db6dc6c4baf5a75e345f380cc4e8224c1ae5ae0/Formula/f/freetype.rb > freetype.rb && brew install freetype.rb
+          
+          ## Required for units
+          brew install udunits
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
