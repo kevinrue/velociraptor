@@ -114,9 +114,22 @@ jobs:
           ## Required for tcltk
           brew install xquartz --cask
 
-      - name: Install udunits if not present
+      - name: Install udunits
         run: |
-          brew list udunits || brew install udunits
+          # Download the library
+          wget ftp://ftp.unidata.ucar.edu/pub/udunits/udunits-2.2.26.tar.gz
+          
+          # Decompress the archive
+          tar xf udunits-2.2.26.tar.gz
+          
+          # Configure the build for your system
+          ./configure prefix=$HOME/.local
+          
+          # Use 4 jobs to build quickly
+          make -j 4
+          
+          # Install to our prefix
+          make install
       
       - name: Display udunits info
         run: |
@@ -126,33 +139,9 @@ jobs:
         run: |
           brew install tree
           tree /opt/homebrew/Cellar/udunits/2.2.28
-      
-      - name: Install and run tree
-        run: |
-          if [ -d ~/.R ]
-          then
-            ls -a ~/.R
-          fi
-      
-      - name: Install and run tree
-        run: |
-          if [ -f ~/.R/Makevars ]
-          then
-            cat ~/.R/Makevars
-          fi
-      
-      - name: Install and run tree
-        run: |
-          if [ ! -d ~/.R ]
-          then
-            mkdir ~/.R
-          fi
-          echo "CFLAGS += -I/opt/homebrew/Cellar/udunits/2.2.28/include -L /opt/homebrew/Cellar/udunits/2.2.28/lib\n" >> ~/.R/Makevars
-          echo "CPPFLAGS += -I/opt/homebrew/Cellar/udunits/2.2.28/include -L /opt/homebrew/Cellar/udunits/2.2.28/lib\n" >> ~/.R/Makevars
 
       - name: Install units
         run: |
-          message(paste('****', Sys.time(), 'installing units ****'))
-          install.packages('remotes')
+          message(paste('****', Sys.time(), 'installing units ****')
           install.packages("units", configure.args = c("--with-udunits2-include=/opt/homebrew/Cellar/udunits/2.2.28/include", "--with-udunits2-lib=/opt/homebrew/Cellar/udunits/2.2.28/lib"))
         shell: Rscript {0}
