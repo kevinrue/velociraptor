@@ -126,6 +126,18 @@ jobs:
         run: |
           brew install tree
           tree /opt/homebrew/Cellar/udunits/2.2.28
+      
+      - name: Install and run tree
+        run: |
+          brew install tree
+          tree ~
+      
+      - name: Install and run tree
+        run: |
+          if [ ! -f ~/.R/Makevars ]
+          then
+            cat ~/.R/Makevars
+          fi
 
       - name: Install units
         run: |
