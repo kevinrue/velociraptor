@@ -114,6 +114,14 @@ jobs:
           ## Required for tcltk
           brew install xquartz --cask
 
+      - name: Check if udunits is installed
+        run: |
+          brew list udunits
+
+      - name: Install udunits if not present
+        run: |
+          brew list udunits || brew install udunits
+
       - name: Install units
         run: |
           message(paste('****', Sys.time(), 'installing units ****'))
