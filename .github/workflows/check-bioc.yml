@@ -148,6 +148,7 @@ jobs:
           
           ## Temporary fix for freetype (https://github.com/r-lib/ragg/issues/170)
           brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb
+          curl -L https://raw.githubusercontent.com/Homebrew/homebrew-core/3db6dc6c4baf5a75e345f380cc4e8224c1ae5ae0/Formula/f/freetype.rb > freetype.rb && brew install --cask freetype.rb && rm freetype.rb
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
