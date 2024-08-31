@@ -118,5 +118,6 @@ jobs:
         run: |
           message(paste('****', Sys.time(), 'installing units ****'))
           #install.packages("units", configure.args = c("/opt/include", "--with-udunits2-lib=/opt/lib"))
-          install.packages("units", type = "mac.binary")
+          #install.packages("units", type = "mac.binary")
+          install.packages('https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.4/units_0.8-5.tgz')
         shell: Rscript {0}
