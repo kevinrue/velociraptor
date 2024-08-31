@@ -117,30 +117,16 @@ jobs:
       - name: Install udunits
         run: |
           # Download the library
-          curl -L -o v2.2.26.tar.gz https://github.com/Unidata/UDUNITS-2/archive/refs/tags/v2.2.26.tar.gz
+          curl -O https://downloads.unidata.ucar.edu/udunits/2.2.28/udunits-2.2.28.tar.gz
           
-          # Decompress the archive
-          tar xf v2.2.26.tar.gz
-          
-          cd UDUNITS-2-2.2.26
-          
-          # Configure the build for your system
-          #./configure.ac prefix=$HOME/.local
-          
-          # Use 4 jobs to build quickly
-          #make -j 4
-          
-          # Install to our prefix
-          make install
-      
-      # - name: Display udunits info
-      #   run: |
-      #     brew info udunits
-      
-      # - name: Install and run tree
-      #   run: |
-      #     brew install tree
-      #     tree /opt/homebrew/Cellar/udunits/2.2.28
+          # Unpack the distribution in an appropriate place.
+          cd /opt
+          sudo pax -rz < ~/udunits-2.2.28.tar.gz
+
+          # Build and install the package.
+          cd udunits-2.2.28
+          ./configure >& configure.log
+          make all install
 
       - name: Install units
         run: |
