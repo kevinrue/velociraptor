@@ -118,12 +118,13 @@ jobs:
         run: |
           brew list udunits || brew install udunits
       
-      - name: Install udunits if not present
+      - name: Display udunits info
         run: |
           brew info udunits
       
-      - name: Install udunits if not present
+      - name: Install and run tree
         run: |
+          brew install tree
           tree /opt/homebrew/Cellar/udunits/2.2.28
 
       - name: Install units
