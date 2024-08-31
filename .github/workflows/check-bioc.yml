@@ -150,9 +150,12 @@ jobs:
           #brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb
           brew unlink freetype
           curl -L https://raw.githubusercontent.com/Homebrew/homebrew-core/3db6dc6c4baf5a75e345f380cc4e8224c1ae5ae0/Formula/f/freetype.rb > freetype.rb && brew install freetype.rb
-          
-          ## Required for units
-          brew install udunits
+
+      - name: Install binary units for macOS
+        if: matrix.config.os == 'macOS-latest'
+        run: |
+          install.packages('https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.4/units_0.8-5.tgz')
+        shell: Rscript {0}
 
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
@@ -194,9 +197,6 @@ jobs:
           ## For running the checks
           message(paste('****', Sys.time(), 'installing rcmdcheck and BiocCheck ****'))
           install.packages(c("rcmdcheck", "BiocCheck"), repos = gha_repos)
-          
-          ## For udunits bindings
-          install.packages(c("udunits2"), repos = gha_repos)
 
           ## Pass #1 at installing dependencies
           ## This pass uses AnVIL-powered fast binaries
