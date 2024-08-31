@@ -127,8 +127,8 @@ jobs:
 
           # Build and install the package.
           cd udunits-2.2.28
-          ./configure
-          make all install
+          sudo ./configure
+          sudo make all install
 
       - name: Install units
         run: |
