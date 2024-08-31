@@ -128,7 +128,7 @@ jobs:
           #./configure.ac prefix=$HOME/.local
           
           # Use 4 jobs to build quickly
-          make -j 4
+          #make -j 4
           
           # Install to our prefix
           make install
