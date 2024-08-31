@@ -117,6 +117,10 @@ jobs:
       - name: Install udunits if not present
         run: |
           brew list udunits || brew install udunits
+      
+      - name: Install udunits if not present
+        run: |
+          brew info udunits
 
       - name: Install units
         run: |
