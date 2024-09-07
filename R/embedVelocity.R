@@ -25,7 +25,7 @@
 #'
 #' @author Aaron Lun
 #' @examples
-#' example(scvelo, echo=FALSE) # recycling that example.
+#' out <- run_scvelo_example()
 #'
 #' # Making up a new embedding.
 #' tsne.results <- matrix(rnorm(2*ncol(out)), ncol=2)

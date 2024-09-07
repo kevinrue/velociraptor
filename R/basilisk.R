@@ -353,7 +353,11 @@
     'yaml==0.2.5',
     'zipp==3.20.1',
     'zstandard==0.23.0',
-    'zstd==1.5.6'
+    'zstd==1.5.6',
+    # loky
+    "psutil==6.0.0",
+    "cloudpickle==3.0.0",
+    "loky==3.4.1"
   )
 )
 

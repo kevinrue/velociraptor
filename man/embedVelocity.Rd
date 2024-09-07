@@ -41,7 +41,7 @@ The resulting matrix is then used to compute a weighted average of the positions
 allowing us to compute a velocity in the low-dimensional embedding.
 }
 \examples{
-example(scvelo, echo=FALSE) # recycling that example.
+out <- run_scvelo_example()
 
 # Making up a new embedding.
 tsne.results <- matrix(rnorm(2*ncol(out)), ncol=2)

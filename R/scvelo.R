@@ -262,6 +262,10 @@ NULL
     do.call(scv$pp$moments, c(list(data=adata), scvelo.params$moments))
 
     if (mode=="dynamical") {
+        if (is.null(scvelo.params$recover_dynamics)) {
+            scvelo.params$recover_dynamics <- list()
+        }
+        scvelo.params$recover_dynamics$show_progress_bar <- FALSE
         do.call(scv$tl$recover_dynamics, c(list(data=adata), scvelo.params$recover_dynamics))
     }
 
@@ -310,3 +314,25 @@ setMethod("scvelo", "SingleCellExperiment", function(x, ..., sf.X=sizeFactors(x)
     }
     callNextMethod(x, ..., sf.X=sf.X, dimred=dimred)
 })
+
+#' Run scvelo() example
+#'
+#' This function is a hotfix for an issue running example code during
+#' `R CMD check`.
+#'
+#' @return The output of `scvelo()`.
+#' @export
+#' @importFrom scuttle mockSCE
+#'
+#' @examples
+#' run_scvelo_example()
+run_scvelo_example <- function() {
+  sce1 <- mockSCE()
+  sce2 <- mockSCE()
+
+  spliced <- counts(sce1)
+  unspliced <- counts(sce2)
+
+  out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
+  out
+}
