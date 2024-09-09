@@ -216,6 +216,11 @@ jobs:
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE, force = TRUE)
         shell: Rscript {0}
 
+      - name: Install reticulate patch
+        run: |
+          remotes::install_github("rstudio/reticulate")
+        shell: Rscript {0}
+
       - name: Install BiocGenerics
         if:  env.has_RUnit == 'true'
         run: |
