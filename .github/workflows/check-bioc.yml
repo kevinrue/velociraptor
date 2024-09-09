@@ -217,7 +217,6 @@ jobs:
         shell: Rscript {0}
 
       - name: Install reticulate patch
-        if: github.ref == 'refs/heads/devel'
         run: |
           remotes::install_github("rstudio/reticulate")
         shell: Rscript {0}
