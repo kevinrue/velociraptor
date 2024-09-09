@@ -1,3 +1,8 @@
+# velociraptor 1.15.9
+
+* Update Conda environment for Linux and MacOSX Arm.
+* Patch GitHub Action to use GitHub version of `remotes`.
+
 # velociraptor 1.15.8
 
 * Update Conda environment using micromamba for MacOSX Arm.
