@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.9</span>
       </span>
     </div>
 
@@ -192,8 +192,7 @@ reproduce earlier results.</p>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
 <span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
-<span><span class="co">## WARNING: Unable to create progress bar. Consider installing `tqdm` as `pip install tqdm` and `ipywidgets` as `pip install ipywidgets`,</span></span>
-<span><span class="co">## or disable the progress bar using `show_progress_bar=False`.</span></span>
+<span><span class="co">##   0%|          | 0/500 [00:00&lt;?, ?cells/s]</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -291,6 +290,7 @@ in <code><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="exter
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
 <span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
+<span><span class="co">##   0%|          | 0/500 [00:00&lt;?, ?cells/s]</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -334,9 +334,10 @@ case, arguments like <code>subset.row=</code> are simply ignored.</p>
 <span><span class="co">##     finished (0:00:01) --&gt; added </span></span>
 <span><span class="co">##     'Ms' and 'Mu', moments of un/spliced abundances (adata.layers)</span></span>
 <span><span class="co">## computing velocities</span></span>
-<span><span class="co">##     finished (0:00:01) --&gt; added </span></span>
+<span><span class="co">##     finished (0:00:02) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
 <span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
+<span><span class="co">##   0%|          | 0/500 [00:00&lt;?, ?cells/s]</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -378,6 +379,7 @@ example, to tinker with the behavior of the
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity', velocity vectors for each individual cell (adata.layers)</span></span>
 <span><span class="co">## computing velocity graph (using 1/4 cores)</span></span>
+<span><span class="co">##   0%|          | 0/500 [00:00&lt;?, ?cells/s]</span></span>
 <span><span class="co">##     finished (0:00:00) --&gt; added </span></span>
 <span><span class="co">##     'velocity_graph', sparse matrix with cosine correlations (adata.uns)</span></span>
 <span><span class="co">## computing terminal states</span></span>
@@ -437,13 +439,13 @@ example, to tinker with the behavior of the
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] scater_1.33.4               ggplot2_3.5.1              </span></span>
-<span><span class="co">##  [3] velociraptor_1.15.8         scran_1.33.1               </span></span>
+<span><span class="co">##  [3] velociraptor_1.15.9         scran_1.33.2               </span></span>
 <span><span class="co">##  [5] scuttle_1.15.4              scRNAseq_2.19.1            </span></span>
 <span><span class="co">##  [7] SingleCellExperiment_1.27.2 SummarizedExperiment_1.35.1</span></span>
 <span><span class="co">##  [9] Biobase_2.65.1              GenomicRanges_1.57.1       </span></span>
 <span><span class="co">## [11] GenomeInfoDb_1.41.1         IRanges_2.39.2             </span></span>
-<span><span class="co">## [13] S4Vectors_0.43.2            BiocGenerics_0.51.0        </span></span>
-<span><span class="co">## [15] MatrixGenerics_1.17.0       matrixStats_1.3.0          </span></span>
+<span><span class="co">## [13] S4Vectors_0.43.2            BiocGenerics_0.51.1        </span></span>
+<span><span class="co">## [15] MatrixGenerics_1.17.0       matrixStats_1.4.1          </span></span>
 <span><span class="co">## [17] knitr_1.48                  BiocStyle_2.33.1           </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
@@ -453,7 +455,7 @@ example, to tinker with the behavior of the
 <span><span class="co">##  [10] zlibbioc_1.51.1          ragg_1.3.2               vctrs_0.6.5             </span></span>
 <span><span class="co">##  [13] memoise_2.0.1            Rsamtools_2.21.1         RCurl_1.98-1.16         </span></span>
 <span><span class="co">##  [16] htmltools_0.5.8.1        S4Arrays_1.5.7           AnnotationHub_3.13.3    </span></span>
-<span><span class="co">##  [19] curl_5.2.2               BiocNeighbors_1.23.0     Rhdf5lib_1.27.0         </span></span>
+<span><span class="co">##  [19] curl_5.2.2               BiocNeighbors_1.99.0     Rhdf5lib_1.27.0         </span></span>
 <span><span class="co">##  [22] SparseArray_1.5.31       rhdf5_2.49.0             sass_0.4.9              </span></span>
 <span><span class="co">##  [25] alabaster.base_1.5.6     bslib_0.8.0              htmlwidgets_1.6.4       </span></span>
 <span><span class="co">##  [28] basilisk_1.17.2          desc_1.4.3               alabaster.sce_1.5.1     </span></span>
@@ -463,28 +465,28 @@ example, to tinker with the behavior of the
 <span><span class="co">##  [40] fastmap_1.2.0            GenomeInfoDbData_1.2.12  digest_0.6.37           </span></span>
 <span><span class="co">##  [43] colorspace_2.1-1         AnnotationDbi_1.67.0     dqrng_0.4.1             </span></span>
 <span><span class="co">##  [46] irlba_2.3.5.1            ExperimentHub_2.13.1     textshaping_0.4.0       </span></span>
-<span><span class="co">##  [49] RSQLite_2.3.7            beachmat_2.21.5          labeling_0.4.3          </span></span>
+<span><span class="co">##  [49] RSQLite_2.3.7            beachmat_2.21.6          labeling_0.4.3          </span></span>
 <span><span class="co">##  [52] filelock_1.0.3           fansi_1.0.6              httr_1.4.7              </span></span>
 <span><span class="co">##  [55] abind_1.4-5              compiler_4.4.1           withr_3.0.1             </span></span>
 <span><span class="co">##  [58] bit64_4.0.5              BiocParallel_1.39.0      viridis_0.6.5           </span></span>
 <span><span class="co">##  [61] DBI_1.2.3                highr_0.11               HDF5Array_1.33.6        </span></span>
 <span><span class="co">##  [64] alabaster.ranges_1.5.2   alabaster.schemas_1.5.0  rappdirs_0.3.3          </span></span>
-<span><span class="co">##  [67] DelayedArray_0.31.11     rjson_0.2.22             bluster_1.15.0          </span></span>
+<span><span class="co">##  [67] DelayedArray_0.31.11     rjson_0.2.22             bluster_1.15.1          </span></span>
 <span><span class="co">##  [70] tools_4.4.1              vipor_0.4.7              beeswarm_0.4.0          </span></span>
 <span><span class="co">##  [73] glue_1.7.0               restfulr_0.0.15          rhdf5filters_1.17.0     </span></span>
 <span><span class="co">##  [76] grid_4.4.1               Rtsne_0.17               cluster_2.1.6           </span></span>
 <span><span class="co">##  [79] generics_0.1.3           gtable_0.3.5             ensembldb_2.29.1        </span></span>
 <span><span class="co">##  [82] metapod_1.13.0           BiocSingular_1.21.2      ScaledMatrix_1.13.0     </span></span>
-<span><span class="co">##  [85] utf8_1.2.4               XVector_0.45.0           ggrepel_0.9.5           </span></span>
+<span><span class="co">##  [85] utf8_1.2.4               XVector_0.45.0           ggrepel_0.9.6           </span></span>
 <span><span class="co">##  [88] BiocVersion_3.20.0       pillar_1.9.0             limma_3.61.9            </span></span>
 <span><span class="co">##  [91] dplyr_1.1.4              BiocFileCache_2.13.0     lattice_0.22-6          </span></span>
 <span><span class="co">##  [94] rtracklayer_1.65.0       bit_4.0.5                tidyselect_1.2.1        </span></span>
 <span><span class="co">##  [97] locfit_1.5-9.10          Biostrings_2.73.1        gridExtra_2.3           </span></span>
-<span><span class="co">## [100] bookdown_0.40            ProtGenerics_1.37.1      edgeR_4.3.13            </span></span>
+<span><span class="co">## [100] bookdown_0.40            ProtGenerics_1.37.1      edgeR_4.3.14            </span></span>
 <span><span class="co">## [103] xfun_0.47                statmod_1.5.0            UCSC.utils_1.1.0        </span></span>
 <span><span class="co">## [106] lazyeval_0.2.2           yaml_2.3.10              evaluate_0.24.0         </span></span>
-<span><span class="co">## [109] codetools_0.2-20         tibble_3.2.1             alabaster.matrix_1.5.5  </span></span>
-<span><span class="co">## [112] BiocManager_1.30.25      cli_3.6.3                reticulate_1.38.0       </span></span>
+<span><span class="co">## [109] codetools_0.2-20         tibble_3.2.1             alabaster.matrix_1.5.6  </span></span>
+<span><span class="co">## [112] BiocManager_1.30.25      cli_3.6.3                reticulate_1.39.0.9000  </span></span>
 <span><span class="co">## [115] systemfonts_1.1.0        munsell_0.5.1            jquerylib_0.1.4         </span></span>
 <span><span class="co">## [118] zellkonverter_1.15.1     Rcpp_1.0.13              dir.expiry_1.13.0       </span></span>
 <span><span class="co">## [121] dbplyr_2.5.0             png_0.1-8                XML_3.99-0.17           </span></span>
