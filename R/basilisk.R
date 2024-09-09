@@ -276,7 +276,7 @@
     'nest-asyncio==1.6.0',
     'networkx==3.3',
     'nomkl==1.0',
-    'numba==0.60.0',
+    'numba==0.56.2',
     'numpy==1.26.4',
     'numpy_groupies==0.11.2',
     'numpyro==0.15.2',

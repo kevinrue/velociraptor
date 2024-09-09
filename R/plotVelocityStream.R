@@ -56,19 +56,37 @@
 #' @author Michael Stadler
 #' 
 #' @examples
+#' ##
+#' # Setup ----
+#' ##
+#' 
 #' library(scuttle)
 #' set.seed(42)
 #' sce1 <- mockSCE(ncells = 100, ngenes = 500)
 #' sce2 <- mockSCE(ncells = 100, ngenes = 500)
+#' 
+#' spliced <- counts(sce1)
+#' unspliced <- counts(sce2)
+#' 
+#' ##
+#' # Example ----
+#' ##
 #'
-#' datlist <- list(X=counts(sce1), spliced=counts(sce1), unspliced=counts(sce2))
-#'
-#' out <- scvelo(datlist, mode = "dynamical")
+#' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced),
+#'               mode = "dynamical")
 #' 
 #' em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 #' 
 #' plotVelocityStream(out, em)
-#' plotVelocityStream(out, em, color.streamlines = TRUE)
+#' 
+#' ##
+#' # Additional examples ----
+#' ##
+#' 
+#' if (interactive()) {
+#'   plotVelocityStream(out, em, color.streamlines = TRUE)
+#' }
+#' 
 #' 
 #' @seealso \code{\link{gridVectors}} used to summarize velocity vectors into
 #'   a grid (velocity field), the \pkg{ggplot2} package used for plotting,

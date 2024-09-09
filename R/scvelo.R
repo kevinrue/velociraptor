@@ -262,10 +262,6 @@ NULL
     do.call(scv$pp$moments, c(list(data=adata), scvelo.params$moments))
 
     if (mode=="dynamical") {
-        if (is.null(scvelo.params$recover_dynamics)) {
-            scvelo.params$recover_dynamics <- list()
-        }
-        scvelo.params$recover_dynamics$show_progress_bar <- FALSE
         do.call(scv$tl$recover_dynamics, c(list(data=adata), scvelo.params$recover_dynamics))
     }
 
