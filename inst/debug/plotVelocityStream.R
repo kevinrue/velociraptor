@@ -104,18 +104,18 @@ if (color.streamlines) {
   # remark: when coloring streamlines, we currently cannot have any arrows
   # remark: ..dx.., ..dy.. and ..step.. are calculated by metR::geom_streamline
   p <- p +
-    metR::geom_streamline(mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
-      y = !!ggplot2::sym("y"),
-      dx = !!ggplot2::sym("dx"),
-      dy = !!ggplot2::sym("dy"),
-      linewidth = stream.width * !!ggplot2::sym("..step.."),
-      alpha = !!ggplot2::sym("..step.."),
-      color = ggplot2::stat(sqrt((!!ggplot2::sym("..dx.."))^2 +
-          (!!ggplot2::sym("..dy.."))^2))),
+    metR::geom_streamline(
+      mapping = ggplot2::aes(
+        x = !!ggplot2::sym("x"),
+        y = !!ggplot2::sym("y"),
+        dx = !!ggplot2::sym("dx"),
+        dy = !!ggplot2::sym("dy")
+      ),
       arrow = NULL, lineend = "round",
       data = plotdat2, linewidth = 0.6, jitter = 2,
       L = stream.L, min.L = stream.min.L,
-      res = stream.res, inherit.aes = FALSE) +
+      res = stream.res, inherit.aes = FALSE
+    ) +
     ggplot2::scale_color_gradientn(colors = color.streamlines.map,
       guide = "none") +
     ggplot2::scale_alpha_continuous(guide = "none") +
@@ -125,11 +125,13 @@ if (color.streamlines) {
       panel.grid.minor = ggplot2::element_blank())
 } else {
   p <- p +
-    metR::geom_streamline(mapping = ggplot2::aes(x = !!ggplot2::sym("x"),
-      y = !!ggplot2::sym("y"),
-      dx = !!ggplot2::sym("dx"),
-      dy = !!ggplot2::sym("dy"),
-      size = stream.width * !!ggplot2::sym("..step..")),
+    metR::geom_streamline(
+      mapping = ggplot2::aes(
+        x = !!ggplot2::sym("x"),
+        y = !!ggplot2::sym("y"),
+        dx = !!ggplot2::sym("dx"),
+        dy = !!ggplot2::sym("dy")
+      ),
       data = plotdat2, size = 0.3, jitter = 2,
       L = stream.L, min.L = stream.min.L,
       res = stream.res, arrow.angle = arrow.angle,
