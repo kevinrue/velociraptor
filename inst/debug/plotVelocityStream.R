@@ -4,14 +4,14 @@ library(velociraptor)
 
 # man page
 
-# library(scuttle)
-# sce1 <- mockSCE()
-# sce2 <- mockSCE()
-# 
-# spliced <- counts(sce1)
-# unspliced <- counts(sce2)
-# 
-# out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), mode = "dynamical")
+library(scuttle)
+sce1 <- mockSCE()
+sce2 <- mockSCE()
+
+spliced <- counts(sce1)
+unspliced <- counts(sce2)
+
+out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), mode = "dynamical")
 
 # vignette
 
