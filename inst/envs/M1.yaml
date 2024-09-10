@@ -49,7 +49,7 @@ dependencies:
 - icu=75.1=hfee45f7_0
 - idna=3.8=pyhd8ed1ab_0
 - importlib-metadata=8.4.0=pyha770c72_0
-- importlib_resources=6.4.4=pyhd8ed1ab_0
+- importlib_resources=6.4.5=pyhd8ed1ab_0
 - ipython=8.27.0=pyh707e725_0
 - ipywidgets=8.1.5=pyhd8ed1ab_0
 - jax=0.4.31=pyhd8ed1ab_1

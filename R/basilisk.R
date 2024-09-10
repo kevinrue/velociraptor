@@ -208,7 +208,7 @@
     'icu==75.1',
     'idna==3.8',
     'importlib-metadata==8.4.0',
-    'importlib_resources==6.4.4',
+    'importlib_resources==6.4.5',
     'ipython==8.27.0',
     'ipywidgets==8.1.5',
     'jax==0.4.31',
