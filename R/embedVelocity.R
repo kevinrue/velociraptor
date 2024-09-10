@@ -25,7 +25,15 @@
 #'
 #' @author Aaron Lun
 #' @examples
-#' example(scvelo, echo=FALSE) # recycling that example.
+#' # Using mock data to demonstrate the process:
+#' library(scuttle)
+#' sce1 <- mockSCE()
+#' sce2 <- mockSCE()
+#'
+#' spliced <- counts(sce1)
+#' unspliced <- counts(sce2)
+#'
+#' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 #'
 #' # Making up a new embedding.
 #' tsne.results <- matrix(rnorm(2*ncol(out)), ncol=2)

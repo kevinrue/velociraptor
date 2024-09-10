@@ -67,8 +67,10 @@
 #' 
 #' em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 #' 
+#' \dontrun{
 #' plotVelocityStream(out, em)
 #' plotVelocityStream(out, em, color.streamlines = TRUE)
+#' }
 #' 
 #' @seealso \code{\link{gridVectors}} used to summarize velocity vectors into
 #'   a grid (velocity field), the \pkg{ggplot2} package used for plotting,
