@@ -1,11 +1,39 @@
+library(velociraptor)
+
+###
+
+# man page
+
+# library(scuttle)
+# sce1 <- mockSCE()
+# sce2 <- mockSCE()
+# 
+# spliced <- counts(sce1)
+# unspliced <- counts(sce2)
+# 
+# out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), mode = "dynamical")
+
+# vignette
+
+library(scRNAseq)
+sce <- HermannSpermatogenesisData()
+sce
+
+sce <- sce[, 1:500]
+
 library(scuttle)
-sce1 <- mockSCE()
-sce2 <- mockSCE()
+sce <- logNormCounts(sce, assay.type=1)
 
-spliced <- counts(sce1)
-unspliced <- counts(sce2)
+library(scran)
+dec <- modelGeneVar(sce)
+top.hvgs <- getTopHVGs(dec, n=2000)
 
-out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced), mode = "dynamical")
+library(velociraptor)
+velo.out <- scvelo(
+  sce, subset.row=top.hvgs, assay.X="spliced",
+  scvelo.params=list(neighbors=list(n_neighbors=30L))
+)
+out <- velo.out
 
 ###
 
@@ -100,6 +128,10 @@ if (!colByFeat) {
     ggplot2::labs(color = color_by)
 }
 
+plotdat2.backup <- plotdat2
+# plotdat2 <- subset(plotdat2.backup, dx != 0 & dy != 0)
+plotdat2 <- plotdat2.backup
+
 if (color.streamlines) {
   # remark: when coloring streamlines, we currently cannot have any arrows
   # remark: ..dx.., ..dy.. and ..step.. are calculated by metR::geom_streamline
@@ -142,5 +174,5 @@ if (color.streamlines) {
       panel.grid.minor = ggplot2::element_blank())
 }
 
-return(p)
+p
 
