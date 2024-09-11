@@ -105,8 +105,10 @@ out <- scvelo(datlist, mode = "dynamical")
 
 em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 
-p <- plotVelocityStream(out, em)
-p <- plotVelocityStream(out, em, color.streamlines = TRUE)
+\dontrun{
+plotVelocityStream(out, em)
+plotVelocityStream(out, em, color.streamlines = TRUE)
+}
 
 }
 \seealso{
