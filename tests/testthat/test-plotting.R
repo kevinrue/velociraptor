@@ -66,28 +66,37 @@ test_that("plotVelocity runs", {
     unlink(tf)
 })
 
-test_that("plotVelocityStream runs", {
-
-    skip_if_not_installed("ggplot2")
-    skip_if_not_installed("metR")
-    
-    expect_error(plotVelocityStream("error", em2))
-    expect_error(plotVelocityStream(out2, "error"))
-    expect_error(plotVelocityStream(out2, em2[1:10, ]))
-    expect_error(plotVelocityStream(out2, em2, use.dimred = "error"))
-    expect_error(plotVelocityStream(out2, em2, use.dimred = FALSE))
-    expect_error(plotVelocityStream(out2, em2, color_by = "error"))
-    expect_error(plotVelocityStream(out2, em2, grid.resolution = "error"))
-    expect_error(plotVelocityStream(out2, em2, scale = "error"))
-    expect_error(plotVelocityStream(out2, em2, color.streamlines = "error"))
-    
-    tf <- tempfile(fileext = ".png")
-    png(tf)
-    expect_warning(print(plotVelocityStream(out2, em2, color_by = "#44444422")))
-    print(plotVelocityStream(out2, em2))
-    print(plotVelocityStream(out3, em2, color_by = "type"))
-    print(plotVelocityStream(out2, em2, color.streamlines = TRUE))
-    dev.off()
-    expect_true(file.exists(tf))
-    unlink(tf)
+test_that("plotVelocityStream throws an error", {
+  
+  expect_error(
+    plotVelocityStream(out2, em2),
+    "temporarily"
+  )  
+  
 })
+
+# test_that("plotVelocityStream runs", {
+# 
+#     skip_if_not_installed("ggplot2")
+#     skip_if_not_installed("metR")
+#     
+#     expect_error(plotVelocityStream("error", em2))
+#     expect_error(plotVelocityStream(out2, "error"))
+#     expect_error(plotVelocityStream(out2, em2[1:10, ]))
+#     expect_error(plotVelocityStream(out2, em2, use.dimred = "error"))
+#     expect_error(plotVelocityStream(out2, em2, use.dimred = FALSE))
+#     expect_error(plotVelocityStream(out2, em2, color_by = "error"))
+#     expect_error(plotVelocityStream(out2, em2, grid.resolution = "error"))
+#     expect_error(plotVelocityStream(out2, em2, scale = "error"))
+#     expect_error(plotVelocityStream(out2, em2, color.streamlines = "error"))
+#     
+#     tf <- tempfile(fileext = ".png")
+#     png(tf)
+#     expect_warning(print(plotVelocityStream(out2, em2, color_by = "#44444422")))
+#     print(plotVelocityStream(out2, em2))
+#     print(plotVelocityStream(out3, em2, color_by = "type"))
+#     print(plotVelocityStream(out2, em2, color.streamlines = TRUE))
+#     dev.off()
+#     expect_true(file.exists(tf))
+#     unlink(tf)
+# })

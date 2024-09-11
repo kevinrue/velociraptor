@@ -1,3 +1,8 @@
+# velociraptor 1.15.10
+
+* Temporarily disable `plotVelocityStream()` due to unexplained issue related to
+  `metr::geom_streamline()`
+
 # velociraptor 1.15.9
 
 * Update Conda environment for Linux and MacOSX Arm.
