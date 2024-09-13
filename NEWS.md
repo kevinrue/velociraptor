@@ -1,3 +1,7 @@
+# velociraptor 1.15.11
+
+* Re-enable `plotVelocityStream()` with a warning.
+
 # velociraptor 1.15.10
 
 * Temporarily disable `plotVelocityStream()` due to unexplained issue related to

@@ -105,7 +105,9 @@ out <- scvelo(datlist, mode = "dynamical")
 
 em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 
-\dontrun{
+# https://github.com/kevinrue/velociraptor/issues/90
+
+if (!basilisk.utils::isMacOSX()){
 plotVelocityStream(out, em)
 plotVelocityStream(out, em, color.streamlines = TRUE)
 }

@@ -67,7 +67,9 @@
 #' 
 #' em <- embedVelocity(reducedDim(out, 1), out)[,1:2]
 #' 
-#' \dontrun{
+#' # https://github.com/kevinrue/velociraptor/issues/90
+#' 
+#' if (!basilisk.utils::isMacOSX()){
 #' plotVelocityStream(out, em)
 #' plotVelocityStream(out, em, color.streamlines = TRUE)
 #' }
@@ -92,10 +94,14 @@ plotVelocityStream <- function(
     "#22A884", "#43BF71", "#7AD151",
     "#BBDF27", "#FDE725"),
   arrow.angle = 8, arrow.length = 0.8) {
-  stop(
-    "This function is temporarily unavailable while we investigate an issue ",
-    "related to metR::geom_streamline()"
-  )
+  if (basilisk.utils::isMacOSX()){ # both Intel and Arm
+    warning(
+      "This function has been observed to run indefinitely on macOS. ",
+      "The issue is related to the metR::geom_streamline() layer but unsolved yet. ",
+      "Use with caution and consider terminating R if rendering the plot freezes your session.",
+      immediate. = TRUE
+    )
+  }
   
   if (!identical(ncol(sce), nrow(embedded))) {
     stop("'sce' and 'embedded' do not have consistent dimensions.")
