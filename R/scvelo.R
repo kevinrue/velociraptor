@@ -107,10 +107,9 @@
 #' As of the latest \pkg{velociraptor} update (24 May 2024):
 #' 
 #' \describe{
-#' \item{Linux}{\pkg{scVelo} v0.2.2 from bioconda is used.
-#' This is NOT the latest version available to date.
-#' Instead, it is the latest version successfully tested in a complete Conda environment.
-#' Note that pinned dependencies were obtained from \code{zellkonverter::AnnDataDependencies()}.
+#' \item{Linux}{\pkg{scVelo} v0.3.2 from bioconda is used.
+#' \pkg{libtiff} is pinned to v4.5.1 and \pkg{pillow} is pinned to v10.0.0 (\url{https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029}),
+#' \pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260}).
 #' }
 #' \item{MacOS Arm}{\pkg{scVelo} v0.3.2 from conda-forge is used.
 #' This is the latest version available to date.

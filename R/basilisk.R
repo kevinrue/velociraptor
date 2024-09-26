@@ -763,7 +763,7 @@
     'rich==13.8.1',
     'scanpy==1.10.3',
     'scikit-learn==1.1.3',
-    'scipy==1.14.1',
+    'scipy==1.13.1',
     'scvelo==0.3.2',
     'scvi-tools==1.1.6.post1',
     'seaborn==0.13.2',
