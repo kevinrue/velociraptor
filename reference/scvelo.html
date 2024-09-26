@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">velociraptor</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.11</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.15.12</span>
       </span>
     </div>
 
@@ -263,15 +263,15 @@ The PCA is not performed if <code>dimred</code> or <code>use.dimred</code> is al
 <span class="pkg">basilisk.utils</span> is used to determine the operating system and architecture of the computer used to run <code>scvelo()</code>, using to the appropriate Conda environment.</p>
 <p>As of the latest <span class="pkg">velociraptor</span> update (24 May 2024):</p>
 <dl><dt>Linux</dt>
-<dd><p><span class="pkg">scVelo</span> v0.2.2 from bioconda is used.
-This is NOT the latest version available to date.
-Instead, it is the latest version successfully tested in a complete Conda environment.
-Note that pinned dependencies were obtained from <code><a href="https://rdrr.io/pkg/zellkonverter/man/AnnData-Environment.html" class="external-link">zellkonverter::AnnDataDependencies()</a></code>.</p></dd>
+<dd><p><span class="pkg">scVelo</span> v0.3.2 from bioconda is used.
+This is the latest version available to date.
+<span class="pkg">libtiff</span> is pinned to v4.5.1 and <span class="pkg">pillow</span> is pinned to v10.0.0 (<a href="https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029" class="external-link">https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029</a>),
+<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>).</p></dd>
 
 <dt>MacOS Arm</dt>
 <dd><p><span class="pkg">scVelo</span> v0.3.2 from conda-forge is used.
 This is the latest version available to date.
-Tested on M1.</p></dd>
+<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>)</p></dd>
 
 <dt>Windows</dt>
 <dd><p><span class="pkg">scVelo</span> v0.2.5 from bioconda is used.
@@ -321,7 +321,7 @@ and <span class="pkg">numpy</span> is pinned to v1.21.1 (<a href="https://github
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
       </footer></div>
