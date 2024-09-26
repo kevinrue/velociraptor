@@ -1,3 +1,7 @@
+# velociraptor 1.15.12
+
+* Update Conda environment for Linux to avoid Anaconda channel.
+
 # velociraptor 1.15.11
 
 * Re-enable `plotVelocityStream()` with a warning.
