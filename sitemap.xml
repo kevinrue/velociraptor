@@ -1,18 +1,18 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>/404.html</loc></url>
-<url><loc>/LICENSE-text.html</loc></url>
-<url><loc>/LICENSE.html</loc></url>
-<url><loc>/articles/index.html</loc></url>
-<url><loc>/articles/velociraptor.html</loc></url>
-<url><loc>/authors.html</loc></url>
-<url><loc>/index.html</loc></url>
-<url><loc>/news/index.html</loc></url>
-<url><loc>/reference/embedVelocity.html</loc></url>
-<url><loc>/reference/gridVectors.html</loc></url>
-<url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/plotVelocity.html</loc></url>
-<url><loc>/reference/plotVelocityStream.html</loc></url>
-<url><loc>/reference/scvelo.html</loc></url>
-<url><loc>/reference/velociraptor-package.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/404.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/LICENSE-text.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/LICENSE.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/articles/index.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/articles/velociraptor.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/authors.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/index.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/news/index.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/embedVelocity.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/gridVectors.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/index.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/plotVelocity.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/plotVelocityStream.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/scvelo.html</loc></url>
+<url><loc>https://kevinrue.github.io/velociraptor/reference/velociraptor-package.html</loc></url>
 </urlset>
 
