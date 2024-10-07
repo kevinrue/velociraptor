@@ -1,3 +1,7 @@
+url: https://kevinrue.github.io/velociraptor/
+template:
+  bootstrap: 5
+
 articles:
 - title: "Getting Started"
   contents: velociraptor
