@@ -1,5 +1,3 @@
-<img src="man/figures/logo.png" align="right" alt="logo.png" width="180" />
-
 # velociraptor
 
 <!-- badges: start -->
@@ -14,8 +12,8 @@ _velociraptor_ provides an R toolkit for single-cell velocity computation.
 
 |      Branch      |    R CMD check   | Last updated |
 |:----------------:|:----------------:|:------------:|
-| [_devel_](http://bioconductor.org/packages/devel/bioc/html/velociraptor.html) | [![Bioconductor-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/velociraptor) | ![](http://bioconductor.org/shields/lastcommit/devel/bioc/velociraptor.svg) |
-| [_release_](http://bioconductor.org/packages/release/bioc/html/velociraptor.html) | [![Bioconductor-release Build Status](http://bioconductor.org/shields/build/release/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/velociraptor) | ![](http://bioconductor.org/shields/lastcommit/release/bioc/velociraptor.svg) |
+| [_devel_](http://bioconductor.org/packages/devel/bioc/html/velociraptor.html) | [![Bioconductor-devel Build Status](http://bioconductor.org/shields/build/devel/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/velociraptor) | ![Latest commit](http://bioconductor.org/shields/lastcommit/devel/bioc/velociraptor.svg) |
+| [_release_](http://bioconductor.org/packages/release/bioc/html/velociraptor.html) | [![Bioconductor-release Build Status](http://bioconductor.org/shields/build/release/bioc/velociraptor.svg)](http://bioconductor.org/checkResults/release/bioc-LATEST/velociraptor) | ![[Latest commit](http://bioconductor.org/shields/lastcommit/release/bioc/velociraptor.svg) |
 
 ## Installation
 
