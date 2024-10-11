@@ -1,3 +1,8 @@
+# velociraptor 1.15.13
+
+* Add separate environment (untested) for Linux Aarch64.
+  Cannot break that platform more than it already is.
+
 # velociraptor 1.15.12
 
 * Update Conda environment for Linux to avoid Anaconda channel.
