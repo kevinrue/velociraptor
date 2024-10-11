@@ -177,18 +177,31 @@ Differences in packages and versions available from Conda require different envi
 As of the latest \pkg{velociraptor} update (24 May 2024):
 
 \describe{
-\item{Linux}{\pkg{scVelo} v0.3.2 from bioconda is used.
+\item{All environments}{
+\pkg{tqdm} and \pkg{ipywidgets} are installed to suppress the message "Unable to create progress bar".
+}
+\item{Linux}{\pkg{scVelo} v0.3.2 from conda-forge is used.
 This is the latest version available to date.
 \pkg{libtiff} is pinned to v4.5.1 and \pkg{pillow} is pinned to v10.0.0 (\url{https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029}),
 \pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260}).
 }
-\item{MacOS Arm}{\pkg{scVelo} v0.3.2 from conda-forge is used.
+\item{Linux AArch64}{\pkg{scVelo} v0.3.2 from conda-forge is used.
 This is the latest version available to date.
-\pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260})
+\pkg{libtiff} is pinned to v4.5.1 and \pkg{pillow} is pinned to v10.0.0 (\url{https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029}),
+\pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260}).
+Please note that this environment has not been validated yet; it is derived from the environment from Linux (above) and requires additional testing to identify a working environment before pinning all the packages and versions in the environment.
+}
+\item{macOS}{\pkg{scVelo} v0.3.2 from conda-forge is used.
+This is the latest version available to date.
+\pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260}).
+}
+\item{macOS ARM}{\pkg{scVelo} v0.3.2 from conda-forge is used.
+This is the latest version available to date.
+\pkg{scipy} is pinned to v1.13.1 (\url{https://github.com/theislab/scvelo/issues/1260}).
 }
 \item{Windows}{\pkg{scVelo} v0.2.5 from bioconda is used.
 Later versions of \pkg{scVelo} depend on \pkg{jaxlib} which is not supported on Windows (\url{https://github.com/google/jax/issues/438}).
-Note that \pkg{matplotlib} is pinned to v3.6.3 (\url{https://github.com/scverse/scanpy/issues/2411}),
+\pkg{matplotlib} is pinned to v3.6.3 (\url{https://github.com/scverse/scanpy/issues/2411}),
 \pkg{pandas} is pinned to v1.5.2 (\url{https://stackoverflow.com/questions/76234312/importerror-cannot-import-name-is-categorical-from-pandas-api-types}),
 and \pkg{numpy} is pinned to v1.21.1 (\url{https://github.com/theislab/scvelo/issues/1109}).
 }
