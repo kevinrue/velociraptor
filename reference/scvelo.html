@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">velociraptor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.15.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.15.13</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -239,21 +239,36 @@ The PCA is not performed if <code>dimred</code> or <code>use.dimred</code> is al
 <p>Differences in packages and versions available from Conda require different environments for different operating systems and architectures.
 <span class="pkg">basilisk.utils</span> is used to determine the operating system and architecture of the computer used to run <code>scvelo()</code>, using to the appropriate Conda environment.</p>
 <p>As of the latest <span class="pkg">velociraptor</span> update (24 May 2024):</p>
-<dl><dt>Linux</dt>
-<dd><p><span class="pkg">scVelo</span> v0.3.2 from bioconda is used.
+<dl><dt>All environments</dt>
+<dd><p><span class="pkg">tqdm</span> and <span class="pkg">ipywidgets</span> are installed to suppress the message "Unable to create progress bar".</p></dd>
+
+<dt>Linux</dt>
+<dd><p><span class="pkg">scVelo</span> v0.3.2 from conda-forge is used.
 This is the latest version available to date.
 <span class="pkg">libtiff</span> is pinned to v4.5.1 and <span class="pkg">pillow</span> is pinned to v10.0.0 (<a href="https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029" class="external-link">https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029</a>),
 <span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>).</p></dd>
 
-<dt>MacOS Arm</dt>
+<dt>Linux AArch64</dt>
 <dd><p><span class="pkg">scVelo</span> v0.3.2 from conda-forge is used.
 This is the latest version available to date.
-<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>)</p></dd>
+<span class="pkg">libtiff</span> is pinned to v4.5.1 and <span class="pkg">pillow</span> is pinned to v10.0.0 (<a href="https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029" class="external-link">https://github.com/conda-forge/libtiff-feedstock/issues/104#issuecomment-2375893029</a>),
+<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>).
+Please note that this environment has not been validated yet; it is derived from the environment from Linux (above) and requires additional testing to identify a working environment before pinning all the packages and versions in the environment.</p></dd>
+
+<dt>macOS</dt>
+<dd><p><span class="pkg">scVelo</span> v0.3.2 from conda-forge is used.
+This is the latest version available to date.
+<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>).</p></dd>
+
+<dt>macOS ARM</dt>
+<dd><p><span class="pkg">scVelo</span> v0.3.2 from conda-forge is used.
+This is the latest version available to date.
+<span class="pkg">scipy</span> is pinned to v1.13.1 (<a href="https://github.com/theislab/scvelo/issues/1260" class="external-link">https://github.com/theislab/scvelo/issues/1260</a>).</p></dd>
 
 <dt>Windows</dt>
 <dd><p><span class="pkg">scVelo</span> v0.2.5 from bioconda is used.
 Later versions of <span class="pkg">scVelo</span> depend on <span class="pkg">jaxlib</span> which is not supported on Windows (<a href="https://github.com/google/jax/issues/438" class="external-link">https://github.com/google/jax/issues/438</a>).
-Note that <span class="pkg">matplotlib</span> is pinned to v3.6.3 (<a href="https://github.com/scverse/scanpy/issues/2411" class="external-link">https://github.com/scverse/scanpy/issues/2411</a>),
+<span class="pkg">matplotlib</span> is pinned to v3.6.3 (<a href="https://github.com/scverse/scanpy/issues/2411" class="external-link">https://github.com/scverse/scanpy/issues/2411</a>),
 <span class="pkg">pandas</span> is pinned to v1.5.2 (<a href="https://stackoverflow.com/questions/76234312/importerror-cannot-import-name-is-categorical-from-pandas-api-types" class="external-link">https://stackoverflow.com/questions/76234312/importerror-cannot-import-name-is-categorical-from-pandas-api-types</a>),
 and <span class="pkg">numpy</span> is pinned to v1.21.1 (<a href="https://github.com/theislab/scvelo/issues/1109" class="external-link">https://github.com/theislab/scvelo/issues/1109</a>).</p></dd>
 
