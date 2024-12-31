@@ -25,7 +25,8 @@ Imports:
     scuttle,
     SingleCellExperiment,
     BiocParallel,
-    BiocSingular
+    BiocSingular,
+    basilisk.utils
 Suggests:
     BiocStyle,
     testthat,
