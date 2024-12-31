@@ -3,7 +3,7 @@
 #' Summarize the velocity vectors into a grid, usually for easy plotting.
 #'
 #' @param x A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
-#' Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.
+#' Alternatively, a \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} containing such coordinates in its \code{\link[SingleCellExperiment]{reducedDims}}.
 #' @param embedded A low-dimensional projection of the velocity vectors into the embedding of \code{x}.
 #' This should be of the same dimensions as \code{x} and is typically produced by \code{\link{embedVelocity}}.
 #' @param resolution Integer scalar specifying the resolution of the grid,

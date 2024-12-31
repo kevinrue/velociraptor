@@ -6,18 +6,18 @@
 #' The list should contain \code{"spliced"} and \code{"unspliced"} entries containing spliced and unspliced counts, respectively.
 #' It should also contain an \code{"X"} entry containing the \dQuote{usual} count matrix, see details below.
 #'
-#' Alternatively, a \linkS4class{SummarizedExperiment} object containing three such matrices among its assays.
+#' Alternatively, a \code{\link[SummarizedExperiment:SummarizedExperiment-class]{SummarizedExperiment}} object containing three such matrices among its assays.
 #' @param ... For the generic, further arguments to pass to specific methods.
 #' For the SummarizedExperiment and SingleCellExperiment methods, further arguments to pass to the ANY method.
 #' @param assay.X An integer scalar or string specifying the assay of \code{x} containing the usual count matrix.
 #' @param assay.spliced An integer scalar or string specifying the assay of \code{x} containing the spliced counts.
 #' @param assay.unspliced An integer scalar or string specifying the assay of \code{x} containing the unspliced counts.
 #' @param sf.X A numeric vector containing size factors for usual count matrix.
-#' Defaults to \code{\link{librarySizeFactors}} on the \code{"X"} matrix in \code{x}.
+#' Defaults to \code{\link[scuttle]{librarySizeFactors}} on the \code{"X"} matrix in \code{x}.
 #' @param sf.spliced A numeric vector containing size factors for the spliced counts for each cell.
-#' Defaults to \code{\link{librarySizeFactors}} on the \code{"spliced"} matrix in \code{x}.
+#' Defaults to \code{\link[scuttle]{librarySizeFactors}} on the \code{"spliced"} matrix in \code{x}.
 #' @param sf.unspliced A numeric vector containing size factors for the unspliced counts for each cell.
-#' Defaults to \code{\link{librarySizeFactors}} on the \code{"unspliced"} matrix in \code{x}.
+#' Defaults to \code{\link[scuttle]{librarySizeFactors}} on the \code{"unspliced"} matrix in \code{x}.
 #' @param subset.row A character, integer or logical vector specifying the genes to use for the velocity calculations.
 #' Defaults to all genes.
 #' @param use.theirs Logical scalar indicating whether \pkg{scVelo}'s gene filtering and normalization should be used.
@@ -25,13 +25,13 @@
 #' @param scvelo.params List of lists containing arguments for individual \pkg{scVelo} functions, see details below.
 #' @param dimred A low-dimensional representation of the cells with number of rows equal to the number of cells in \code{x},
 #' used to find the nearest neighbors.
-#' @param use.dimred String naming the entry of \code{\link{reducedDims}(x)} to use for nearest neighbor calculations.
+#' @param use.dimred String naming the entry of \code{\link[SingleCellExperiment]{reducedDims}(x)} to use for nearest neighbor calculations.
 #' Ignored if \code{dimred} is supplied.
 #' @param ncomponents Numeric scalar indicating the number of principal components to obtain.
 #' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
-#' @param BSPARAM A \linkS4class{BiocSingularParam} object specifying which algorithm should be used to perform the PCA.
+#' @param BSPARAM A \code{\link[BiocSingular:BiocSingularParam-class]{BiocSingularParam}} object specifying which algorithm should be used to perform the PCA.
 #' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
-#' @param BPPARAM A \linkS4class{BiocParallelParam} object specifying whether the PCA calculations should be parallelized.
+#' @param BPPARAM A \code{\link[BiocParallel:BiocParallelParam-class]{BiocParallelParam}} object specifying whether the PCA calculations should be parallelized.
 #' Only used if \code{use.theirs=FALSE} and \code{dimred=NULL}.
 #'
 #' @details
@@ -44,7 +44,7 @@
 #' before starting the velocity calculations with \pkg{scVelo}.
 #' This involves:
 #' \enumerate{
-#' \item Size factor-based normalization with \code{sf.*} values and \code{\link{normalizeCounts}}.
+#' \item Size factor-based normalization with \code{sf.*} values and \code{\link[scuttle]{normalizeCounts}}.
 #' For \code{"X"}, log-transformation is performed as well, while for the others, only scaling normalization is performed.
 #' \item Subsetting all matrices to \code{subset.row}, most typically to a subset of interest, e.g., highly variable genes.
 #' Note that, if set, any subsetting is done \emph{after} normalization so that library sizes are correctly computed.
@@ -138,12 +138,12 @@
 #' }
 #'
 #' @return
-#' A \linkS4class{SingleCellExperiment} is returned containing the output of the velocity calculations.
+#' A \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} is returned containing the output of the velocity calculations.
 #' Of particular interest are:
 #' \itemize{
-#' \item the \code{velocity_pseudotime} field in the \code{\link{colData}},
+#' \item the \code{velocity_pseudotime} field in the \code{\link[SummarizedExperiment]{colData}},
 #' containing the velocity pseudotime for each cell.
-#' \item the \code{velocity} entry of the \code{\link{assays}},
+#' \item the \code{velocity} entry of the \code{\link[SummarizedExperiment]{assays}},
 #' containing the velocity vectors for each cell.
 #' }
 #' The output will always have number of columns equal to the number of cells supplied in \code{x},
@@ -161,7 +161,8 @@
 #'
 #' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced))
 #'
-#' # make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:
+#' # make scvelo use 10 rather than the default 30 neighbors to compute moments 
+#' # for velocity estimation:
 #' out <- scvelo(list(X=spliced, spliced=spliced, unspliced=unspliced),
 #'               scvelo.params=list(neighbors=list(n_neighbors=10L)))
 #'

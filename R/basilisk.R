@@ -838,5 +838,6 @@ if (basilisk.utils::isWindows()) {
 
 #' @importFrom basilisk BasiliskEnvironment
 #' @importFrom zellkonverter AnnDataDependencies
+#' @importFrom basilisk.utils isWindows isLinuxAarch64 isLinux isMacOSXArm isMacOSX
 velo.env <- BasiliskEnvironment("env", "velociraptor",
   packages=.scvelo_dependencies$packages, channels = .scvelo_dependencies$channels)

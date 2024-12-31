@@ -4,9 +4,9 @@
 #' lines are lines that follow the gradient in the velocity field and illustrate
 #' paths that cells could follow based on observed RNA velocities.
 #'
-#' @param sce A \linkS4class{SingleCellExperiment} object containing
+#' @param sce A \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} object containing
 #'   low-dimensional coordinates, e.g., after t-SNE, in its
-#'   \code{\link{reducedDims}}.
+#'   \code{\link[SingleCellExperiment]{reducedDims}}.
 #' @param embedded A low-dimensional projection of the velocity vectors into the
 #'   embedding of \code{sce}. This should be of the same dimensions as \code{sce}
 #'   and is typically produced by \code{\link{embedVelocity}}.

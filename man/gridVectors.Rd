@@ -21,7 +21,7 @@ gridVectors(x, embedded, ...)
 }
 \arguments{
 \item{x}{A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
-Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.}
+Alternatively, a \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} containing such coordinates in its \code{\link[SingleCellExperiment]{reducedDims}}.}
 
 \item{embedded}{A low-dimensional projection of the velocity vectors into the embedding of \code{x}.
 This should be of the same dimensions as \code{x} and is typically produced by \code{\link{embedVelocity}}.}

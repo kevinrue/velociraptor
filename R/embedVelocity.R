@@ -3,8 +3,8 @@
 #' Project the velocity vector for each cell onto an existing low-dimensional embedding.
 #'
 #' @param x A numeric matrix of low-dimensional coordinates, e.g., after t-SNE.
-#' Alternatively, a \linkS4class{SingleCellExperiment} containing such coordinates in its \code{\link{reducedDims}}.
-#' @param vobj A \linkS4class{SingleCellExperiment} containing the output of the velocity calculations,
+#' Alternatively, a \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} containing such coordinates in its \code{\link[SingleCellExperiment]{reducedDims}}.
+#' @param vobj A \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} containing the output of the velocity calculations,
 #' typically after running \code{\link{scvelo}}.
 #' @param ... For the generic, further arguments to pass to specific methods.
 #'

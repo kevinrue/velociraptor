@@ -4,9 +4,9 @@
 #' unspliced counts and fitted model) and reduced dimension graphs with
 #' cell colored by velocity and (spliced) expression.
 #'
-#' @param x A \linkS4class{SingleCellExperiment} object with RNA velocity results
+#' @param x A \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} object with RNA velocity results
 #'   as returned by \code{\link{scvelo}}, and low-dimensional coordinates, e.g.,
-#'   after t-SNE, in its \code{\link{reducedDims}}.
+#'   after t-SNE, in its \code{\link[SingleCellExperiment]{reducedDims}}.
 #' @param genes A character vector with one or several genes for which to plot
 #'   phase and velocity graphs. \code{genes} have to be in \code{rownames(x)}.
 #' @param use.dimred String or integer scalar specifying the reduced dimensions
