@@ -24,9 +24,9 @@ plotVelocityStream(
 )
 }
 \arguments{
-\item{sce}{A \linkS4class{SingleCellExperiment} object containing
+\item{sce}{A \code{\link[SingleCellExperiment:SingleCellExperiment-class]{SingleCellExperiment}} object containing
 low-dimensional coordinates, e.g., after t-SNE, in its
-\code{\link{reducedDims}}.}
+\code{\link[SingleCellExperiment]{reducedDims}}.}
 
 \item{embedded}{A low-dimensional projection of the velocity vectors into the
 embedding of \code{sce}. This should be of the same dimensions as \code{sce}
