@@ -822,15 +822,20 @@
 
 # Switch environment ----
 
-if (basilisk.utils::isWindows()) {
+#' @importFrom basilisk isWindows
+#' @importFrom basilisk isLinuxAarch64
+#' @importFrom basilisk isLinux
+#' @importFrom basilisk isMacOSXArm
+#' @importFrom basilisk isMacOSX
+if (basilisk::isWindows()) {
   .scvelo_dependencies <- .scvelo.dependencies.Windows
-} else if (basilisk.utils::isLinuxAarch64()) {
+} else if (basilisk::isLinuxAarch64()) {
   .scvelo_dependencies <- .scvelo.dependencies.LinuxAarch64
-} else if (basilisk.utils::isLinux()) {
+} else if (basilisk::isLinux()) {
   .scvelo_dependencies <- .scvelo.dependencies.Linux
-} else if (basilisk.utils::isMacOSXArm()) {
+} else if (basilisk::isMacOSXArm()) {
   .scvelo_dependencies <- .scvelo.dependencies.MacOSXArm
-} else if (basilisk.utils::isMacOSX()) {
+} else if (basilisk::isMacOSX()) {
   .scvelo_dependencies <- .scvelo.dependencies.MacOSX
 } else {
   stop("Unsupported operating system or architecture.\n  Please open an issue at <https://github.com/kevinrue/velociraptor/issues> to request support.")
