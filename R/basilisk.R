@@ -2,9 +2,7 @@
 
 .scvelo.dependencies.Windows <- list(
   packages = c(
-    'matplotlib==3.6.3',
-    'matplotlib-base==3.6.3',
-    'scvelo==0.2.5'
+    'matplotlib==3.6.3'
   )
 )
 
