@@ -68,7 +68,7 @@ test_that("plotVelocity runs", {
 
 test_that("plotVelocityStream runs", {
   # metR::geom_streamline() layer causes timeouts on macOS 
-  if (!basilisk.utils::isMacOSX()) {
+  if (!basilisk::isMacOSX()) {
     skip_if_not_installed("ggplot2")
     skip_if_not_installed("metR")
     
