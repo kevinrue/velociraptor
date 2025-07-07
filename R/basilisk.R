@@ -2,7 +2,7 @@
 
 .scvelo.dependencies.Windows <- list(
   packages = c(
-    'matplotlib==3.6.3'
+    'scvelo==0.3.3'
   )
 )
 
@@ -15,7 +15,7 @@
     'libtiff==4.5.1',
     'pillow==10.0.0',
     'scipy==1.13.1',
-    'scvelo==0.3.2',
+    'scvelo==0.3.3',
     'tqdm==4.66.5'
   )
 )
