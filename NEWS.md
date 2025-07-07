@@ -1,3 +1,7 @@
+# velociraptor 1.19.1
+
+* Switch import of OS-detecting function to `basilisk`.
+
 # velociraptor 1.15.13
 
 * Add separate environment (untested) for Linux Aarch64.
