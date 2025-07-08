@@ -123,44 +123,6 @@ jobs:
           echo $sysreqs
           sudo -s eval "$sysreqs"
 
-      - name: Install macOS system dependencies
-        if: startsWith(matrix.config.os, 'macOS')
-        run: |
-          ## Enable installing XML from source if needed
-          brew install libxml2
-          echo "XML_CONFIG=/opt/homebrew/opt/libxml2/bin/xml2-config" >> $GITHUB_ENV
-
-          ## Required to install magick as noted at
-          ## https://github.com/r-lib/usethis/commit/f1f1e0d10c1ebc75fd4c18fa7e2de4551fd9978f#diff-9bfee71065492f63457918efcd912cf2
-          brew install imagemagick@6
-
-          ## For textshaping, required by ragg, and required by pkgdown
-          brew install harfbuzz fribidi
-
-          ## For installing usethis's dependency gert
-          brew install libgit2
-
-          ## Required for tcltk
-          brew install xquartz --cask
-
-          ## Required for terra
-          brew install gdal
-          
-          ## Downgrade llvm to last know version supported by llvmlite
-          # https://pypi.org/project/llvmlite/
-          brew install llvm@15
-          
-          ## Temporary fix for freetype (https://github.com/r-lib/ragg/issues/170)
-          #brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb
-          brew unlink freetype
-          curl -L https://raw.githubusercontent.com/Homebrew/homebrew-core/3db6dc6c4baf5a75e345f380cc4e8224c1ae5ae0/Formula/f/freetype.rb > freetype.rb && brew install freetype.rb
-
-      - name: Install binary units for macOS
-        if: startsWith(matrix.config.os, 'macOS')
-        run: |
-          install.packages('https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/units_0.8-7.tgz')
-        shell: Rscript {0}
-
       - name: Install Windows system dependencies
         if: runner.os == 'Windows'
         run: |
