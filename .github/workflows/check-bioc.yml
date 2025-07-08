@@ -157,7 +157,7 @@ jobs:
       - name: Install binary units for macOS
         if: startsWith(matrix.config.os, 'macOS')
         run: |
-          install.packages('https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.4/units_0.8-5.tgz')
+          install.packages('https://cran.rstudio.com/bin/macosx/big-sur-arm64/contrib/4.5/units_0.8-7.tgz')
         shell: Rscript {0}
 
       - name: Install Windows system dependencies
