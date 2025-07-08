@@ -94,7 +94,7 @@ plotVelocityStream <- function(
     "#22A884", "#43BF71", "#7AD151",
     "#BBDF27", "#FDE725"),
   arrow.angle = 8, arrow.length = 0.8) {
-  if (basilisk.utils::isMacOSX()){ # both Intel and Arm
+  if (basilisk::isMacOSX()){ # both Intel and Arm
     warning(
       "This function has been observed to run indefinitely on macOS. ",
       "The issue is related to the metR::geom_streamline() layer but unsolved yet. ",
