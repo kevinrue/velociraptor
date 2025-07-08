@@ -1,6 +1,7 @@
 # velociraptor 1.19.1
 
 * Switch import of OS-detecting function to `basilisk`.
+* Update `scvelo` to 0.3.3 (PyPI) for all operating systems.
 
 # velociraptor 1.15.13
 
