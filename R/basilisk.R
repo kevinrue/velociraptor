@@ -9,7 +9,6 @@
 ## LinuxAarch64 ----
 
 .scvelo.dependencies.LinuxAarch64 <- list(
-  channels = c("conda-forge"),
   packages = c(
     'ipywidgets==8.1.2',
     'libtiff==4.5.1',
@@ -23,7 +22,6 @@
 ## Linux ----
 
 .scvelo.dependencies.Linux <- list(
-  channels = c("conda-forge"),
   packages = c(
     'scvelo==0.3.3'
   )
@@ -40,7 +38,6 @@
 ## MacOSX ----
 
 .scvelo.dependencies.MacOSX <- list(
-  channels = c("conda-forge", "bioconda"),
   packages = c(
     'scvelo==0.3.3'
   )
