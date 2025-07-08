@@ -146,8 +146,9 @@ jobs:
           ## Required for terra
           brew install gdal
           
-          ## Try downgrading llvm to last know version supported by llvmlite
-          #brew install llvm@15
+          ## Downgrade llvm to last know version supported by llvmlite
+          # https://pypi.org/project/llvmlite/
+          brew install llvm@15
           
           ## Temporary fix for freetype (https://github.com/r-lib/ragg/issues/170)
           #brew install --cask https://raw.githubusercontent.com/Homebrew/homebrew-core/d28afc3bfdb5d24eab02157bfffcc9e17ed6666c/Formula/f/freetype.rb
