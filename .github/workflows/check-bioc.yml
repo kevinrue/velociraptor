@@ -226,6 +226,16 @@ jobs:
               check_dir = "check"
           )
         shell: Rscript {0}
+      
+      - name: Print package versions
+        run: |
+          packages_info <- basilisk::listPackages(velociraptor:::velo.env)$full
+          cat(paste0(
+            "c\n",
+            paste0(sprintf("  '%s'", packages_info), collapse = ",\n"),
+            "\n)"
+          ))
+        shell: Rscript {0}
 
       ## Might need an to add this to the if:  && runner.os == 'Linux'
       - name: Reveal testthat details
