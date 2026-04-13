@@ -1,3 +1,7 @@
+# velociraptor 1.21.1
+
+* Pin version of all dependencies.
+
 # velociraptor 1.19.1
 
 * Switch import of OS-detecting function to `basilisk`.
