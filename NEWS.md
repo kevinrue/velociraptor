@@ -1,4 +1,4 @@
-# velociraptor 1.19.2
+# velociraptor 1.21.1
 
 * Pin version of all dependencies.
 
