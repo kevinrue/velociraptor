@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">velociraptor</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.19.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.21.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -294,10 +294,46 @@ and <span class="pkg">numpy</span> is pinned to v1.21.1 (<a href="https://github
 <span class="r-in"><span><span class="va">unspliced</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce2</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># make scvelo use 10 rather than the default 30 neighbors to compute moments for velocity estimation:</span></span></span>
 <span class="r-in"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">scvelo</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>X<span class="op">=</span><span class="va">spliced</span>, spliced<span class="op">=</span><span class="va">spliced</span>, unspliced<span class="op">=</span><span class="va">unspliced</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>              scvelo.params<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>neighbors<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>n_neighbors<span class="op">=</span><span class="fl">10L</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'normalizeCounts' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::normalizeCounts' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'librarySizeFactors' is deprecated.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> Use 'scrapper::centerSizeFactors' instead.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> See help("Deprecated")</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -310,7 +346,7 @@ and <span class="pkg">numpy</span> is pinned to v1.21.1 (<a href="https://github
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
