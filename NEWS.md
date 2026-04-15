@@ -1,3 +1,7 @@
+# velociraptor 1.21.3
+
+* Update dependencies for MacOSXArm (again).
+
 # velociraptor 1.21.2
 
 * Update dependencies for MacOSXArm.
