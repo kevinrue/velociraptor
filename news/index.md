@@ -1,5 +1,9 @@
 # Changelog
 
+## velociraptor 1.21.2
+
+- Update dependencies for MacOSXArm.
+
 ## velociraptor 1.21.1
 
 - Pin version of all dependencies.

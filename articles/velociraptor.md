@@ -403,7 +403,7 @@ sessionInfo()
     ## 
     ## other attached packages:
     ##  [1] scater_1.39.4               ggplot2_4.0.2              
-    ##  [3] velociraptor_1.21.1         scran_1.39.2               
+    ##  [3] velociraptor_1.21.2         scran_1.39.2               
     ##  [5] scuttle_1.21.6              scRNAseq_2.25.0            
     ##  [7] SingleCellExperiment_1.33.2 SummarizedExperiment_1.41.1
     ##  [9] Biobase_2.71.0              GenomicRanges_1.63.2       
@@ -442,11 +442,11 @@ sessionInfo()
     ##  [76] Rtsne_0.17               cluster_2.1.8.2          gtable_0.3.6            
     ##  [79] ensembldb_2.35.0         metapod_1.19.2           BiocSingular_1.27.1     
     ##  [82] ScaledMatrix_1.19.0      XVector_0.51.0           ggrepel_0.9.8           
-    ##  [85] BiocVersion_3.23.1       pillar_1.11.1            limma_3.67.0            
+    ##  [85] BiocVersion_3.23.1       pillar_1.11.1            limma_3.67.1            
     ##  [88] dplyr_1.2.1              BiocFileCache_3.1.0      lattice_0.22-9          
     ##  [91] rtracklayer_1.71.3       bit_4.6.0                tidyselect_1.2.1        
     ##  [94] locfit_1.5-9.12          Biostrings_2.79.5        gridExtra_2.3           
-    ##  [97] bookdown_0.46            ProtGenerics_1.43.0      edgeR_4.9.5             
+    ##  [97] bookdown_0.46            ProtGenerics_1.43.0      edgeR_4.9.6             
     ## [100] xfun_0.57                statmod_1.5.1            UCSC.utils_1.7.1        
     ## [103] lazyeval_0.2.3           yaml_2.3.12              evaluate_1.0.5          
     ## [106] codetools_0.2-20         cigarillo_1.1.0          tibble_3.3.1            
