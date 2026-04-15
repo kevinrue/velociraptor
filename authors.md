@@ -18,13 +18,13 @@ Source:
 [`DESCRIPTION`](https://github.com/kevinrue/velociraptor/blob/devel/DESCRIPTION)
 
 Rue-Albrecht K, Lun A, Soneson C, Stadler M (2026). *velociraptor:
-Toolkit for Single-Cell Velocity*. R package version 1.21.2,
+Toolkit for Single-Cell Velocity*. R package version 1.21.3,
 <https://github.com/kevinrue/velociraptor>.
 
     @Manual{,
       title = {velociraptor: Toolkit for Single-Cell Velocity},
       author = {Kevin Rue-Albrecht and Aaron Lun and Charlotte Soneson and Michael Stadler},
       year = {2026},
-      note = {R package version 1.21.2},
+      note = {R package version 1.21.3},
       url = {https://github.com/kevinrue/velociraptor},
     }

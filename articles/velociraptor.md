@@ -403,12 +403,12 @@ sessionInfo()
     ## 
     ## other attached packages:
     ##  [1] scater_1.39.4               ggplot2_4.0.2              
-    ##  [3] velociraptor_1.21.2         scran_1.39.2               
+    ##  [3] velociraptor_1.21.3         scran_1.39.2               
     ##  [5] scuttle_1.21.6              scRNAseq_2.25.0            
     ##  [7] SingleCellExperiment_1.33.2 SummarizedExperiment_1.41.1
     ##  [9] Biobase_2.71.0              GenomicRanges_1.63.2       
     ## [11] Seqinfo_1.1.0               IRanges_2.45.0             
-    ## [13] S4Vectors_0.49.1            BiocGenerics_0.57.0        
+    ## [13] S4Vectors_0.49.1-1          BiocGenerics_0.57.0        
     ## [15] generics_0.1.4              MatrixGenerics_1.23.0      
     ## [17] matrixStats_1.5.0           knitr_1.51                 
     ## [19] BiocStyle_2.39.0           
@@ -432,7 +432,7 @@ sessionInfo()
     ##  [46] textshaping_1.0.5        RSQLite_2.4.6            beachmat_2.27.5         
     ##  [49] labeling_0.4.3           filelock_1.0.3           httr_1.4.8              
     ##  [52] abind_1.4-8              compiler_4.7.0           withr_3.0.2             
-    ##  [55] bit64_4.6.0-1            S7_0.2.1                 BiocParallel_1.45.0     
+    ##  [55] bit64_4.6.0-1            S7_0.2.1-1               BiocParallel_1.45.0     
     ##  [58] viridis_0.6.5            DBI_1.3.0                HDF5Array_1.39.1        
     ##  [61] alabaster.ranges_1.11.0  alabaster.schemas_1.11.0 rappdirs_0.3.4          
     ##  [64] DelayedArray_0.37.1      rjson_0.2.23             bluster_1.21.1          
@@ -452,7 +452,7 @@ sessionInfo()
     ## [106] codetools_0.2-20         cigarillo_1.1.0          tibble_3.3.1            
     ## [109] alabaster.matrix_1.11.0  BiocManager_1.30.27      cli_3.6.6               
     ## [112] reticulate_1.45.0.9000   systemfonts_1.3.2        jquerylib_0.1.4         
-    ## [115] zellkonverter_1.21.1     Rcpp_1.1.1               GenomeInfoDb_1.47.2     
+    ## [115] zellkonverter_1.21.1     Rcpp_1.1.1-1             GenomeInfoDb_1.47.2     
     ## [118] dir.expiry_1.19.0        dbplyr_2.5.2             png_0.1-9               
     ## [121] XML_3.99-0.23            parallel_4.7.0           pkgdown_2.2.0           
     ## [124] blob_1.3.0               AnnotationFilter_1.35.0  bitops_1.0-9            
